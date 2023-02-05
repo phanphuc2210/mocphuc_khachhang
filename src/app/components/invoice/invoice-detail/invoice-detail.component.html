@@ -1,0 +1,89 @@
+<div class="mb-16">
+    <div class="banner-page">
+        <i class="text-5xl font-semibold text-white">Chi tiết hóa đơn #{{ orderId }}</i>
+    </div>
+
+    <!-- Breadcrumb -->
+    <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
+        <ol class="my-container inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+                <a routerLink="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-slate-600 dark:text-gray-400 dark:hover:text-white">
+                    <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                    Trang chủ
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                    <a routerLink="/invoice" class="ml-1 text-sm font-medium text-gray-700 hover:text-slate-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Hóa đơn</a>
+                </div>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                    <a routerLink="/invoice/{{ orderId }}" class="ml-1 text-sm font-medium text-gray-700 hover:text-slate-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Chi tiết hóa đơn</a>
+                </div>
+            </li>
+        </ol>
+    </nav>
+
+    <div *ngIf="invoice_info && invoice_details" class="my-container mt-4">
+        <div class="grid grid-cols-2 gap-3">
+            <div>
+                <p class="text-base font-bold my-3">Tên khách hàng: <span class="font-normal">{{ invoice_info.name }}</span></p>
+                <p class="text-base font-bold my-3">Số điện thoại: <span class="font-normal">{{ invoice_info.phone }}</span></p>
+                <p class="text-base font-bold my-3">Nơi nhận: <span class="font-normal">{{ invoice_info.address }}</span></p>
+            </div>
+            <div>
+                <p class="text-base font-bold my-3">Ngày đặt hàng: <span class="font-normal">{{ invoice_info.date | date: 'dd/MM/YYYY' }}</span></p>
+                <p class="text-base font-bold my-3">Phương thức thanh toán: <span class="font-normal">{{ invoice_info.payment_method }}</span></p>
+            </div>
+        </div>
+
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+            <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+                <thead class="text-sm text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Hình ảnh
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Tên sản phẩm
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Đơn giá
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Số lượng
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Thành tiền
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let detail of invoice_details" class="bg-white border-b text-gray-900 dark:text-white dark:bg-gray-900 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+                            <img class="w-16 mx-auto" src="{{ detail.image }}" alt="{{ detail.name }}">
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ detail.name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ detail.price | currency:"VND":'vnđ':'':'vi' }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <input type="text" value="{{ detail.quantity }}" id="small-input" class="my-input input-focus mx-auto text-center w-[20%]" disabled>
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ detail.price! * detail.quantity | currency:"VND":'vnđ':'':'vi' }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-6 flex flex-col items-end gap-3">
+            <p class="text-lg font-bold">Tổng tiền: <span class="text-red-600">{{ total_price | currency:"VND":'vnđ':'':'vi'}}</span></p>
+        </div>
+    </div>
+</div>

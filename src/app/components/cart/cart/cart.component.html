@@ -1,0 +1,104 @@
+<div class="mb-16">
+    <div class="banner-page">
+        <i class="text-5xl font-semibold text-white">Giỏ hàng</i>
+    </div>
+    <!-- Breadcrumb -->
+    <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
+        <ol class="my-container inline-flex items-center space-x-1 md:space-x-3">
+          <li class="inline-flex items-center">
+            <a routerLink="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-slate-600 dark:text-gray-400 dark:hover:text-white">
+              <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+              Trang chủ
+            </a>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+              <a routerLink="/cart" class="ml-1 text-sm font-medium text-gray-700 hover:text-slate-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Giỏ hàng</a>
+            </div>
+          </li>
+        </ol>
+    </nav>
+    <div *ngIf="cart$ | async as cart" class="my-container mt-4">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+                <thead class="text-sm text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Hình ảnh
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Tên sản phẩm
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Đơn giá
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Số lượng
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Thành tiền
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Xóa
+                        </th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="cart.length > 0; else noProduct">
+                    <tr *ngFor="let entry of cart" class="bg-white border-b text-gray-900 dark:text-white dark:bg-gray-900 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+                            <img class="w-16 mx-auto" src="{{ entry.product.image }}" alt="{{ entry.product.name }}">
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ entry.product.name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ entry.product.price | currency:"VND":'vnđ':'':'vi' }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center justify-center">
+                                <span class="text-sm p-4 font-bold cursor-pointer select-none" (click)="decrease(entry.product)"> -</span>
+                                <input type="text" value="{{ entry.count }}" id="small-input" class="my-input input-focus text-center w-[20%]" disabled>
+                                <span class="text-sm p-4 font-bold cursor-pointer select-none" (click)="increase(entry.product)"> + </span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ entry.product.price * entry.count | currency:"VND":'vnđ':'':'vi' }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <svg (click)="removeProduct(entry.product)" class="w-5 h-5 mx-auto text-red-600 cursor-pointer" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </td>
+                    </tr>
+                </tbody>
+                <ng-template #noProduct>
+                    <tr>
+                        <td colspan="6">
+                            <p class="py-4">
+                                Không có sản phẩm nào trong giỏ hàng!
+                                <a class="text-blue-600 hover:underline" routerLink="/product">Đến trang sản phẩm.</a>
+                            </p>
+                        </td>
+                    </tr>
+                </ng-template>
+            </table>
+        </div>
+        <div *ngIf="cart.length > 0" class="mt-4">
+            <div class="flex justify-end">
+                <button routerLink="/product" type="button" class="text-white font-bold bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                    Tiếp tục mua hàng
+                </button>
+                <button (click)="clearCart()"  type="button" class="text-white font-bold bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                    Xóa giỏ hàng
+                </button>
+            </div>
+            <div class="mt-6 flex flex-col items-end gap-3">
+                <p class="text-lg font-bold">Tổng tiền: <span class="text-red-600">{{ (totalPrice$ | async) | currency:"VND":'vnđ':'':'vi'}}</span></p>
+                <button routerLink="/cart/payment" type="button" class="text-white font-bold bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                    Thanh toán
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

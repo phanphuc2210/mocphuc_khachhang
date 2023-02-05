@@ -1,0 +1,84 @@
+<div class="mb-16">
+    <div class="banner-page">
+        <i class="text-5xl font-semibold text-white">Hóa Đơn</i>
+    </div>
+
+    <!-- Breadcrumb -->
+    <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
+        <ol class="my-container inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
+            <a routerLink="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-slate-600 dark:text-gray-400 dark:hover:text-white">
+            <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+            Trang chủ
+            </a>
+        </li>
+        <li>
+            <div class="flex items-center">
+            <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+            <a routerLink="/invoice" class="ml-1 text-sm font-medium text-gray-700 hover:text-slate-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Hóa đơn</a>
+            </div>
+        </li>
+        </ol>
+    </nav>
+
+    <div *ngIf="invoice" class="my-container mt-4">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+                <thead class="text-sm text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Mã hóa đơn
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Ngày đặt
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Địa chỉ
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Sđt
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Phương thức
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            
+                        </th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="invoice.length > 0; else noOrder">
+                    <tr *ngFor="let order of invoice" class="bg-white border-b text-gray-900 dark:text-white dark:bg-gray-900 dark:border-gray-700">
+                        <td class="px-6 py-4">
+                            #{{ order.id }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ order.date | date: 'dd/MM/YYYY' }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ order.address }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ order.phone }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ order.payment_method }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <span routerLink="/invoice/{{ order.id }}" class="text-blue-600 hover:underline cursor-pointer">Chi tiết</span>
+                        </td>
+                    </tr>
+                </tbody>
+                <ng-template #noOrder>
+                    <tr>
+                        <td colspan="6">
+                            <p class="py-4">
+                                Bạn chưa có bất kỳ hóa đơn nào!
+                                <a class="text-blue-600 hover:underline" routerLink="/product">Tiến hành mua hàng.</a>
+                            </p>
+                        </td>
+                    </tr>
+                </ng-template>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,150 @@
+<div class="mb-16">
+    <div class="banner-page">
+        <i class="text-5xl font-semibold text-white">Thanh toán</i>
+    </div>
+    <!-- Breadcrumb -->
+    <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
+        <ol class="my-container inline-flex items-center space-x-1 md:space-x-3">
+          <li class="inline-flex items-center">
+            <a routerLink="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-slate-600 dark:text-gray-400 dark:hover:text-white">
+              <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+              Trang chủ
+            </a>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+              <a routerLink="/cart" class="ml-1 text-sm font-medium text-gray-700 hover:text-slate-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Giỏ hàng</a>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+              <a routerLink="/cart/payment" class="ml-1 text-sm font-medium text-gray-700 hover:text-slate-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Thanh toán</a>
+            </div>
+          </li>
+        </ol>
+    </nav>
+    <div *ngIf="cart$ | async as cart" class="my-container mt-4">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+                <thead class="text-sm text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Hình ảnh
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Tên sản phẩm
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Đơn giá
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Số lượng
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Thành tiền
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let entry of cart" class="bg-white border-b text-gray-900 dark:text-white dark:bg-gray-900 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+                            <img class="w-16 mx-auto" src="{{ entry.product.image }}" alt="{{ entry.product.name }}">
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ entry.product.name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ entry.product.price | currency:"VND":'vnđ':'':'vi' }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <input type="text" value="{{ entry.count }}" id="small-input" class="my-input input-focus text-center w-[20%] mx-auto" disabled>
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ entry.product.price * entry.count | currency:"VND":'vnđ':'':'vi' }}
+                        </td> 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <form class="mt-8 grid grid-cols-2" [formGroup]="paymentForm"*ngIf="paymentForm">
+            <div>
+                <p class="text-base font-bold my-6">Tên khách hàng: <span class="font-normal">{{ paymentForm.controls['name'].value }}</span></p>
+                <div class="flex items-center gap-2 text-base my-6">
+                    <span class="font-bold">Số điện thoại:</span> 
+                    <input 
+                        type="text" 
+                        formControlName="phone" 
+                        id="small-input" 
+                        [ngClass]="{
+                            'my-input input-focus w-[25%]': true,
+                            'input-error': (paymentForm.controls['phone'].dirty &&
+                            (paymentForm.hasError('required', 'phone') || paymentForm.hasError('pattern', 'phone'))),
+                            'peer invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500': paymentForm.controls['phone'].dirty
+                        }"
+                    >
+                    <p
+                        class="text-sm text-pink-600"
+                        *ngIf="
+                        paymentForm.controls['phone'].dirty &&
+                        paymentForm.hasError('required', 'phone')
+                        "
+                    >
+                        *Sđt không được trống
+                    </p>
+                    <p
+                      class="text-sm text-pink-600"
+                      *ngIf="
+                        paymentForm.controls['phone'].dirty &&
+                        paymentForm.hasError('pattern', 'phone')
+                      "
+                    >
+                      *Sđt không đúng định dạng
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 text-base my-6">
+                    <span class="font-bold">Địa chỉ:</span> 
+                    <div class="w-[75%]">
+                        <input 
+                            type="text" 
+                            formControlName="address" 
+                            id="small-input" 
+                            [ngClass]="{
+                                'my-input input-focus w-full': true,
+                                'input-error': (paymentForm.controls['address'].dirty &&
+                                paymentForm.hasError('required', 'address')),
+                                'peer invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500': paymentForm.controls['address'].dirty
+                            }"
+                        >
+                        <p
+                            class="text-sm text-pink-600"
+                            *ngIf="
+                            paymentForm.controls['address'].dirty &&
+                            paymentForm.hasError('required', 'address')
+                            "
+                        >
+                            *Địa chỉ không được trống
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p class="text-base font-bold mt-6 mb-4">Phương thức thanh toán:</p>
+                <div class="flex items-center ml-6">
+                    <input checked (change)="checkCheckBoxvalue($event)" id="cod" type="radio" value="cod" name="payment_methods" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="cod" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Thanh toán khi nhận hàng (COD)</label>
+                </div>
+            </div>
+        </form>
+        <div class="mt-4 flex justify-between">
+            <a routerLink="/cart" class="text-blue-600 hover:underline">Quay lại</a>
+            <div class="flex flex-col gap-3">
+                <p class="text-lg font-bold">Tổng tiền phải thanh toán: <span class="text-red-600 pl-2">{{ (totalPrice$ | async) | currency:"VND":'vnđ':'':'vi'}}</span></p>
+                <button (click)="payment()" type="button" class="text-white font-bold bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                    Xác nhận đặt hàng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

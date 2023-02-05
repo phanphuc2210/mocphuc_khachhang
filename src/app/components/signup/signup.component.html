@@ -1,0 +1,168 @@
+<div class="min-h-screen bg-gradient-to-r from-cyan-500 to-blue-500 pt-2">
+    <div class="px-4 md:px-0 flex items-center py-4" >
+        <div class="card w-[28rem] mx-auto bg-white/30">
+            <h1 class="text-3xl font-semibold text-center">Đăng ký</h1>
+            <form class="mt-3" [formGroup]="signupForm" (ngSubmit)="signUp()">
+                <div class="mb-4">
+                    <span class="block text-sm font-bold text-slate-700 mb-1">Tên</span>
+                    <input
+                      type="text"
+                      formControlName="firstname"
+                      [ngClass]="{
+                            'my-input' : true,
+                            'input-error': (signupForm.controls['firstname'].dirty &&
+                            signupForm.hasError('required', 'firstname'))
+                        }"
+                    />
+                    <p
+                      class="text-sm text-pink-600"
+                      *ngIf="
+                        signupForm.controls['firstname'].dirty &&
+                        signupForm.hasError('required', 'firstname')
+                      "
+                    >
+                      *Tên không được trống
+                    </p>
+                </div>
+                <div class="mb-4">
+                    <span class="block text-sm font-bold text-slate-700 mb-1">Họ</span>
+                    <input
+                      type="text"
+                      formControlName="lastname"
+                      [ngClass]="{
+                            'my-input' : true,
+                            'input-error': (signupForm.controls['lastname'].dirty &&
+                            signupForm.hasError('required', 'lastname'))
+                        }"
+                    />
+                    <p
+                      class="text-sm text-pink-600"
+                      *ngIf="
+                        signupForm.controls['lastname'].dirty &&
+                        signupForm.hasError('required', 'lastname')
+                      "
+                    >
+                      *Họ không được trống
+                    </p>
+                </div>
+                <div class="mb-4">
+                    <span class="block text-sm font-bold text-slate-700 mb-1">Số điện thoại</span>
+                    <input
+                      type="tel"
+                      formControlName="phone"
+                      [ngClass]="{
+                            'my-input' : true,
+                            'input-error': (signupForm.controls['phone'].dirty &&
+                            (signupForm.hasError('required', 'phone') || signupForm.hasError('pattern', 'phone')))
+                        }"
+                    />
+                    <p
+                      class="text-sm text-pink-600"
+                      *ngIf="
+                        signupForm.controls['phone'].dirty &&
+                        signupForm.hasError('required', 'phone')
+                      "
+                    >
+                      *Sđt không được trống
+                    </p>
+                    <p
+                      class="text-sm text-pink-600"
+                      *ngIf="
+                        signupForm.controls['phone'].dirty &&
+                        signupForm.hasError('pattern', 'phone')
+                      "
+                    >
+                      *Sđt không định dạng
+                    </p>
+                </div>
+                <div class="mb-4">
+                  <span class="block text-sm font-bold text-slate-700 mb-1">Địa chỉ</span>
+                  <input
+                    type="text"
+                    formControlName="address"
+                    [ngClass]="{
+                          'my-input' : true,
+                          'input-error': (signupForm.controls['address'].dirty &&
+                          signupForm.hasError('required', 'adrress'))
+                      }"
+                  />
+                  <p
+                    class="text-sm text-pink-600"
+                    *ngIf="
+                      signupForm.controls['address'].dirty &&
+                      signupForm.hasError('required', 'address')
+                    "
+                  >
+                    *Địa chỉ không được trống
+                  </p>
+              </div>
+                <div class="mb-4">
+                    <span class="block text-sm font-bold text-slate-700 mb-1">Email</span>
+                    <input
+                      type="email"
+                      formControlName="email"
+                      [ngClass]="{
+                            'my-input' : true,
+                            'input-error': (signupForm.controls['email'].dirty &&
+                            signupForm.hasError('required', 'email')),
+                            'peer invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500': signupForm.controls['email'].dirty
+                        }"
+                    />
+                    <p
+                      class="text-sm text-pink-600"
+                      *ngIf="
+                        signupForm.controls['email'].dirty &&
+                        signupForm.hasError('required', 'email')
+                      "
+                    >
+                      *Email không được trống
+                    </p>
+                    <p class="mt-2 hidden peer-invalid:block text-pink-600 text-sm">
+                        *Email không đúng định dạng
+                    </p>
+                </div>
+                <div class="mb-4">
+                    <span class="block text-sm font-bold text-slate-700 mb-1">Password</span>
+                    <input
+                        [type]="typePass"
+                        formControlName="password"
+                        [ngClass]="{
+                            'my-input' : true,
+                            'input-error': (signupForm.controls['password'].dirty &&
+                            signupForm.hasError('required', 'password'))
+                        }"
+                    />
+                    <p
+                        class="text-sm text-pink-600"
+                        *ngIf="
+                        signupForm.controls['password'].dirty &&
+                        signupForm.hasError('required', 'password')
+                        "
+                    >
+                        *Password không được trống
+                    </p>
+                
+                </div>
+                <div class="mb-4">
+                    <input
+                        (change)="showHidePass()"
+                        type="checkbox"
+                        class="border border-slate-300 rounded-md shadow-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+                    />
+                    <span class="ml-2 text-xs font-bold">Hiện password</span>
+                </div>
+                <div class="mb-4">
+                    <button [disabled]="signupForm.invalid" type="submit" class="text-white bg-gray-800 disabled:bg-gray-600 disabled:text-slate-300 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                        Sign up
+                    </button>
+                </div>
+            </form>
+            <p class="text-sm text-slate-700 font-semibold">
+                Bạn đã đăng ký?
+                <a routerLink="/login" class="text-blue-700 hover:text-blue-900">
+                    Click để đăng nhập!!
+                </a>
+            </p>
+        </div>
+    </div>
+</div>

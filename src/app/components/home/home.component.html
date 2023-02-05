@@ -1,0 +1,40 @@
+<div class="mb-16">
+    <app-slider></app-slider>
+    <div class="my-container mt-12">
+        <h2 class="text-center text-3xl font-semibold">Sản phẩm mới</h2>
+        <div class="grid grid-cols-1 mt-6 sm:grid-cols-2 md:grid-cols-4 justify-center gap-5"> 
+            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+        </div>   
+    </div>
+    
+    <div class="my-container mt-12">
+        <div class="grid grid-cols-3 gap-4">
+            <div class="" >
+                <img src="https://bizweb.dktcdn.net/thumb/2048x2048/100/360/933/themes/728303/assets/evo_banner_index_1.jpg?1638603834649" width="100%" />
+            </div>
+            <div class="" >
+                <img src="https://bizweb.dktcdn.net/thumb/2048x2048/100/360/933/themes/728303/assets/evo_banner_index_2.jpg?1638603834649" width="100%" />
+            </div>
+            <div class="" >
+                <img src="https://bizweb.dktcdn.net/thumb/2048x2048/100/360/933/themes/728303/assets/evo_banner_index_3.jpg?1638603834649" width="100%" />
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mt-4">
+            <div class="" >
+                <img src="https://bizweb.dktcdn.net/thumb/2048x2048/100/360/933/themes/728303/assets/evo_banner_index_4.jpg?1638603834649" width="100%" />
+            </div>
+            <div class="" >
+                <img src="https://bizweb.dktcdn.net/thumb/2048x2048/100/360/933/themes/728303/assets/evo_banner_index_5.jpg?1638603834649" width="100%" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="my-container mt-12">
+        <h2 class="text-center text-3xl font-semibold">Sản phẩm bạn có thể thích</h2>
+        <div class="grid grid-cols-1 mt-6 sm:grid-cols-2 md:grid-cols-4 justify-center gap-5"> 
+            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+        </div>   
+    </div>
+</div>
+
+
