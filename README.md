@@ -1,6 +1,15 @@
-# MocphucKhachhang
+# MộcPhúc_Khách hàng (Học việc Infodation)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.0.
+
+## Công nghệ sử dụng
+### Front-end
+    - Angular
+    - TailwindCSS/Flowbite
+    - ...
+### Back-end
+    - NodeJS/ExpressJS
+    - MySQL
 
 ## Các chức năng chính
 - Đăng ký, đăng nhập/ đăng xuất
@@ -11,6 +20,15 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Thanh toán
 - Xem danh sách/chi tiết hóa đơn mà mình đã đặt
 - Xem/chỉnh sửa thông tin cá nhân
+
+## Một số hình ảnh về dự án
+![img](https://i.imgur.com/eAJOp8V.png)
+![img](https://i.imgur.com/wwLI97z.png)
+![img](https://i.imgur.com/fZVcFCP.png)
+![img](https://i.imgur.com/nFNlyjm.png)
+![img](https://i.imgur.com/2xuPomh.png)
+![img](https://i.imgur.com/fcbPr6W.png)
+![img](https://i.imgur.com/O60f0Ka.png)
 
 ## Development server
 
