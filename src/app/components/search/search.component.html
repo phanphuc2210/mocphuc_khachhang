@@ -12,9 +12,16 @@
 
     <div class="mt-4" >
         <h2 class="text-xl font-semibold">Tìm kiếm sản phẩm</h2>
-        <div class="grid grid-cols-1 mt-6 sm:grid-cols-2 md:grid-cols-4 justify-center gap-5"> 
-            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
-        </div>   
+        <div *ngIf="products">
+            <div *ngIf="products.length > 0; else notFound" class="grid grid-cols-1 mt-6 sm:grid-cols-2 md:grid-cols-4 justify-center gap-5"> 
+                <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+            </div>   
+            <ng-template #notFound>
+                <p class="text-center font-bold">
+                    Không có sản phẩm nào được tìm thấy!
+                </p>
+            </ng-template>
+        </div>
     </div>
 
    

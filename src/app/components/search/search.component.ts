@@ -11,7 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class SearchComponent implements OnInit, AfterViewInit{
   @ViewChild('searchInput', {static: true}) searchInput!: ElementRef
-  products: Product[] = []
+  products!: Product[]
   
   constructor(private productService: ProductService) {}
 
