@@ -2,6 +2,16 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.0.
 
+## Các chức năng chính
+- Đăng ký, đăng nhập/ đăng xuất
+- Yêu cầu login lại khi token hết hạn
+- Xem danh sách/chi tiết sản phẩm
+- Tìm kiếm sản phẩm
+- Thêm, tăng giảm, xóa sản phẩm trong giỏ hàng
+- Thanh toán
+- Xem danh sách/chi tiết hóa đơn mà mình đã đặt
+- Xem/chỉnh sửa thông tin cá nhân
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
