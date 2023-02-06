@@ -24,6 +24,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Một số hình ảnh về dự án
 ![img](https://i.imgur.com/eAJOp8V.png)
 ![img](https://i.imgur.com/wwLI97z.png)
+![img](https://i.imgur.com/0buhNPA.png)
+![img](https://i.imgur.com/8QrzzNl.png)
+![img](https://i.imgur.com/JehOKZe.png)
 ![img](https://i.imgur.com/fZVcFCP.png)
 ![img](https://i.imgur.com/nFNlyjm.png)
 ![img](https://i.imgur.com/2xuPomh.png)
