@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class InvoiceService {
-  private NODE_API = "http://localhost:8000/cart/invoice"
+  private NODE_API = "http://localhost:8000/invoice"
 
   constructor(private http: HttpClient) { }
 

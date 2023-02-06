@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
+import * as CartActions from 'src/app/store/cartStore/cart.action'
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,7 @@ export class LoginComponent {
     password: ['', Validators.required]
   })
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private store:Store) {}
 
   public login() {
     const data = {
@@ -34,6 +36,7 @@ export class LoginComponent {
           localStorage.setItem('token', res.result.token)            
           localStorage.setItem('user', JSON.stringify(res.result.data)) 
 
+
           Swal.fire({
             background: '#000',
             icon: 'success',
@@ -43,6 +46,7 @@ export class LoginComponent {
           }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
+              this.store.dispatch(CartActions.getCart({userId: res.result.data.id}))
               this.router.navigate(['/'])
             }
           })

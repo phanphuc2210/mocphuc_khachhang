@@ -28,8 +28,6 @@ export class HeaderComponent implements OnInit{
     this.authService.userSubject.subscribe(res => {
       if(res) {
         this.user = res
-        console.log("user:",this.user)
-        this.store.dispatch(CartActions.getCart({userId: this.user.id}))
       }
     })
   }
