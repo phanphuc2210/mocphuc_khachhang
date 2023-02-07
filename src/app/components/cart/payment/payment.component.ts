@@ -87,7 +87,7 @@ export class PaymentComponent implements OnInit {
     const data: Payment = {
       order: {
         userId: this.user.id!,
-        name: this.paymentForm.controls['address'].value,
+        name: this.paymentForm.controls['name'].value,
         address: this.paymentForm.controls['address'].value,
         phone: this.paymentForm.controls['phone'].value,
         email: this.paymentForm.controls['email'].value,

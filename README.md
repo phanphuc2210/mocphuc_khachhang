@@ -33,7 +33,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ![img](https://i.imgur.com/2xuPomh.png)
 ![img](https://i.imgur.com/fcbPr6W.png)
 ![img](https://i.imgur.com/O60f0Ka.png)
-![img](https://i.imgur.com/Kp3Y1sx.png)
+![img](https://i.imgur.com/Iocqbyw.png)
 
 ## Development server
 
