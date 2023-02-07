@@ -5,6 +5,7 @@ export interface Order {
     date?: Date
     address: String
     phone: String
+    email?: String
     payment_method: String
 }
 

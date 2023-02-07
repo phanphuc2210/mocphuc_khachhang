@@ -36,4 +36,8 @@ export class CartService {
   public payment(data: Payment): Observable<any> {
     return this.http.post<any>(`${this.NODE_API}/payment`, data)
   }
+
+  public sendMail(data: Payment): Observable<any> {
+    return this.http.post<any>(`${this.NODE_API}/send-mail`, data)
+  }
 }

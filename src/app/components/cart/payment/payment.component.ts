@@ -51,6 +51,7 @@ export class PaymentComponent implements OnInit {
             Validators.required, Validators.pattern(/^[0-9]{10}$/i)
           ])],
           address: [this.user.address, Validators.required],
+          email: [this.user.email],
           payment_method: ['cod', Validators.required],
         });
       });
@@ -60,7 +61,13 @@ export class PaymentComponent implements OnInit {
         map((res) => {
           let orderDetails: Order_Detail[] = [];
           res.forEach((o) => {
-            orderDetails.push({ productId: o.product.id!, quantity: o.count });
+            orderDetails.push({ 
+              productId: o.product.id!, 
+              name: o.product.name,
+              image: o.product.image,
+              price: o.product.price,
+              quantity: o.count 
+            });
           });
           return orderDetails;
         })
@@ -80,8 +87,10 @@ export class PaymentComponent implements OnInit {
     const data: Payment = {
       order: {
         userId: this.user.id!,
+        name: this.paymentForm.controls['address'].value,
         address: this.paymentForm.controls['address'].value,
         phone: this.paymentForm.controls['phone'].value,
+        email: this.paymentForm.controls['email'].value,
         payment_method: this.paymentForm.controls['payment_method'].value,
       },
       order_details: this.order_details,
@@ -93,6 +102,10 @@ export class PaymentComponent implements OnInit {
         if(res.result) {
           const orderId = res.result.orderId
           this.store.dispatch(CartActions.clearCart())
+          // send mail
+          this.cartService.sendMail({ ...data ,order: {...data.order, id: orderId} }).subscribe(res => {
+            console.log('Mail:', res)
+          })
           Swal.fire({
             background: '#000',
             icon: 'success',
