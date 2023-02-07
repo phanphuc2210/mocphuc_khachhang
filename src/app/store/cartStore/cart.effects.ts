@@ -25,7 +25,7 @@ export class CartEffects {
     addProduct$ = createEffect(() => 
         this.actions$.pipe(
             ofType(CartActions.addProduct),
-            exhaustMap((action) => {
+            mergeMap((action) => {
                 let data: Cart = {
                     userId: this.authService.userSubject.value.id,
                     productId: action.product.id!
