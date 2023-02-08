@@ -7,17 +7,17 @@ export const initialState: Product[] = []
 
 export const reducer = createReducer(
     initialState,
-    on(CartAction.getCart, state => state),
+    
     on(CartAction.getCartSuccess, (_, action) => [...action.products]),
 
-    on(CartAction.addProduct, state => [...state]),
+   
     on(CartAction.addProductSuccess, (state, action) => {
         const stateClone: Product[] = [...state]
         stateClone.push(action.product)
         return stateClone
     }),
 
-    on(CartAction.decreaseProduct, state => [...state]),
+    
     on(CartAction.decreaseProductSuccess, (state, action) => {
         let stateClone: Product[] = [...state]
         const found = stateClone.find(p => p.id === action.product.id);
@@ -27,7 +27,7 @@ export const reducer = createReducer(
         return stateClone
     }),
 
-    on(CartAction.removeProduct, state => [...state]),
+   
     on(CartAction.removeProductSuccess, (state, action) => {
         let stateClone: Product[] = [...state]
         stateClone = stateClone.filter(p => p.id !== action.product.id)

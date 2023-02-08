@@ -5,19 +5,19 @@
     <img src="../../../assets/logo.png" class="h-9 mr-3 sm:h-12" alt="Logo" />
     <span class="self-center text-xl md:text-2xl font-extrabold whitespace-nowrap dark:text-white">MộcPhúc.</span>
   </a>
-  <div class="flex md:order-2">
-    <div *ngIf="!(isLogin | async),else login" class="flex gap-4">
+  <div class="flex items-center md:order-2">
+    <div *ngIf="!(isLogin | async),else login" class="flex gap-2 text-sm mr-1 md:mr-0 md:text-base md:gap-4">
       <span routerLink="/signup" class="text-gray-700 cursor-pointer">Đăng ký</span>
       <span routerLink="/login" class="text-gray-700 cursor-pointer">Đăng nhập</span>
     </div>
     <ng-template #login>
-      <div class="flex">
+      <div class="flex mr-1 md:mr-0">
         <div class=" relative inline-block text-left dropdown">
           <span class="">
-            <button class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-gray-700 hover:text-gray-500" 
+            <button class="flex items-center justify-between w-full px-2 md:px-4 py-2 text-sm font-medium leading-5 text-gray-700 hover:text-gray-500" 
               aria-haspopup="true" aria-expanded="true" aria-controls="headlessui-menu-items-117">
               <span>Hello, {{ user.firstname }}</span>
-              <svg class="w-5 h-5 ml-1 -mr-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              <svg class="w-5 h-5 -mr-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button
           ></span>
           <div class="opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95">
@@ -110,27 +110,21 @@
     </button>
   </div>
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
-      <div class="relative mt-3 md:hidden">
-        <input type="text" id="search-navbar" class="block w-full p-2  text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tìm kiếm...">
-        <button class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer">
-          <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-        </button>
-      </div>
       <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
         <li>
-          <a routerLink="/" class="block py-2 pl-3 pr-4 font-bold text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-800 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Trang chủ</a>
+          <a routerLink="/" class="block py-2 pl-3 pr-2 lg:pr-4 font-bold text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-800 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Trang chủ</a>
         </li>
         <li>
-          <a routerLink="/about" class="block py-2 pl-3 pr-4 font-bold text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-800 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Giới thiệu</a>
+          <a routerLink="/about" class="block py-2 pl-3 pr-2 lg:pr-4 font-bold text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-800 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Giới thiệu</a>
         </li>
         <li>
-          <a routerLink="/product" class="block py-2 pl-3 pr-4 font-bold text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-800 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Sản phẩm</a>
+          <a routerLink="/product" class="block py-2 pl-3 pr-2 lg:pr-4 font-bold text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-800 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Sản phẩm</a>
         </li>
         <li>
-          <a routerLink="/contact" class="block py-2 pl-3 pr-4 font-bold text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-800 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Liên hệ</a>
+          <a routerLink="/contact" class="block py-2 pl-3 pr-2 lg:pr-4 font-bold text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-800 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Liên hệ</a>
         </li>
         <li>
-          <a routerLink="/search" class="flex gap-1 py-2 pl-3 pr-4 font-bold text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-800 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+          <a routerLink="/search" class="flex gap-1 py-2 pl-3 pr-2 lg:pr-4 font-bold text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-800 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
             Tìm kiếm
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"></path>
