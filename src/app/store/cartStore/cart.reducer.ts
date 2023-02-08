@@ -1,4 +1,3 @@
-import { state } from "@angular/animations";
 import { ActionReducer, createReducer, INIT, on, UPDATE } from "@ngrx/store";
 import { Product } from "src/app/models/product.model";
 import * as CartAction from './cart.action'
