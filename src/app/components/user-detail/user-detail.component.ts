@@ -28,16 +28,12 @@ export class UserDetailComponent implements OnInit {
     this.authService.getUser(this.user.id).subscribe(res => {
       if(res.result) {
         console.log(res.result[0])
-        this.userForm = this.fb.group({
-          firstname: [res.result[0].firstname, Validators.required],
-          lastname: [res.result[0].lastname, Validators.required],
-          phone: [res.result[0].phone, Validators.compose([
-            Validators.required, Validators.pattern(/^[0-9]{10}$/i)
-          ])],
-          address: [res.result[0].address, Validators.required],
-          email: [res.result[0].email, Validators.required],
-          password: [res.result[0].password, Validators.required],
-        })
+        this.userForm.controls['firstname'].setValue(res.result[0].firstname);
+        this.userForm.controls['lastname'].setValue(res.result[0].lastname);
+        this.userForm.controls['phone'].setValue(res.result[0].phone);
+        this.userForm.controls['address'].setValue(res.result[0].address);
+        this.userForm.controls['email'].setValue(res.result[0].email);
+        this.userForm.controls['password'].setValue(res.result[0].password);
       }
     })
   }
