@@ -57,17 +57,16 @@ export class UserDetailComponent implements OnInit {
           title: '<p class="text-xl text-slate-300">Thay đổi thông tin thành công</p>',
           confirmButtonText: 'Ok',
           confirmButtonColor: '#0e9f6e',
-        }).then((result) => {
-          /* Read more about isConfirmed, isDenied below */
-          if (result.isConfirmed) {
-            const userLS = {
-              ...this.user,
-              firstname: this.userForm.controls.firstname.value!
-            }
-            localStorage.setItem('user', JSON.stringify(userLS)) 
-            this.authService.userSubject.next(userLS)
-          }
         })
+         
+        const userLS = {
+          ...this.user,
+          firstname: this.userForm.controls.firstname.value!
+        }
+        localStorage.setItem('user', JSON.stringify(userLS)) 
+        this.authService.userSubject.next(userLS)
+    
+      
       },
       error: err => {
         alert('Something went wrong!')

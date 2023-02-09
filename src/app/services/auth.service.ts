@@ -30,4 +30,13 @@ export class AuthService {
   public updateUser(id: number, data: User): Observable<any> {
     return this.httpClient.put<any>(`${this.NODE_API}users/${id}`, data)
   }
+
+  public changePassword(id: number, data: any): Observable<any> {
+    return this.httpClient.patch<any>(`${this.NODE_API}users/${id}/change-password`, data)
+  }
+
+  public logOut(): void {
+    localStorage.clear()
+    this.loginSubject.next(false)
+  }
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { HomeComponent } from './components/home/home.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'user-detail', component: UserDetailComponent, canActivate: [AuthGuard]},
+  {path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard]},
   {
     path: 'cart', 
     loadChildren: () => 

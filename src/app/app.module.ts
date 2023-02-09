@@ -32,6 +32,7 @@ import {registerLocaleData} from '@angular/common';
 import localeVi from '@angular/common/locales/vi';
 import { CartEffects } from './store/cartStore/cart.effects';
 import { ProductCardComponent } from './commons/product-card/product-card.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 registerLocaleData(localeVi, 'vi');
 
 @NgModule({
@@ -49,7 +50,8 @@ registerLocaleData(localeVi, 'vi');
     LoginComponent,
     SignupComponent,
     UserDetailComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

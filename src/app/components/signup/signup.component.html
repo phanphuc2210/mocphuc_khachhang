@@ -3,47 +3,49 @@
         <div class="card w-[28rem] mx-auto bg-white/30">
             <h1 class="text-3xl font-semibold text-center">Đăng ký</h1>
             <form class="mt-3" [formGroup]="signupForm" (ngSubmit)="signUp()">
-                <div class="mb-4">
-                    <span class="block text-sm font-bold text-slate-700 mb-1">Tên</span>
-                    <input
-                      type="text"
-                      formControlName="firstname"
-                      [ngClass]="{
-                            'my-input' : true,
-                            'input-error': (signupForm.controls['firstname'].dirty &&
-                            signupForm.hasError('required', 'firstname'))
-                        }"
-                    />
-                    <p
-                      class="text-sm text-pink-600"
-                      *ngIf="
-                        signupForm.controls['firstname'].dirty &&
-                        signupForm.hasError('required', 'firstname')
-                      "
-                    >
-                      *Tên không được trống
-                    </p>
-                </div>
-                <div class="mb-4">
-                    <span class="block text-sm font-bold text-slate-700 mb-1">Họ</span>
-                    <input
-                      type="text"
-                      formControlName="lastname"
-                      [ngClass]="{
-                            'my-input' : true,
-                            'input-error': (signupForm.controls['lastname'].dirty &&
-                            signupForm.hasError('required', 'lastname'))
-                        }"
-                    />
-                    <p
-                      class="text-sm text-pink-600"
-                      *ngIf="
-                        signupForm.controls['lastname'].dirty &&
-                        signupForm.hasError('required', 'lastname')
-                      "
-                    >
-                      *Họ không được trống
-                    </p>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="mb-4">
+                      <span class="block text-sm font-bold text-slate-700 mb-1">Tên</span>
+                      <input
+                        type="text"
+                        formControlName="firstname"
+                        [ngClass]="{
+                              'my-input' : true,
+                              'input-error': (signupForm.controls['firstname'].dirty &&
+                              signupForm.hasError('required', 'firstname'))
+                          }"
+                      />
+                      <p
+                        class="text-sm text-pink-600"
+                        *ngIf="
+                          signupForm.controls['firstname'].dirty &&
+                          signupForm.hasError('required', 'firstname')
+                        "
+                      >
+                        *Tên không được trống
+                      </p>
+                  </div>
+                  <div class="mb-4">
+                      <span class="block text-sm font-bold text-slate-700 mb-1">Họ</span>
+                      <input
+                        type="text"
+                        formControlName="lastname"
+                        [ngClass]="{
+                              'my-input' : true,
+                              'input-error': (signupForm.controls['lastname'].dirty &&
+                              signupForm.hasError('required', 'lastname'))
+                          }"
+                      />
+                      <p
+                        class="text-sm text-pink-600"
+                        *ngIf="
+                          signupForm.controls['lastname'].dirty &&
+                          signupForm.hasError('required', 'lastname')
+                        "
+                      >
+                        *Họ không được trống
+                      </p>
+                  </div>
                 </div>
                 <div class="mb-4">
                     <span class="block text-sm font-bold text-slate-700 mb-1">Số điện thoại</span>
@@ -143,6 +145,36 @@
                     </p>
                 
                 </div>
+                <div class="mb-4">
+                  <span class="block text-sm font-bold text-slate-700 mb-1">Nhập lại password</span>
+                  <input
+                    [type]="typePass"
+                    formControlName="confirmPassword"
+                    [ngClass]="{
+                          'my-input' : true,
+                          'input-error': (signupForm.controls['confirmPassword'].dirty &&
+                          signupForm.hasError('required', 'confirmPassword'))
+                      }"
+                  />
+                  <p
+                    class="text-sm text-pink-600"
+                    *ngIf="
+                      signupForm.controls['confirmPassword'].dirty &&
+                      signupForm.hasError('required', 'confirmPassword')
+                    "
+                  >
+                    *Password nhập lại không được trống
+                  </p>
+                  <p
+                    class="text-sm text-pink-600"
+                    *ngIf="
+                      signupForm.controls['confirmPassword'].dirty &&
+                      signupForm.hasError('mismatch')
+                    "
+                  >
+                    *Password nhập lại không trùng!
+                  </p>
+              </div>
                 <div class="mb-4">
                     <input
                         (change)="showHidePass()"
