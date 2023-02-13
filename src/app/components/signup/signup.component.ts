@@ -21,9 +21,9 @@ export class SignupComponent {
       Validators.required, Validators.pattern(/^[0-9]{10}$/i)
     ])],
     address: ['', Validators.required],
-    email: ['', Validators.required],
-    password: ['', Validators.required],
-    confirmPassword: ['', Validators.required]
+    email: ['', Validators.compose([Validators.required, Validators.email])],
+    password: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
+    confirmPassword: ['', Validators.compose([Validators.required])]
   }, { validator: confirmPasswordValidator })
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}

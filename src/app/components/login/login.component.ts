@@ -15,8 +15,8 @@ export class LoginComponent {
   isShowPass:boolean = false
   typePass: string = 'password'
   loginForm = this.fb.group({
-    email: ['', Validators.required],
-    password: ['', Validators.required]
+    email: ['', Validators.compose([Validators.required, Validators.email])],
+    password: ['', Validators.compose([Validators.required])]
   })
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private store:Store) {}

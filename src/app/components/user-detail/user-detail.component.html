@@ -21,131 +21,44 @@
     </nav>
     <div class="my-container">
       <form class="mt-3" [formGroup]="userForm" (ngSubmit)="changeInfo()">
-        <div class="mb-4">
-            <span class="block text-sm font-bold text-slate-700 mb-1">Tên</span>
-            <input
-              type="text"
-              formControlName="firstname"
-              [ngClass]="{
-                    'my-input' : true,
-                    'input-error': (userForm.controls['firstname'].dirty &&
-                    userForm.hasError('required', 'firstname'))
-                }"
-            />
-            <p
-              class="text-sm text-pink-600"
-              *ngIf="
-                userForm.controls['firstname'].dirty &&
-                userForm.hasError('required', 'firstname')
-              "
-            >
-              *Tên không được trống
-            </p>
-        </div>
-        <div class="mb-4">
-            <span class="block text-sm font-bold text-slate-700 mb-1">Họ</span>
-            <input
-              type="text"
-              formControlName="lastname"
-              [ngClass]="{
-                    'my-input' : true,
-                    'input-error': (userForm.controls['lastname'].dirty &&
-                    userForm.hasError('required', 'lastname'))
-                }"
-            />
-            <p
-              class="text-sm text-pink-600"
-              *ngIf="
-                userForm.controls['lastname'].dirty &&
-                userForm.hasError('required', 'lastname')
-              "
-            >
-              *Họ không được trống
-            </p>
-        </div>
-        <div class="mb-4">
-            <span class="block text-sm font-bold text-slate-700 mb-1">Số điện thoại</span>
-            <input
-              type="tel"
-              formControlName="phone"
-              [ngClass]="{
-                    'my-input' : true,
-                    'input-error': (userForm.controls['phone'].dirty &&
-                    (userForm.hasError('required', 'phone') || userForm.hasError('pattern', 'phone')))
-                }"
-            />
-            <p
-              class="text-sm text-pink-600"
-              *ngIf="
-                userForm.controls['phone'].dirty &&
-                userForm.hasError('required', 'phone')
-              "
-            >
-              *Sđt không được trống
-            </p>
-            <p
-              class="text-sm text-pink-600"
-              *ngIf="
-                userForm.controls['phone'].dirty &&
-                userForm.hasError('pattern', 'phone')
-              "
-            >
-              *Sđt không định dạng
-            </p>
-        </div>
-        <div class="mb-4">
-          <span class="block text-sm font-bold text-slate-700 mb-1">Địa chỉ</span>
-          <input
-            type="text"
+        <app-custom-form-input 
+            formControlName="firstname"
+            [type] = "'text'"
+            [label] = "'Tên'"
+            [errors]="userForm.controls['firstname'].errors"
+        ></app-custom-form-input>
+        <app-custom-form-input 
+          formControlName="lastname"
+          [type] = "'text'"
+          [label] = "'Họ'"
+          [errors]="userForm.controls['lastname'].errors"
+        ></app-custom-form-input>
+        <app-custom-form-input 
+            formControlName="phone"
+            [type] = "'text'"
+            [placeholder]="'vd: 0708288212'"
+            [label] = "'Số điện thoại'"
+            [errors]="userForm.controls['phone'].errors"
+        ></app-custom-form-input>
+        <app-custom-form-input 
             formControlName="address"
-            [ngClass]="{
-                  'my-input' : true,
-                  'input-error': (userForm.controls['address'].dirty &&
-                  userForm.hasError('required', 'adrress'))
-              }"
-          />
-          <p
-            class="text-sm text-pink-600"
-            *ngIf="
-              userForm.controls['address'].dirty &&
-              userForm.hasError('required', 'address')
-            "
-          >
-            *Địa chỉ không được trống
-          </p>
-      </div>
-        <div class="mb-4">
-            <span class="block text-sm font-bold text-slate-700 mb-1">Email</span>
-            <input
-              readonly
-              type="email"
-              formControlName="email"
-              [ngClass]="{
-                    'my-input' : true,
-                    'input-error': (userForm.controls['email'].dirty &&
-                    userForm.hasError('required', 'email')),
-                    'peer invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500': userForm.controls['email'].dirty
-                }"
-            />
-            <p
-              class="text-sm text-pink-600"
-              *ngIf="
-                userForm.controls['email'].dirty &&
-                userForm.hasError('required', 'email')
-              "
-            >
-              *Email không được trống
-            </p>
-            <p class="mt-2 hidden peer-invalid:block text-pink-600 text-sm">
-                *Email không đúng định dạng
-            </p>
-        </div>
-        
+            [type] = "'text'"
+            [label] = "'Địa chỉ'"
+            [errors]="userForm.controls['address'].errors"
+        ></app-custom-form-input>
+        <app-custom-form-input 
+            formControlName="email"
+            [type] = "'text'"
+            [label] = "'Email'"
+            [placeholder]="'vd: example@gmail.com'"
+            [errors]="userForm.controls['email'].errors"
+        ></app-custom-form-input>
         <div class="mb-4">
             <button [disabled]="userForm.invalid" type="submit" class="text-white bg-gray-800 disabled:bg-gray-600 disabled:text-slate-300 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                 Thay đổi thông tin
             </button>
         </div>
-    </form>
+      </form>
     </div>
 </div>
+

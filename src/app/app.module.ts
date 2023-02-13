@@ -33,6 +33,7 @@ import localeVi from '@angular/common/locales/vi';
 import { CartEffects } from './store/cartStore/cart.effects';
 import { ProductCardComponent } from './commons/product-card/product-card.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { CommonsModule } from './commons/commons.module';
 registerLocaleData(localeVi, 'vi');
 
 @NgModule({
@@ -51,7 +52,7 @@ registerLocaleData(localeVi, 'vi');
     SignupComponent,
     UserDetailComponent,
     ProductCardComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +62,7 @@ registerLocaleData(localeVi, 'vi');
     FormsModule,
     ReactiveFormsModule,
     SlickCarouselModule,
+    CommonsModule,
     SweetAlert2Module.forRoot(),
     StoreModule.forRoot(
       {cart: cartReducer},

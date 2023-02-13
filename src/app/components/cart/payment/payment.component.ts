@@ -22,7 +22,17 @@ export class PaymentComponent implements OnInit {
   count$: Observable<number>;
   totalPrice$: Observable<number>;
   user!: User;
-  paymentForm!: FormGroup;
+  paymentForm = this.fb.group({
+    name: ['', Validators.required],
+    phone: ['', Validators.compose([
+      Validators.required, Validators.pattern(/^[0-9]{10}$/i)
+    ])],
+    address: ['', Validators.required],
+    email: ['', Validators.compose([
+      Validators.required, Validators.email
+    ])],
+    payment_method: ['', Validators.required],
+  });
   order_details!: Order_Detail[]
 
   constructor(
@@ -42,18 +52,11 @@ export class PaymentComponent implements OnInit {
       .getUser(this.authService.userSubject.value.id)
       .subscribe((res) => {
         this.user = res.result[0];
-        this.paymentForm = this.fb.group({
-          name: [
-            this.user.lastname + ' ' + this.user.firstname,
-            Validators.required,
-          ],
-          phone: [this.user.phone, Validators.compose([
-            Validators.required, Validators.pattern(/^[0-9]{10}$/i)
-          ])],
-          address: [this.user.address, Validators.required],
-          email: [this.user.email],
-          payment_method: ['cod', Validators.required],
-        });
+        this.paymentForm.controls['name'].setValue(this.user.lastname + ' ' + this.user.firstname)
+        this.paymentForm.controls['phone'].setValue(this.user.phone)
+        this.paymentForm.controls['address'].setValue(this.user.address)
+        this.paymentForm.controls['email'].setValue(this.user.email)
+        this.paymentForm.controls['payment_method'].setValue('cod')
       });
 
       this.cart$
@@ -87,11 +90,11 @@ export class PaymentComponent implements OnInit {
     const data: Payment = {
       order: {
         userId: this.user.id!,
-        name: this.paymentForm.controls['name'].value,
-        address: this.paymentForm.controls['address'].value,
-        phone: this.paymentForm.controls['phone'].value,
-        email: this.paymentForm.controls['email'].value,
-        payment_method: this.paymentForm.controls['payment_method'].value,
+        name: this.paymentForm.controls['name'].value!,
+        address: this.paymentForm.controls['address'].value!,
+        phone: this.paymentForm.controls['phone'].value!,
+        email: this.paymentForm.controls['email'].value!,
+        payment_method: this.paymentForm.controls['payment_method'].value!,
       },
       order_details: this.order_details,
     };

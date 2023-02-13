@@ -68,66 +68,28 @@
                 </tbody>
             </table>
         </div>
-        <form class="mt-8 grid grid-cols-2" [formGroup]="paymentForm"*ngIf="paymentForm">
+        <form class="mt-8 grid grid-cols-2" [formGroup]="paymentForm" *ngIf="paymentForm">
             <div>
                 <p class="text-base font-bold my-6">Tên khách hàng: <span class="font-normal">{{ paymentForm.controls['name'].value }}</span></p>
-                <div class="flex items-center gap-2 text-base my-6">
-                    <span class="font-bold">Số điện thoại:</span> 
-                    <input 
-                        type="text" 
-                        formControlName="phone" 
-                        id="small-input" 
-                        [ngClass]="{
-                            'my-input input-focus w-[25%]': true,
-                            'input-error': (paymentForm.controls['phone'].dirty &&
-                            (paymentForm.hasError('required', 'phone') || paymentForm.hasError('pattern', 'phone'))),
-                            'peer invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500': paymentForm.controls['phone'].dirty
-                        }"
-                    >
-                    <p
-                        class="text-sm text-pink-600"
-                        *ngIf="
-                        paymentForm.controls['phone'].dirty &&
-                        paymentForm.hasError('required', 'phone')
-                        "
-                    >
-                        *Sđt không được trống
-                    </p>
-                    <p
-                      class="text-sm text-pink-600"
-                      *ngIf="
-                        paymentForm.controls['phone'].dirty &&
-                        paymentForm.hasError('pattern', 'phone')
-                      "
-                    >
-                      *Sđt không đúng định dạng
-                    </p>
-                </div>
-                <div class="flex items-center gap-2 text-base my-6">
-                    <span class="font-bold">Địa chỉ:</span> 
-                    <div class="w-[75%]">
-                        <input 
-                            type="text" 
-                            formControlName="address" 
-                            id="small-input" 
-                            [ngClass]="{
-                                'my-input input-focus w-full': true,
-                                'input-error': (paymentForm.controls['address'].dirty &&
-                                paymentForm.hasError('required', 'address')),
-                                'peer invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500': paymentForm.controls['address'].dirty
-                            }"
-                        >
-                        <p
-                            class="text-sm text-pink-600"
-                            *ngIf="
-                            paymentForm.controls['address'].dirty &&
-                            paymentForm.hasError('required', 'address')
-                            "
-                        >
-                            *Địa chỉ không được trống
-                        </p>
-                    </div>
-                </div>
+              
+                <app-custom-form-input 
+                    formControlName="phone"
+                    [type] = "'text'"
+                    containerClass="flex items-center gap-2 text-base my-6"
+                    inputClass="w-[25%]"
+                    [placeholder]="'vd: 0708288212'"
+                    [label] = "'Số điện thoại:'"
+                    [errors]="paymentForm.controls['phone'].errors"         
+                ></app-custom-form-input>
+                <app-custom-form-input 
+                    formControlName="address"
+                    [type] = "'text'"
+                    containerClass="flex items-center gap-2 text-base my-6"
+                    inputClass="w-[75%]"
+                    [label] = "'Địa chỉ:'"
+                    [errors]="paymentForm.controls['address'].errors"
+                ></app-custom-form-input>
+
             </div>
             <div>
                 <p class="text-base font-bold mt-6 mb-4">Phương thức thanh toán:</p>

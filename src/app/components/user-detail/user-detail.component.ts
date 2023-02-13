@@ -18,7 +18,7 @@ export class UserDetailComponent implements OnInit {
       Validators.required, Validators.pattern(/^[0-9]{10}$/i)
     ])],
     address: ['', Validators.required],
-    email: ['', Validators.required],
+    email: ['', Validators.compose([Validators.required, Validators.email])],
     password: ['', Validators.required],
   });
 
