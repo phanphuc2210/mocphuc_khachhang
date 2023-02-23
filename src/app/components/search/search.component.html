@@ -12,7 +12,7 @@
 
     <div class="mt-4" >
         <h2 class="text-xl font-semibold">Tìm kiếm sản phẩm</h2>
-        <div *ngIf="products">
+        <div *ngIf="products$ | async as products">
             <div *ngIf="products.length > 0; else notFound" class="grid grid-cols-1 mt-6 sm:grid-cols-2 md:grid-cols-4 justify-center gap-5"> 
                 <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
             </div>   

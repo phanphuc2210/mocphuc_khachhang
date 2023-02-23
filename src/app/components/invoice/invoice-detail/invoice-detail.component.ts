@@ -19,14 +19,12 @@ export class InvoiceDetailComponent implements OnInit {
   ngOnInit(): void {
     this.orderId = this.route.snapshot.paramMap.get('orderId')!
     this.invoiceService.getDetail(Number(this.orderId)).subscribe(res => {
-      if(res.result) {
-        this.invoice_info = res.result.order
-        this.invoice_details = res.result.order_details
+        this.invoice_info = res.order
+        this.invoice_details = res.order_details
         this.invoice_details.forEach(d => {
           this.total_price += d.price! * d.quantity
         })
         console.log('Invocie #' + this.orderId + ':', { invoice_info: this.invoice_info, invoice_details: this.invoice_details})
-      }
     })
   }
 }

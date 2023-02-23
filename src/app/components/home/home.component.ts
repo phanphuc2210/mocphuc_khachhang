@@ -3,6 +3,7 @@ import { Product } from 'src/app/models/product.model';
 import { ProductType } from 'src/app/models/productType.model';
 import { ProductService } from 'src/app/services/product.service';
 import * as AOS from 'aos';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,15 +11,13 @@ import * as AOS from 'aos';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit{
-  products: Product[] = [];
+  products$!: Observable<Product[]>
 
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    AOS.init();
+    AOS.init()
 
-    this.productService.getProductsByQuantity(4).subscribe(res => {
-      this.products = res.result;
-    });
+    this.products$ = this.productService.getProductsByQuantity(4)
   }
 }

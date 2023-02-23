@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Product } from 'src/app/models/product.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductService } from 'src/app/services/product.service';
 import * as CartAction from 'src/app/store/cartStore/cart.action';
 
@@ -17,6 +18,7 @@ export class DetailComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private store: Store
@@ -26,14 +28,19 @@ export class DetailComponent implements OnInit {
     this.productId = this.route.snapshot.paramMap.get('id')!;
     this.productService
       .getProductById(this.productId)
-      .subscribe((res) => (this.product = res.result[0]));
+      .subscribe((res) => (this.product = res));
   }
 
+  // Làm chức năng mua hàng cho khách lữ hành thì từ từ sửa lại
   public buyProduct(product: Product) {
-    for(let i = 0; i < this.quantity; i++) {
-      this.store.dispatch(CartAction.addProduct({ product }));
+    if(this.authService.userSubject.value) {
+      for(let i = 0; i < this.quantity; i++) {
+        this.store.dispatch(CartAction.addProduct({ product }));
+      }
+      this.router.navigate(['/cart'])
+    } else {
+      this.router.navigate(['/login'])
     }
-    this.router.navigate(['/cart'])
   }
 
   public decrease() {

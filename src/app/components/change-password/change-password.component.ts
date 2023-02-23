@@ -43,7 +43,7 @@ export class ChangePasswordComponent implements OnInit {
         Swal.fire({
           background: '#000',
           icon: 'success',
-          title: '<p class="text-xl text-slate-300">'+ res.result.message +'</p>',
+          title: '<p class="text-xl text-slate-300">'+ res.message +'</p>',
           confirmButtonText: 'Ok',
           confirmButtonColor: '#0e9f6e',
         })

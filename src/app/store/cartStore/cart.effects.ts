@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { exhaustMap, map, mergeMap } from "rxjs";
+import { catchError, exhaustMap, map, mergeMap } from "rxjs";
 import { Cart } from "src/app/models/cart.model";
 import { AuthService } from "src/app/services/auth.service";
 import { CartService } from "src/app/services/cart.service";
@@ -14,8 +14,8 @@ export class CartEffects {
             mergeMap((action) => {
                 return this.cartService.getCart(action.userId).pipe(
                     map((res) => {
-                        console.log("products:", res.result)
-                        return CartActions.getCartSuccess({products: res.result})
+                        console.log("products:", res)
+                        return CartActions.getCartSuccess({products: res})
                     })
                 )
             })

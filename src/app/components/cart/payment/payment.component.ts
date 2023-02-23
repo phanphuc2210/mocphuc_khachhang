@@ -51,7 +51,7 @@ export class PaymentComponent implements OnInit {
     this.authService
       .getUser(this.authService.userSubject.value.id)
       .subscribe((res) => {
-        this.user = res.result[0];
+        this.user = res;
         this.paymentForm.controls['name'].setValue(this.user.lastname + ' ' + this.user.firstname)
         this.paymentForm.controls['phone'].setValue(this.user.phone)
         this.paymentForm.controls['address'].setValue(this.user.address)
@@ -69,7 +69,7 @@ export class PaymentComponent implements OnInit {
               name: o.product.name,
               image: o.product.image,
               price: o.product.price,
-              quantity: o.count 
+              quantity: o.count,
             });
           });
           return orderDetails;
@@ -102,28 +102,32 @@ export class PaymentComponent implements OnInit {
     this.cartService.payment(data).subscribe(
       (res) => {
         console.log('Payment:', res);
-        if(res.result) {
-          const orderId = res.result.orderId
-          this.store.dispatch(CartActions.clearCart())
-          // send mail
-          this.cartService.sendMail({ ...data ,order: {...data.order, id: orderId} }).subscribe(res => {
+        const orderId = res.orderId
+        this.store.dispatch(CartActions.clearCart())
+        // send mail
+        this.cartService.sendMail({ ...data ,order: {...data.order, id: orderId} }).subscribe(
+          res => {
             console.log('Mail:', res)
-          })
-          Swal.fire({
-            background: '#000',
-            icon: 'success',
-            title: '<p class="text-xl text-slate-300">Thanh toán thành công!</p>',
-            confirmButtonText: 'Ok',
-            confirmButtonColor: '#246224',
-          })
-          this.router.navigate(['/invoice/' + orderId])
-        }
+          },
+          err => {
+            console.log('Mail:', err.error.message)
+          }
+        )
+        Swal.fire({
+          background: '#000',
+          icon: 'success',
+          title: '<p class="text-xl text-slate-300">'+ res.message +'</p>',
+          confirmButtonText: 'Ok',
+          confirmButtonColor: '#246224',
+        })
+        this.router.navigate(['/invoice/' + orderId])
       },
-      (error) => {
+      (err) => {
+        console.log(err.error.message)
         Swal.fire({
           background: '#000',
           icon: 'error',
-          title: '<p class="text-xl text-slate-300">Thanh toán thất bại!</p>',
+          title: '<p class="text-xl text-slate-300">'+ err.error.message +'</p>',
           confirmButtonText: 'Ok',
           confirmButtonColor: '#c81e1e',
         })

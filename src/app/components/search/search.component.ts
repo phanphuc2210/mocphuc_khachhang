@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import { debounceTime, fromEvent, of, pluck, timeout } from 'rxjs';
+import { debounceTime, fromEvent, Observable, of, pluck, timeout } from 'rxjs';
 
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
@@ -11,7 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class SearchComponent implements OnInit, AfterViewInit{
   @ViewChild('searchInput', {static: true}) searchInput!: ElementRef
-  products!: Product[]
+  products$!: Observable<Product[]>
   
   constructor(private productService: ProductService) {}
 
@@ -23,9 +23,7 @@ export class SearchComponent implements OnInit, AfterViewInit{
       )
       .subscribe(res => {
         console.log('searchInput:', res)
-        this.productService.search(res).subscribe(res => {
-          this.products = res.result
-        })
+        this.products$ = this.productService.search(res)
       })
   }
 

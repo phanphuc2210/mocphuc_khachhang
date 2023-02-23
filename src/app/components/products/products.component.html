@@ -26,7 +26,7 @@
                 <p class="text-sm font-semibold dark:text-slate-100 w-32">Phân loại</p>
                 <select class="my-input" (change)="productClassification()" [(ngModel)]="classify">
                     <option selected value="">Tất cả</option>
-                    <option *ngFor="let type of types" value="{{type.id}}">{{type.name}}</option>
+                    <option *ngFor="let type of types$ | async" value="{{type.id}}">{{type.name}}</option>
                 </select>
             </div>
         </div>
@@ -34,7 +34,7 @@
         <hr>
     
         <div class="grid grid-cols-1 mt-6 md:grid-cols-2 lg:grid-cols-4 justify-center gap-5"> 
-            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+            <app-product-card *ngFor="let product of products$ | async" [product]="product"></app-product-card>
         </div>   
     </div>
 </div>

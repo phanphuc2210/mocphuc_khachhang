@@ -30,23 +30,23 @@ export class LoginComponent {
     this.authService.login(data).subscribe({
       next: res => {
           this.authService.loginSubject.next(true)
-          this.authService.userSubject.next(res.result.data)
+          this.authService.userSubject.next(res.data)
 
           // Add info into localStorage
-          localStorage.setItem('token', res.result.token)            
-          localStorage.setItem('user', JSON.stringify(res.result.data)) 
+          localStorage.setItem('token', res.token)            
+          localStorage.setItem('user', JSON.stringify(res.data)) 
 
 
           Swal.fire({
             background: '#000',
             icon: 'success',
-            title: '<p class="text-xl text-slate-300">'+ res.result.message +'</p>',
+            title: '<p class="text-xl text-slate-300">'+ res.message +'</p>',
             confirmButtonText: 'Ok',
             confirmButtonColor: '#0e9f6e',
           }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-              this.store.dispatch(CartActions.getCart({userId: res.result.data.id}))
+              this.store.dispatch(CartActions.getCart({userId: res.data.id}))
               this.router.navigate(['/'])
             }
           })

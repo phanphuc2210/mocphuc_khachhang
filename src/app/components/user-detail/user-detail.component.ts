@@ -26,15 +26,13 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.getUser(this.user.id).subscribe(res => {
-      if(res.result) {
-        console.log(res.result[0])
-        this.userForm.controls['firstname'].setValue(res.result[0].firstname);
-        this.userForm.controls['lastname'].setValue(res.result[0].lastname);
-        this.userForm.controls['phone'].setValue(res.result[0].phone);
-        this.userForm.controls['address'].setValue(res.result[0].address);
-        this.userForm.controls['email'].setValue(res.result[0].email);
-        this.userForm.controls['password'].setValue(res.result[0].password);
-      }
+        console.log(res)
+        this.userForm.controls['firstname'].setValue(res.firstname);
+        this.userForm.controls['lastname'].setValue(res.lastname);
+        this.userForm.controls['phone'].setValue(res.phone);
+        this.userForm.controls['address'].setValue(res.address);
+        this.userForm.controls['email'].setValue(res.email);
+        this.userForm.controls['password'].setValue(res.password);
     })
   }
 
@@ -54,7 +52,7 @@ export class UserDetailComponent implements OnInit {
         Swal.fire({
           background: '#000',
           icon: 'success',
-          title: '<p class="text-xl text-slate-300">Thay đổi thông tin thành công</p>',
+          title: '<p class="text-xl text-slate-300">'+ res.message +'</p>',
           confirmButtonText: 'Ok',
           confirmButtonColor: '#0e9f6e',
         })
@@ -65,11 +63,15 @@ export class UserDetailComponent implements OnInit {
         }
         localStorage.setItem('user', JSON.stringify(userLS)) 
         this.authService.userSubject.next(userLS)
-    
-      
       },
       error: err => {
-        alert('Something went wrong!')
+        Swal.fire({
+          background: '#000',
+          icon: 'success',
+          title: '<p class="text-xl text-slate-300">'+ err.error.message +'</p>',
+          confirmButtonText: 'Ok',
+          confirmButtonColor: '#0e9f6e',
+        })
       }
     })
   }

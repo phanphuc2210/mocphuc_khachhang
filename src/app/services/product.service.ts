@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Product } from '../models/product.model';
 import { ProductType } from '../models/productType.model';
 
@@ -8,29 +9,29 @@ import { ProductType } from '../models/productType.model';
   providedIn: 'root'
 })
 export class ProductService {
-  private NODE_API = "http://localhost:8000/"
+  private NODE_API = environment.apiURL
 
   constructor(private httpClient: HttpClient) { }
 
   public getProductTypes(): Observable<any> {
-    return this.httpClient.get<any>(`${this.NODE_API}types`);
+    return this.httpClient.get<any>(`${this.NODE_API}/types`);
   }
 
-  public getProductById(id:string): Observable<any> {
-    return this.httpClient.get<any>(`${this.NODE_API}products/${id}`);
+  public getProductById(id:string): Observable<Product> {
+    return this.httpClient.get<Product>(`${this.NODE_API}/products/${id}`);
   }
 
-  public getAllProducts(typeId?: string): Observable<any> {
+  public getAllProducts(typeId?: string): Observable<Product[]> {
     const classify = typeId? `typeId=${typeId}` : '';
-    return this.httpClient.get<any>(`${this.NODE_API}products?${classify}`);
+    return this.httpClient.get<Product[]>(`${this.NODE_API}/products?${classify}`);
   }
 
   public getProductsByQuantity(quantity: number): Observable<any> {
-    return this.httpClient.get<any>(`${this.NODE_API}products?limit=${quantity}`);
+    return this.httpClient.get<any>(`${this.NODE_API}/products?limit=${quantity}`);
   }
 
   public search(searchText: any): Observable<any> {
     let search = searchText.split(' ').join('+')
-    return this.httpClient.get<any>(`${this.NODE_API}products?name=${search}`);
+    return this.httpClient.get<any>(`${this.NODE_API}/products?name=${search}`);
   }
 }
