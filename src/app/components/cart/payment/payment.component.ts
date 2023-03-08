@@ -67,7 +67,7 @@ export class PaymentComponent implements OnInit {
             orderDetails.push({ 
               productId: o.product.id!, 
               name: o.product.name,
-              image: o.product.image,
+              image: o.product.image[0],
               price: o.product.price,
               quantity: o.count,
             });

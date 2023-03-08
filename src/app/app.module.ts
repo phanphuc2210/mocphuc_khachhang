@@ -36,6 +36,10 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { CommonsModule } from './commons/commons.module';
 registerLocaleData(localeVi, 'vi');
 
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
+import { NgxStarRatingModule } from 'ngx-star-rating';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +73,12 @@ registerLocaleData(localeVi, 'vi');
       {metaReducers: [ metaReducerLocalStorage ]}
     ),
     EffectsModule.forRoot([CartEffects]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode(), autoPause: true, })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode(), autoPause: true, }),
+    GalleryModule.withConfig({
+      // thumbView: 'contain',
+    }),
+    LightboxModule,
+    NgxStarRatingModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },

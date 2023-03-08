@@ -5,7 +5,7 @@ export interface Product {
     name: string
     typeId: number
     quantity: number
-    image: string
+    image: string[]
     price: number
     description: string
     type_name?: string

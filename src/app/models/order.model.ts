@@ -10,8 +10,8 @@ export interface Order {
 }
 
 export interface Order_Detail {
-    orderId?: Number
-    productId?: Number
+    orderId?: number
+    productId?: number
     name?: String
     image?:String
     price?:number
