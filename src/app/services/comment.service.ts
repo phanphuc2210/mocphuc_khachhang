@@ -18,6 +18,10 @@ export class CommentService {
     return this.httpClient.get<Comment[]>(`${this.API_URL}/${productId}`)
   }
 
+  public getSingleComment(userId: number | string, productId: number | string): Observable<Comment> {
+    return this.httpClient.get<Comment>(`${this.API_URL}/${userId}/${productId}`)
+  }
+
   public postComment(data: Comment): Observable<any> {
     return this.httpClient.post<any>(`${this.API_URL}`, data)
   }

@@ -37,6 +37,12 @@
                     {{ product.name }} 
                     <span class="text-sm">({{ product.quantity }})</span>
                 </h2>
+                <div class="flex items-center gap-2 mt-3">
+                    <div class="stars">
+                        <ngx-star-rating ngModel="{{ starTotal }}" [id]="'rating'" [disabled] ="true"></ngx-star-rating>
+                    </div >
+                    <span (click)="scrollTo()" class="text-sm hover:cursor-pointer">(Xem {{ amountComment }} đánh giá)</span>
+                </div>
                 <div class="flex gap-4 mt-3">
                     <p class="text-base font-bold">
                         Loại sản phẩm: 
@@ -77,7 +83,7 @@
             </div>
         </div>
       
-        <div *ngIf="(commentList | async) as commentList" class="bg-slate-50 rounded-md min-h-[4rem] p-4 mt-4">
+        <div #commentDiv *ngIf="commentList" class="bg-slate-50 rounded-md min-h-[4rem] p-4 mt-6">
             <h3 class="text-xl font-semibold mb-6">Đánh Giá - Nhận Xét Từ Khách Hàng</h3>
             <div class="">
                 <div *ngIf="commentList.length > 0; else noComment">
@@ -124,3 +130,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.querySelector('a[href="#comment"]').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('#comment').scrollIntoView({ behavior: 'smooth' });
+    });
+</script>

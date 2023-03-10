@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Gallery, GalleryItem, ImageItem, ImageSize, ThumbnailsPosition} from 'ng-gallery';
@@ -17,11 +17,15 @@ import * as CartAction from 'src/app/store/cartStore/cart.action';
   styleUrls: ['./detail.component.scss'],
 })
 export class DetailComponent implements OnInit {
+  @ViewChild('commentDiv') commentDiv!: ElementRef;
+
   items!: GalleryItem[];
   productId: string = '';
   product!: Product;
   quantity: number = 1;
-  commentList!: Observable<Comment[]>
+  commentList!: Comment[]
+  amountComment = 0
+  starTotal = 0
 
   starLabel = [
     'Vui lòng đánh giá',
@@ -54,7 +58,14 @@ export class DetailComponent implements OnInit {
           new ImageItem({src: i, thumb: i})
         )
       });
-    this.commentList = this.commentService.getComments(this.productId)
+    this.commentService.getComments(this.productId).subscribe(res => {
+      this.commentList = res
+      this.amountComment = res.length
+      this.commentList.forEach(comment => {
+        this.starTotal += comment.star
+      })
+      this.starTotal = Math.round(this.starTotal / this.amountComment)
+    })
   }
 
   // Làm chức năng mua hàng cho khách lữ hành thì từ từ sửa lại
@@ -79,5 +90,9 @@ export class DetailComponent implements OnInit {
     if(this.quantity < this.product.quantity) {
       this.quantity += 1
     }
+  }
+
+  scrollTo() {
+    this.commentDiv.nativeElement.scrollIntoView({ behavior: 'smooth' })
   }
 }
