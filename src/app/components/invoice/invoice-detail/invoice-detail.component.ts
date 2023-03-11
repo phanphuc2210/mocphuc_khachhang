@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comment } from 'src/app/models/comment.model';
 import { CommentService } from 'src/app/services/comment.service';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-invoice-detail',
@@ -103,6 +104,7 @@ export class InvoiceDetailComponent implements OnInit {
         if(err.error.message === 'Comment không tồn tại') { 
           this.commentForm.controls['star'].setValue(0);
           this.commentForm.controls['message'].setValue('');
+          this.isCommented = false;
           this.productReview = this.invoice_details.find(
             (d) => d.productId === productId
           );
@@ -128,15 +130,53 @@ export class InvoiceDetailComponent implements OnInit {
         message: this.commentForm.controls['message'].value,
       };
 
-      this.commentService.postComment(data).subscribe({
-        next: res => {
-          console.log("Comment:",res)
-          this.modal.hide();
-        },
-        error: err => {
-          console.log("Comment error:", err)
-        }
-      })
+      if(!this.isCommented) {
+        this.commentService.postComment(data).subscribe({
+          next: res => {
+            this.modal.hide();
+            Swal.fire({
+              background: '#000',
+              icon: 'success',
+              title: '<p class="text-xl text-slate-300">Đã thêm đánh giá thành công</p>',
+              confirmButtonText: 'Ok',
+              confirmButtonColor: '#1a56db',
+            })
+          },
+          error: err => {
+            this.modal.hide();
+            Swal.fire({
+              background: '#000',
+              icon: 'error',
+              title: '<p class="text-xl text-slate-300">'+ err.error.message +'</p>',
+              confirmButtonText: 'Ok',
+              confirmButtonColor: '#1a56db',
+            })
+          }
+        })
+      } else {
+        this.commentService.updateComment(data).subscribe({
+          next: res => {
+            this.modal.hide();
+            Swal.fire({
+              background: '#000',
+              icon: 'success',
+              title: '<p class="text-xl text-slate-300">Đã sửa đánh giá thành công</p>',
+              confirmButtonText: 'Ok',
+              confirmButtonColor: '#1a56db',
+            })
+          },
+          error: err => {
+            this.modal.hide();
+            Swal.fire({
+              background: '#000',
+              icon: 'error',
+              title: '<p class="text-xl text-slate-300">'+ err.error.message +'</p>',
+              confirmButtonText: 'Ok',
+              confirmButtonColor: '#1a56db',
+            })
+          }
+        })
+      }
     } else {
       this.errorComment = 'Bạn cần đánh giá trước khi gửi.';
     }

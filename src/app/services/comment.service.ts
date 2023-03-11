@@ -25,4 +25,8 @@ export class CommentService {
   public postComment(data: Comment): Observable<any> {
     return this.httpClient.post<any>(`${this.API_URL}`, data)
   }
+
+  public updateComment(data: Comment): Observable<any> {
+    return this.httpClient.put<any>(`${this.API_URL}`, data)
+  }
 }
