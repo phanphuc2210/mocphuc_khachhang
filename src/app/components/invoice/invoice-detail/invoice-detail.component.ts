@@ -23,6 +23,7 @@ export class InvoiceDetailComponent implements OnInit {
   modalEl!: ElementRef<HTMLDivElement>;
 
   orderId!: string;
+  userId: number;
   invoice_info!: Order;
   invoice_details!: Order_Detail[];
   total_price: number = 0;
@@ -41,6 +42,7 @@ export class InvoiceDetailComponent implements OnInit {
   commentForm!: FormGroup;
   productReview: any;
   errorComment!: string;
+  isCommented = false;
 
   starLabel = [
     'Vui lòng đánh giá',
@@ -58,6 +60,7 @@ export class InvoiceDetailComponent implements OnInit {
     private commentService: CommentService,
     private authService: AuthService
   ) {
+    this.userId = this.authService.userSubject.getValue().id
     this.commentForm = this.fb.group({
       star: [0, Validators.required],
       message: ['', Validators.required],
@@ -78,28 +81,48 @@ export class InvoiceDetailComponent implements OnInit {
       });
     });
 
+
     this.modal = new Modal(this.modalEl.nativeElement, this.modalOptions);
   }
 
   public showCommentModal(productId: number) {
-    this.commentForm.controls['star'].setValue(0);
-    this.commentForm.controls['message'].setValue('');
-    this.productReview = this.invoice_details.find(
-      (d) => d.productId === productId
-    );
-    this.modal.show();
+    // this.commentForm.controls['star'].setValue(0);
+    // this.commentForm.controls['message'].setValue('');
+    this.commentService.getSingleComment(this.userId, productId).subscribe({
+      next: res => {
+        this.isCommented = true
+        this.commentForm.controls['star'].setValue(res.star);
+        this.commentForm.controls['message'].setValue(res.message);
+
+        this.productReview = this.invoice_details.find(
+          (d) => d.productId === productId
+        );
+        this.modal.show();
+      },
+      error: err => {
+        if(err.error.message === 'Comment không tồn tại') { 
+          this.commentForm.controls['star'].setValue(0);
+          this.commentForm.controls['message'].setValue('');
+          this.productReview = this.invoice_details.find(
+            (d) => d.productId === productId
+          );
+          this.modal.show();
+        }
+      }
+    })
   }
 
   public hideModal() {
     this.modal.hide();
     this.commentForm.reset();
     this.errorComment = '';
+    this.isCommented = false
   }
 
   public submitReview() {
     if (this.commentForm.valid) {
       const data: Comment = {
-        userId: this.authService.userSubject.getValue().id,
+        userId: this.userId,
         productId: this.productReview.productId,
         star: this.commentForm.controls['star'].value,
         message: this.commentForm.controls['message'].value,

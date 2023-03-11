@@ -6,7 +6,7 @@ div.stars {
     display: inline-block;
 }
 
-::ng-deep label.star {
+:host::ng-deep label.star {
     padding: 0 4px 0 0 !important;
     font-size: 16px !important;
     color: #ddd !important;
@@ -18,7 +18,7 @@ div.stars {
     }
 }
 
-::ng-deep input.star-5:checked ~ label.star::before {
+:host::ng-deep input.star-5:checked ~ label.star::before {
     color: #ffdd44 !important;
     text-shadow: 0 0 0 #ffdd44 !important;
 }

@@ -9,4 +9,6 @@ export interface Product {
     price: number
     description: string
     type_name?: string
+    amountComment?: number
+    starTotal?: number
 }

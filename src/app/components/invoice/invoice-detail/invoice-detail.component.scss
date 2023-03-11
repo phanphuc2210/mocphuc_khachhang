@@ -1,4 +1,4 @@
-::ng-deep label.star {
+:host::ng-deep label.star {
     padding: 0 5px !important;
     font-size: 2rem !important;
     color: #ddd !important;
@@ -10,7 +10,7 @@
     }
 }
 
-::ng-deep input.star-5:checked ~ label.star::before {
+:host::ng-deep input.star-5:checked ~ label.star::before {
     color: #fe7 !important;
     text-shadow: 0 0 0 #fe7 !important;
 }
