@@ -22,3 +22,44 @@ div.stars {
     color: #ffdd44 !important;
     text-shadow: 0 0 0 #ffdd44 !important;
 }
+
+::ng-deep .description {
+    h1 {
+        font-size: 2rem; /* 30px */
+        line-height: 2.75rem; /* 36px */
+        font-weight: bold;
+    }
+    h2 {
+        font-size: 1.7rem; /* 24px */
+        line-height: 2.45rem; /* 32px */
+        font-weight: bold;
+    }
+    h3 {
+        font-size: 1.4rem; /* 20px */
+        line-height: 1.8rem; /* 28px */
+        font-weight: bold;
+    }
+    h4 {
+        font-size: 1.25rem; /* 18px */
+        line-height: 1.8rem; /* 28px */
+        font-weight: bold;
+    }
+    h5 {
+        font-size: 1.125rem; /* 20px */
+        line-height: 1.8rem; /* 28px */
+        font-weight: bold;
+    }
+    h6 {
+        font-size: 1rem; /* 18px */
+        line-height: 1.8rem; /* 28px */
+        font-weight: bold;
+    }
+    ul {
+        margin-left: 28px;
+        list-style-type:disc
+    }
+    ol {
+        margin-left: 28px;
+        list-style-type: decimal;
+    }
+}

@@ -11,4 +11,9 @@ export interface Product {
     type_name?: string
     amountComment?: number
     starTotal?: number
+    length: number
+    width: number
+    height: number
+    woodId?: number
+    wood: string
 }
