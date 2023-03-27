@@ -10,6 +10,8 @@ import { Comment } from 'src/app/models/comment.model';
 import { CommentService } from 'src/app/services/comment.service';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
+import statusCode from 'src/app/constant/status';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-invoice-detail',
@@ -28,6 +30,7 @@ export class InvoiceDetailComponent implements OnInit {
   invoice_info!: Order;
   invoice_details!: Order_Detail[];
   total_price: number = 0;
+  statusList$!: Observable<any>
 
   // Flowbite config
   modal!: ModalInterface;
@@ -40,6 +43,7 @@ export class InvoiceDetailComponent implements OnInit {
   };
 
   // Comment Form
+  showCommentBtn: boolean = false;
   commentForm!: FormGroup;
   productReview: any;
   errorComment!: string;
@@ -72,14 +76,16 @@ export class InvoiceDetailComponent implements OnInit {
     this.orderId = this.route.snapshot.paramMap.get('orderId')!;
     this.invoiceService.getDetail(Number(this.orderId)).subscribe((res) => {
       this.invoice_info = res.order;
+      this.showCommentBtn = this.invoice_info.status === statusCode.Da_Giao_Hang? true : false
       this.invoice_details = res.order_details;
       this.invoice_details.forEach((d) => {
         this.total_price += d.price! * d.quantity;
       });
-      console.log('Invocie #' + this.orderId + ':', {
-        invoice_info: this.invoice_info,
-        invoice_details: this.invoice_details,
-      });
+      // console.log('Invocie #' + this.orderId + ':', {
+      //   invoice_info: this.invoice_info,
+      //   invoice_details: this.invoice_details,
+      // });
+      this.statusList$ = this.invoiceService.getListStatus(Number(this.orderId))
     });
 
 

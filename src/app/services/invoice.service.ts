@@ -20,4 +20,8 @@ export class InvoiceService {
   public getDetail(orderId: number): Observable<any> {
     return this.http.get<any>(`${this.API_URL}/${orderId}`)
   }
+
+  public getListStatus(orderId: number): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/status/${orderId}`)
+  }
 }
