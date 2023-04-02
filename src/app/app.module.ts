@@ -39,6 +39,8 @@ registerLocaleData(localeVi, 'vi');
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
 import { NgxStarRatingModule } from 'ngx-star-rating';
+import { VouchersComponent } from './components/vouchers/vouchers.component';
+import { UserVoucherComponent } from './components/user-voucher/user-voucher.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { NgxStarRatingModule } from 'ngx-star-rating';
     UserDetailComponent,
     ProductCardComponent,
     ChangePasswordComponent,
+    VouchersComponent,
+    UserVoucherComponent,
   ],
   imports: [
     BrowserModule,

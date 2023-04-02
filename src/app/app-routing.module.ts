@@ -10,6 +10,8 @@ import { ProductsComponent } from './components/products/products.component';
 import { SearchComponent } from './components/search/search.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
+import { UserVoucherComponent } from './components/user-voucher/user-voucher.component';
+import { VouchersComponent } from './components/vouchers/vouchers.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -18,6 +20,8 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'product/:id', component: DetailComponent},
   {path: 'product', component: ProductsComponent},
+  {path: 'voucher', component: VouchersComponent},
+  {path: 'my-voucher', component: UserVoucherComponent, canActivate: [AuthGuard]},
   {path: 'search', component: SearchComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
