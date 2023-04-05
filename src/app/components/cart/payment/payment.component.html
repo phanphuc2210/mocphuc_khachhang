@@ -70,7 +70,7 @@
         </div>
         <form class="mt-8 grid grid-cols-2" [formGroup]="paymentForm" *ngIf="paymentForm">
             <div>
-                <p class="text-base font-bold my-6">Tên khách hàng: <span class="font-normal">{{ paymentForm.controls['name'].value }}</span></p>
+                <p class="text-sm text-slate-700 font-bold my-6">Tên khách hàng: <span class="font-normal">{{ paymentForm.controls['name'].value }}</span></p>
               
                 <app-custom-form-input 
                     formControlName="phone"
@@ -84,7 +84,7 @@
                 <app-custom-form-input 
                     formControlName="address"
                     [type] = "'text'"
-                    containerClass="flex items-center gap-2 text-base my-6"
+                    containerClass="flex items-center gap-2 my-6"
                     inputClass="w-[75%]"
                     [label] = "'Địa chỉ:'"
                     [errors]="paymentForm.controls['address'].errors"
@@ -92,21 +92,142 @@
 
             </div>
             <div>
-                <p class="text-base font-bold mt-6 mb-4">Phương thức thanh toán:</p>
-                <div class="flex items-center ml-6">
-                    <input checked (change)="checkCheckBoxvalue($event)" id="cod" type="radio" value="cod" name="payment_methods" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="cod" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Thanh toán khi nhận hàng (COD)</label>
+                <div class="my-6">
+                    <div class="flex items-center mb-1">
+                        <div class="flex items-center flex-wrap gap-2 mb-0">
+                            <p class="block text-sm font-bold text-slate-700 mb-1">Mã giảm giá:</p>
+                            <input
+                              formControlName="code"
+                              type="text"
+                              placeholder="Nhập mã giảm giá"
+                              [ngClass]="{
+                                    'my-input' : true,
+                                    'input-error': this.paymentForm.controls['code'].dirty && invalidVoucher
+                                }"
+                               class="w-[60%]"
+                               (input)="changeCode()"
+                            />
+                        </div>
+                        <!-- <app-custom-form-input
+                            formControlName="code"
+                            [type] = "'text'"
+                            containerClass="flex items-center flex-wrap gap-2 mb-0"
+                            inputClass="w-[60%]"
+                            [placeholder]="'Nhập mã giảm giá'"
+                            [label] = "'Mã giảm giá:'"      
+                        ></app-custom-form-input> -->
+                        <button 
+                        (click)="showModal()"
+                            type="button" 
+                            class="text-white font-bold bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-3 py-2 h-fit dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                        >
+                            <svg 
+                                class="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                                >
+                                <path 
+                                    d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <p
+                        class="text-sm text-pink-600"
+                        *ngIf="this.paymentForm.controls['code'].dirty && invalidVoucher"
+                    > 
+                        Mã giảm giá không đủ điều kiện
+                    </p>
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-slate-700 mt-6 mb-4">Phương thức thanh toán:</p>
+                    <div class="flex items-center ml-6">
+                        <input checked (change)="checkCheckBoxvalue($event)" id="cod" type="radio" value="cod" name="payment_methods" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="cod" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Thanh toán khi nhận hàng (COD)</label>
+                    </div>
                 </div>
             </div>
         </form>
         <div class="mt-4 flex justify-between">
             <a routerLink="/cart" class="text-blue-600 hover:underline">Quay lại</a>
             <div class="flex flex-col gap-3">
-                <p class="text-lg font-bold">Tổng tiền phải thanh toán: <span class="text-red-600 pl-2">{{ (totalPrice$ | async) | currency:"VND":'vnđ':'':'vi'}}</span></p>
-                <button (click)="payment()" type="button" class="text-white font-bold bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                <p class="text-base text-right font-bold">Tổng tiền sản phẩm: <span class="text-red-600 pl-2">{{ (totalPrice$ | async) | currency:"VND":'vnđ':'':'vi'}}</span></p>
+                <p class="text-base text-right font-bold">Tổng tiền được giảm: <span class="text-red-600 pl-2">{{ (discount) | currency:"VND":'vnđ':'':'vi'}}</span></p>
+                <p class="text-base text-right font-bold">Tổng tiền phải thanh toán: <span class="text-red-600 pl-2">{{ ((totalPrice$ | async)! - discount) | currency:"VND":'vnđ':'':'vi'}}</span></p>
+                <button (click)="payment()" type="button" class="text-white font-bold bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                     Xác nhận đặt hàng
                 </button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div #modalEl tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+    <div class="relative w-full h-full max-w-2xl md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button (click)="hideModal()" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="authentication-modal">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="px-6 py-6 lg:px-8">
+                <p
+                    class="mb-6 text-xl font-semibold dark:text-white"
+                >
+                    Mã giảm giá của tôi
+                </p>
+                <div class="max-h-96 w-full p-2 overflow-y-scroll" >
+                    <div *ngIf="voucherList">
+                        
+                        <ng-container *ngIf="voucherList.length > 0; else noVoucher">
+                            <div *ngFor="let voucher of voucherList" class="flex items-center border rounded-lg shadow border-gray-700 bg-gray-900 mb-4">
+                                <div class="flex justify-center items-center py-6 px-8 border-r border-gray-700">
+                                    <p class="font-extrabold text-sm text-white">MộcPhúc.</p>
+                                </div>
+                                <div class="flex flex-col justify-between p-4 leading-normal w-full">
+                                    <div class="mb-2 flex justify-between">
+                                        <p class="text-base text-white font-bold tracking-tight">Giảm {{ voucher.discount | currency:"VND":'vnđ':'':'vi'}}</p>
+                                        <p class="text-sm text-white font-normal tracking-tight">Mã: <span class="ml-2">{{ voucher.code}}</span></p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <p class="font-normal text-gray-400">Điều kiện</p>
+                                        <ul class="list-disc ml-4">
+                                            <li class="font-normal text-gray-400">Áp dụng cho sản phẩm thuộc loại {{ voucher.applicable_productTypeName }}.</li>
+                                            <li class="font-normal text-gray-400">Áp dụng cho đơn hàng từ {{ voucher.bill_from | currency:"VND":'vnđ':'':'vi'}}.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <p class="font-normal text-gray-400">HSD: {{ voucher.expiration_date | date: 'dd/MM/YYYY' }}</p>
+                                        <button 
+                                            *ngIf="checkCondition(voucher); else notCondition"
+                                            (click)="apply(voucher)"
+                                            type="button" 
+                                            class="px-4 py-1 font-medium text-center text-white cursor-pointer bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                        >
+                                            Áp dụng
+                                        </button>
+                                        <ng-template #notCondition>
+                                            <p class="text-gray-500 font-medium">Chưa thỏa điều kiện</p>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        
+                        <ng-template #noVoucher>
+                            <p class="py-4 text-center">
+                                Chưa có mã giảm giá nào được lưu! <a routerLink="/voucher" class="text-blue-600">Xem mã giảm giá</a>
+                            </p>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
