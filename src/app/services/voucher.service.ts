@@ -14,8 +14,8 @@ export class VoucherService {
 
   constructor(private http: HttpClient) { }
 
-  public getVoucher(): Observable<Voucher[]> {
-    return this.http.get<Voucher[]>(`${this.API_URL}?customer=true`)
+  public getVoucher(userId: number): Observable<Voucher[]> {
+    return this.http.get<Voucher[]>(`${this.API_URL}?userId=${userId}`)
   }
 
   public getVoucherByUserId(userId: number): Observable<Voucher[]> {
@@ -24,5 +24,9 @@ export class VoucherService {
 
   public saveVoucher(data: {userId: number, voucherId: number}): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/save`, data)
+  }
+
+  public checkAllowApplyVoucher(userId: number, code: string): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/check-apply?userId=${userId}&code=${code}`)
   }
 }

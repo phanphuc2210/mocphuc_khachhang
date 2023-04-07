@@ -105,7 +105,6 @@
                                     'input-error': this.paymentForm.controls['code'].dirty && invalidVoucher
                                 }"
                                class="w-[60%]"
-                               (input)="changeCode()"
                             />
                         </div>
                         <!-- <app-custom-form-input
@@ -141,7 +140,7 @@
                         class="text-sm text-pink-600"
                         *ngIf="this.paymentForm.controls['code'].dirty && invalidVoucher"
                     > 
-                        Mã giảm giá không đủ điều kiện
+                        Mã giảm giá không đủ điều kiện!
                     </p>
                 </div>
                 <div>
@@ -222,7 +221,7 @@
                         
                         <ng-template #noVoucher>
                             <p class="py-4 text-center">
-                                Chưa có mã giảm giá nào được lưu! <a routerLink="/voucher" class="text-blue-600">Xem mã giảm giá</a>
+                                Chưa có mã giảm giá nào được lưu!
                             </p>
                         </ng-template>
                     </div>

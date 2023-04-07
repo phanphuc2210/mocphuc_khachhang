@@ -11,6 +11,7 @@ export interface Order {
     status?: number
     status_name?: string
     discount?: number
+    code?: string
 }
 
 export interface Order_Detail {

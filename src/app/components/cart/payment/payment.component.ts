@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { map, Observable } from 'rxjs';
+import { debounceTime, fromEvent, map, Observable } from 'rxjs';
 import { ProductInCart } from 'src/app/models/cart.model';
 import { Order_Detail, Payment } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
@@ -29,9 +29,11 @@ export class PaymentComponent implements OnInit {
   modalEl!: ElementRef<HTMLDivElement>;
 
   voucherList!: Voucher[]
+  voucherAllList!: Voucher[]
   userId: number
   discount: number = 0
   invalidVoucher: boolean = false
+  isAllowApply: boolean = false
 
   cart$: Observable<ProductInCart[]>;
   count$: Observable<number>;
@@ -74,6 +76,10 @@ export class PaymentComponent implements OnInit {
     this.cart$ = store.pipe(select(CartSelectors.GroupedCartSelector));
     this.count$ = store.pipe(select(CartSelectors.countProductSelector));
     this.totalPrice$ = store.pipe(select(CartSelectors.totalPriceSelector));
+
+    this.paymentForm.controls['code'].valueChanges.pipe(debounceTime(1000)).subscribe(res => {
+      this.changeCode()
+    })
   }
 
   ngOnInit(): void {
@@ -112,6 +118,9 @@ export class PaymentComponent implements OnInit {
     this.voucherService.getVoucherByUserId(this.userId).subscribe(res => {
       this.voucherList = res
     })
+    this.voucherService.getVoucher(this.userId).subscribe(res => {
+      this.voucherAllList = res
+    })
 
     // Thiết lập hộp thoại cập nhật trạng thái
     this.modal = new Modal(this.modalEl.nativeElement, this.modalOptions);
@@ -132,7 +141,8 @@ export class PaymentComponent implements OnInit {
         phone: this.paymentForm.controls['phone'].value!,
         email: this.paymentForm.controls['email'].value!,
         payment_method: this.paymentForm.controls['payment_method'].value!,
-        discount: this.discount
+        discount: this.discount,
+        code: this.paymentForm.controls['code'].value!
       },
       order_details: this.order_details,
     };
@@ -185,7 +195,7 @@ export class PaymentComponent implements OnInit {
     let result: boolean;
     let totalPriceByProductType = this.order_details.reduce((total, product) => {
       if(voucher.applicable_productType === product.productType) {
-        return total + product.price!;
+        return total + (product.price! * product.quantity);
       }
       return total;
     }, 0)
@@ -201,14 +211,23 @@ export class PaymentComponent implements OnInit {
   }
 
   changeCode() {
-    let voucherApply = 
-      this.voucherList.find(voucher => voucher.code === this.paymentForm.controls['code'].value)
-    if(this.checkCondition(voucherApply!)) {
-      this.discount = voucherApply?.discount!
-      this.invalidVoucher = false
+    if(this.paymentForm.controls['code'].value === '') {
+      this.paymentForm.controls['code'].reset()
     } else {
-      this.discount = 0
-      this.invalidVoucher = true
+      let voucherApply = 
+      this.voucherAllList.find(voucher => voucher.code === this.paymentForm.controls['code'].value)
+      if(voucherApply) {
+        if(this.checkCondition(voucherApply)) {
+          this.discount = voucherApply?.discount!
+          this.invalidVoucher = false
+        } else {
+          this.discount = 0
+          this.invalidVoucher = true
+        }
+      } else {
+        this.discount = 0
+        this.invalidVoucher = true
+      }
     }
   }
 }

@@ -20,7 +20,7 @@ export class VouchersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.voucherService.getVoucher().subscribe(res => {
+    this.voucherService.getVoucher(this.userId).subscribe(res => {
       this.voucherList = res
     })
 
