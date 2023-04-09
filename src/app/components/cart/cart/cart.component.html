@@ -77,7 +77,7 @@
                         <td colspan="6">
                             <p class="py-4">
                                 Không có sản phẩm nào trong giỏ hàng!
-                                <a class="text-blue-600 hover:underline" routerLink="/product">Đến trang sản phẩm.</a>
+                                <a class="text-blue-600 hover:underline" routerLink="/list-product/all">Đến trang sản phẩm.</a>
                             </p>
                         </td>
                     </tr>
@@ -86,7 +86,7 @@
         </div>
         <div *ngIf="cart.length > 0" class="mt-4">
             <div class="flex justify-end">
-                <button routerLink="/product" type="button" class="text-white font-bold bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                <button routerLink="/list-product/all" type="button" class="text-white font-bold bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                     Tiếp tục mua hàng
                 </button>
                 <button (click)="clearCart()"  type="button" class="text-white font-bold bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">

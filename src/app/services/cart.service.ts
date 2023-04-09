@@ -39,8 +39,4 @@ export class CartService {
   public payment(data: Payment): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/payment`, data)
   }
-
-  public sendMail(data: Payment): Observable<any> {
-    return this.http.post<any>(`${this.API_URL}/send-mail`, data)
-  }
 }

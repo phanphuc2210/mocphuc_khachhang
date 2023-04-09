@@ -161,15 +161,6 @@ export class PaymentComponent implements OnInit {
         console.log('Payment:', res);
         const orderId = res.orderId
         this.store.dispatch(CartActions.clearCart())
-        // send mail
-        this.cartService.sendMail({ ...data ,order: {...data.order, id: orderId, payment_method: this.methodName} }).subscribe(
-          res => {
-            console.log('Mail:', res)
-          },
-          err => {
-            console.log('Mail:', err.error.message)
-          }
-        )
         Swal.fire({
           background: '#000',
           icon: 'success',

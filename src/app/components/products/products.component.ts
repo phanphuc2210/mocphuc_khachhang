@@ -22,11 +22,13 @@ export class ProductsComponent implements OnInit{
     // this.types$ = this.productService.getProductTypes()
     this.route.params.subscribe(params => {
       const slug = params['slug'];
-      // Update data based on id
-      // Render UI with updated data
-      this.productService.getTypeBySlug(slug).subscribe(res => {
-        this.title = res[0].name
-      })
+      if(slug === 'all') {
+        this.title = 'Sản phẩm'
+      } else {
+        this.productService.getTypeBySlug(slug).subscribe(res => {
+          this.title = res[0].name
+        })
+      }
       this.products$ = this.productService.getProductByType(slug)
     });
     // this.products$ = this.productService.getAllProducts()
