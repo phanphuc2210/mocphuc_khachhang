@@ -12,20 +12,29 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductsComponent implements OnInit{
   products$!: Observable<Product[]>;
-  types$!: Observable<ProductType[]>;
-  classify: string = ''; 
+  title = ''
+  // types$!: Observable<ProductType[]>;
+  // classify: string = ''; 
 
   constructor(private productService: ProductService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.types$ = this.productService.getProductTypes()
-
-    this.products$ = this.productService.getAllProducts()
+    // this.types$ = this.productService.getProductTypes()
+    this.route.params.subscribe(params => {
+      const slug = params['slug'];
+      // Update data based on id
+      // Render UI with updated data
+      this.productService.getTypeBySlug(slug).subscribe(res => {
+        this.title = res[0].name
+      })
+      this.products$ = this.productService.getProductByType(slug)
+    });
+    // this.products$ = this.productService.getAllProducts()
   }
 
-  // phân loại sản phẩm
-  public productClassification() { 
-    this.products$ = this.productService.getAllProducts(this.classify)
-  }
+  //phân loại sản phẩm
+  // public productClassification() { 
+  //   this.products$ = this.productService.getAllProducts(this.classify)
+  // }
 
 }

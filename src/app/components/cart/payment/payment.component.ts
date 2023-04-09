@@ -15,6 +15,8 @@ import { Modal } from 'flowbite';
 import type { ModalOptions, ModalInterface } from 'flowbite';
 import { Voucher } from 'src/app/models/voucher.model';
 import { VoucherService } from 'src/app/services/voucher.service';
+import { PaymentMethod } from 'src/app/models/paymentMethod.model';
+import { PaymentMethodService } from 'src/app/services/payment-method.service';
 
 @Component({
   selector: 'app-payment',
@@ -28,6 +30,8 @@ export class PaymentComponent implements OnInit {
   })
   modalEl!: ElementRef<HTMLDivElement>;
 
+  paymentMethods!: PaymentMethod[]
+  methodName = ''
   voucherList!: Voucher[]
   voucherAllList!: Voucher[]
   userId: number
@@ -48,7 +52,7 @@ export class PaymentComponent implements OnInit {
     email: ['', Validators.compose([
       Validators.required, Validators.email
     ])],
-    payment_method: ['', Validators.required],
+    payment_method: [1, Validators.required],
     code: ['']
   });
   order_details!: Order_Detail[]
@@ -70,6 +74,7 @@ export class PaymentComponent implements OnInit {
     private fb: FormBuilder,
     private cartService: CartService,
     private voucherService: VoucherService,
+    private paymentMethodService: PaymentMethodService,
     private router: Router
   ) {
     this.userId = this.authService.userSubject.getValue().id
@@ -91,7 +96,7 @@ export class PaymentComponent implements OnInit {
         this.paymentForm.controls['phone'].setValue(this.user.phone)
         this.paymentForm.controls['address'].setValue(this.user.address)
         this.paymentForm.controls['email'].setValue(this.user.email)
-        this.paymentForm.controls['payment_method'].setValue('cod')
+        this.paymentForm.controls['payment_method'].setValue(1)
       });
 
     this.cart$
@@ -122,14 +127,18 @@ export class PaymentComponent implements OnInit {
       this.voucherAllList = res
     })
 
+    this.paymentMethodService.getList().subscribe(res => {
+      this.paymentMethods = res
+      this.methodName = res[0].name
+    })
+
     // Thiết lập hộp thoại cập nhật trạng thái
     this.modal = new Modal(this.modalEl.nativeElement, this.modalOptions);
   }
 
-  public checkCheckBoxvalue(event: any) {
-    console.log(event.target.value);
-    this.paymentForm.controls['payment_method'].setValue(event.target.value);
-    console.log(this.paymentForm.value);
+  public checkCheckBoxvalue(method: PaymentMethod) {
+    this.paymentForm.controls['payment_method'].setValue(method.id!);
+    this.methodName = method.name;
   }
 
   public payment() {
@@ -147,13 +156,13 @@ export class PaymentComponent implements OnInit {
       order_details: this.order_details,
     };
 
-    this.cartService.payment(data).subscribe(
-      (res) => {
+    this.cartService.payment(data).subscribe({
+      next:(res) => {
         console.log('Payment:', res);
         const orderId = res.orderId
         this.store.dispatch(CartActions.clearCart())
         // send mail
-        this.cartService.sendMail({ ...data ,order: {...data.order, id: orderId} }).subscribe(
+        this.cartService.sendMail({ ...data ,order: {...data.order, id: orderId, payment_method: this.methodName} }).subscribe(
           res => {
             console.log('Mail:', res)
           },
@@ -170,7 +179,7 @@ export class PaymentComponent implements OnInit {
         })
         this.router.navigate(['/invoice/' + orderId])
       },
-      (err) => {
+      error: (err) => {
         console.log(err.error.message)
         Swal.fire({
           background: '#000',
@@ -180,7 +189,7 @@ export class PaymentComponent implements OnInit {
           confirmButtonColor: '#c81e1e',
         })
       }
-    );
+    });
   }
 
   showModal() {

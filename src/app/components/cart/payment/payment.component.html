@@ -144,10 +144,10 @@
                     </p>
                 </div>
                 <div>
-                    <p class="text-sm font-bold text-slate-700 mt-6 mb-4">Phương thức thanh toán:</p>
-                    <div class="flex items-center ml-6">
-                        <input checked (change)="checkCheckBoxvalue($event)" id="cod" type="radio" value="cod" name="payment_methods" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="cod" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Thanh toán khi nhận hàng (COD)</label>
+                    <p class="text-sm font-bold text-slate-700 mt-6 mb-2">Phương thức thanh toán:</p>
+                    <div *ngFor="let method of paymentMethods" class="flex items-center ml-6 my-1">
+                        <input [checked]="method.id === 1" (change)="checkCheckBoxvalue(method)" id="{{method.name}}" type="radio" value="{{method.id}}" name="payment_methods" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="{{method.name}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ method.name }}</label>
                     </div>
                 </div>
             </div>

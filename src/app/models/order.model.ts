@@ -7,7 +7,7 @@ export interface Order {
     address: String
     phone: String
     email?: String
-    payment_method: String
+    payment_method: String | number
     status?: number
     status_name?: string
     discount?: number

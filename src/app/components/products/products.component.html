@@ -1,6 +1,6 @@
 <div class="mb-16">
     <div class="banner-page">
-        <i class="text-5xl font-semibold text-white">Sản Phẩm</i>
+        <i class="text-5xl font-semibold text-white">{{ title }}</i>
     </div>
     <!-- Breadcrumb -->
     <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
@@ -14,7 +14,7 @@
           <li>
             <div class="flex items-center">
               <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-              <a routerLink="/product" class="ml-1 text-sm font-medium text-gray-700 hover:text-slate-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Sản phẩm</a>
+              <a class="ml-1 text-sm font-medium text-gray-700 hover:text-slate-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">{{ title }}</a>
             </div>
           </li>
         </ol>
@@ -22,19 +22,26 @@
     <div class="my-container dark:bg-slate-700 mt-8">
         <div class="mb-4 flex justify-between"> 
             <h2 class="text-3xl font-bold dark:text-slate-100">Danh sách sản phẩm</h2>
-            <div class="flex justify-center items-center">
+            <!-- <div class="flex justify-center items-center">
                 <p class="text-sm font-semibold dark:text-slate-100 w-32">Phân loại</p>
                 <select class="my-input" (change)="productClassification()" [(ngModel)]="classify">
                     <option selected value="">Tất cả</option>
                     <option *ngFor="let type of types$ | async" value="{{type.id}}">{{type.name}}</option>
                 </select>
-            </div>
+            </div> -->
         </div>
     
         <hr>
     
-        <div class="grid grid-cols-1 mt-6 md:grid-cols-2 lg:grid-cols-4 justify-center gap-5"> 
-            <app-product-card *ngFor="let product of products$ | async" [product]="product"></app-product-card>
+        <div *ngIf="products$ | async as products" class="grid grid-cols-1 mt-6 md:grid-cols-2 lg:grid-cols-4 justify-center gap-5"> 
+            <ng-container *ngIf="products.length > 0; else notProduct">
+              <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+            </ng-container>
+            <ng-template #notProduct>
+              <p class="py-4 text-center md:col-span-2 lg:col-span-4">
+                Chưa có sản phẩm nào thuộc loại {{ title }}! Vui lòng quay lại sau.
+              </p>
+            </ng-template>
         </div>   
     </div>
 </div>

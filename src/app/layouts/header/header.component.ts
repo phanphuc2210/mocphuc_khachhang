@@ -12,28 +12,40 @@ import * as CartActions from 'src/app/store/cartStore/cart.action';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit{
-  countProducts$: Observable<number>
+export class HeaderComponent implements OnInit {
+  countProducts$: Observable<number>;
+  productTypes!: ProductType[];
 
-  isLogin = this.authService.loginSubject.asObservable()
-  user!: any
+  isLogin = this.authService.loginSubject.asObservable();
+  user!: any;
 
-  constructor(private authService: AuthService, private router: Router, private store: Store) {
-    this.countProducts$ = store.pipe(select(CartSelectors.countProductSelector))
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private store: Store,
+    private productService: ProductService
+  ) {
+    this.countProducts$ = store.pipe(
+      select(CartSelectors.countProductSelector)
+    );
   }
 
   ngOnInit(): void {
-    this.authService.userSubject.subscribe(res => {
-      if(res) {
-        this.user = res
+    this.authService.userSubject.subscribe((res) => {
+      if (res) {
+        this.user = res;
       }
+    });
+
+    this.productService.getProductTypes().subscribe(res => {
+      this.productTypes = res;
     })
   }
 
   public logOut() {
-    this.authService.logOut()
-    this.router.navigate(['/'])
+    this.authService.logOut();
+    this.router.navigate(['/']);
   }
 }
