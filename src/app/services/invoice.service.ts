@@ -24,4 +24,12 @@ export class InvoiceService {
   public getListStatus(orderId: number): Observable<any> {
     return this.http.get<any>(`${this.API_URL}/status/${orderId}`)
   }
+
+  public getNextStatus(orderId: number): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/next-status/${orderId}`)
+  }
+
+  public updateStatus(data: {orderId: number, nextStatus: number}): Observable<any> {
+    return this.http.patch<any>(`${this.API_URL}/update-status`, data)
+  }
 }

@@ -31,6 +31,7 @@ export class InvoiceDetailComponent implements OnInit {
   invoice_details!: Order_Detail[];
   total_price: number = 0;
   statusList$!: Observable<any>
+  showCancelBtn: boolean = false;
 
   // Flowbite config
   modal!: ModalInterface;
@@ -87,6 +88,14 @@ export class InvoiceDetailComponent implements OnInit {
       // });
       this.statusList$ = this.invoiceService.getListStatus(Number(this.orderId))
     });
+
+    this.invoiceService.getNextStatus(Number(this.orderId)).subscribe(res => {
+      if(res.statusId <= statusCode.Da_Xac_Nhan) {
+        this.showCancelBtn = true;
+      } else {
+        this.showCancelBtn = false;
+      }
+    })
 
 
     this.modal = new Modal(this.modalEl.nativeElement, this.modalOptions);
@@ -186,5 +195,42 @@ export class InvoiceDetailComponent implements OnInit {
     } else {
       this.errorComment = 'Bạn cần đánh giá trước khi gửi.';
     }
+  }
+
+  handleCancelInvoice() {
+    const data: {orderId: number, nextStatus: number} = {
+      orderId: Number(this.orderId),
+      nextStatus: statusCode.Da_Huy
+    }
+
+    Swal.fire({
+      title: '<p class="text-xl text-slate-300">Bạn thật sự muốn hủy hóa đơn này?</p>',
+      background: '#000',
+      showCancelButton: true,
+      cancelButtonText: 'Không',
+      confirmButtonText: 'Hủy hóa đơn',
+      confirmButtonColor: '#1a56db',
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.invoiceService.updateStatus(data).subscribe(res => {
+          Swal.fire({
+            background: '#000',
+            icon: 'success',
+            title: '<p class="text-xl text-slate-300">Hủy đơn hàng thành công</p>',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#1a56db',
+          })
+          this.statusList$ = this.invoiceService.getListStatus(Number(this.orderId))
+          this.invoiceService.getNextStatus(Number(this.orderId)).subscribe(res => {
+            if(res.statusId <= statusCode.Da_Xac_Nhan) {
+              this.showCancelBtn = true;
+            } else {
+              this.showCancelBtn = false;
+            }
+          })
+        })
+      }
+    })
   }
 }

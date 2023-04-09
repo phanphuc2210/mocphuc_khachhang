@@ -122,10 +122,18 @@
                     </tbody>
                 </table>
             </div>
-            <div class="mt-6 flex flex-col items-end gap-3">
+            <div class="mt-6 flex flex-col items-end gap-1">
                 <p class="text-base text-right font-bold">Tổng tiền sản phẩm: <span class="text-red-600">{{ total_price | currency:"VND":'vnđ':'':'vi'}}</span></p>
                 <p class="text-base text-right font-bold">Tổng tiền được giảm: <span class="text-red-600">{{ invoice_info.discount | currency:"VND":'vnđ':'':'vi'}}</span></p>
                 <p class="text-base text-right font-bold">Tổng tiền phải thanh toán: <span class="text-red-600">{{ total_price - invoice_info.discount! | currency:"VND":'vnđ':'':'vi'}}</span></p>
+                <button 
+                    *ngIf="showCancelBtn"
+                    (click)="handleCancelInvoice()"
+                    type="button" 
+                    class="text-white mt-3 w-fit bg-gray-800 disabled:bg-gray-600 disabled:text-slate-300 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-semibold rounded-lg text-sm px-3 py-2 dark:bg-gray-800 dark:hover:bg-gray-900 dark:focus:ring-gray-700 dark:border-gray-700"
+                >
+                    Hủy đơn hàng
+                </button>
             </div>
         </div>
     </div>
