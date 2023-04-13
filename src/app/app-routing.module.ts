@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ProductsComponent } from './components/products/products.component';
 import { SearchComponent } from './components/search/search.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { SuccessComponent } from './components/success/success.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { UserVoucherComponent } from './components/user-voucher/user-voucher.component';
 import { VouchersComponent } from './components/vouchers/vouchers.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'search', component: SearchComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
+  {path: 'success', component: SuccessComponent},
   {path: 'user-detail', component: UserDetailComponent, canActivate: [AuthGuard]},
   {path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard]},
   {

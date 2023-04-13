@@ -41,6 +41,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { VouchersComponent } from './components/vouchers/vouchers.component';
 import { UserVoucherComponent } from './components/user-voucher/user-voucher.component';
+import { SuccessComponent } from './components/success/success.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { UserVoucherComponent } from './components/user-voucher/user-voucher.com
     ChangePasswordComponent,
     VouchersComponent,
     UserVoucherComponent,
+    SuccessComponent,
   ],
   imports: [
     BrowserModule,
