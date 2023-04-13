@@ -17,6 +17,7 @@ import { Voucher } from 'src/app/models/voucher.model';
 import { VoucherService } from 'src/app/services/voucher.service';
 import { PaymentMethod } from 'src/app/models/paymentMethod.model';
 import { PaymentMethodService } from 'src/app/services/payment-method.service';
+import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
   selector: 'app-payment',
@@ -75,6 +76,7 @@ export class PaymentComponent implements OnInit {
     private cartService: CartService,
     private voucherService: VoucherService,
     private paymentMethodService: PaymentMethodService,
+    private paymentService: PaymentService,
     private router: Router
   ) {
     this.userId = this.authService.userSubject.getValue().id
@@ -155,6 +157,13 @@ export class PaymentComponent implements OnInit {
       },
       order_details: this.order_details,
     };
+
+    if(this.methodName === 'VNPAY') {
+      this.paymentService.vnpayPayment(data).subscribe(res => {
+        window.location.assign(res.url);
+      })
+      return;
+    }
 
     this.cartService.payment(data).subscribe({
       next:(res) => {
