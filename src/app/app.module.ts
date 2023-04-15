@@ -42,6 +42,8 @@ import { NgxStarRatingModule } from 'ngx-star-rating';
 import { VouchersComponent } from './components/vouchers/vouchers.component';
 import { UserVoucherComponent } from './components/user-voucher/user-voucher.component';
 import { SuccessComponent } from './components/success/success.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,8 @@ import { SuccessComponent } from './components/success/success.component';
     VouchersComponent,
     UserVoucherComponent,
     SuccessComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

@@ -36,6 +36,14 @@ export class AuthService {
     return this.httpClient.patch<any>(`${this.NODE_API}/users/${id}/change-password`, data)
   }
 
+  public forgotPassword(data: {email: string}): Observable<any> {
+    return this.httpClient.post<any>(`${this.NODE_API}/users/forgot-password`, data)
+  }
+
+  public resetPassword(data: {newPass: string, resetToken: string}): Observable<any> {
+    return this.httpClient.post<any>(`${this.NODE_API}/users/reset-password`, data)
+  }
+
   public logOut(): void {
     localStorage.clear()
     this.loginSubject.next(false)

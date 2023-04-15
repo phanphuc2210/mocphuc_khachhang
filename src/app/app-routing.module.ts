@@ -4,9 +4,11 @@ import { AboutComponent } from './components/about/about.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { DetailComponent } from './components/detail/detail.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProductsComponent } from './components/products/products.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { SearchComponent } from './components/search/search.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { SuccessComponent } from './components/success/success.component';
@@ -27,6 +29,8 @@ const routes: Routes = [
   {path: 'search', component: SearchComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'success', component: SuccessComponent},
   {path: 'user-detail', component: UserDetailComponent, canActivate: [AuthGuard]},
   {path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard]},
