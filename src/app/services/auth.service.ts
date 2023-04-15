@@ -36,7 +36,7 @@ export class AuthService {
     return this.httpClient.patch<any>(`${this.NODE_API}/users/${id}/change-password`, data)
   }
 
-  public forgotPassword(data: {email: string}): Observable<any> {
+  public forgotPassword(data: {email: string, isAdmin: boolean}): Observable<any> {
     return this.httpClient.post<any>(`${this.NODE_API}/users/forgot-password`, data)
   }
 

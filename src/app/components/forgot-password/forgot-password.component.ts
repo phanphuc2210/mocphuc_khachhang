@@ -21,7 +21,8 @@ export class ForgotPasswordComponent implements OnInit {
 
   sendEmail() {
     const data = {
-      email: this.requestForm.controls['email'].value!
+      email: this.requestForm.controls['email'].value!,
+      isAdmin: false
     }
 
     this.authService.forgotPassword(data).subscribe({
