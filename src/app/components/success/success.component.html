@@ -1,4 +1,13 @@
-<div class="h-screen flex justify-center items-center">
-    <h2 class="text-lg font-semibold">Thanh toán thành công!!!</h2>
-    <a class="text-blue-600 hover:underline" routerLink="/">Quay lại trang chủ</a>
+<div *ngIf="result" class="h-screen flex flex-col justify-center items-center">
+ <img *ngIf="result.rspCode === '00'" src="../../../assets/images/payment-success.png" alt="payment-success">
+ <img *ngIf="result.rspCode !== '00'" src="../../../assets/images/payment-failure.png" alt="payment-failure">
+  <h2 class="text-xl font-semibold">{{ result.message }}</h2>
+  <a
+    *ngIf="result.rspCode === '00'"
+    class="text-blue-600 hover:underline"
+    routerLink="/invoice/{{ result.orderId }}"
+  >
+    Đến trang chi tiết hóa đơn
+  </a>
+  <a *ngIf="result.rspCode !== '00'" class="text-blue-600 hover:underline" routerLink="/">Quay lại trang chủ</a>
 </div>

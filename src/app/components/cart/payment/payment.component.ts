@@ -37,6 +37,7 @@ export class PaymentComponent implements OnInit {
   voucherAllList!: Voucher[]
   userId: number
   discount: number = 0
+  amount: number = 0
   invalidVoucher: boolean = false
   isAllowApply: boolean = false
 
@@ -134,6 +135,10 @@ export class PaymentComponent implements OnInit {
       this.methodName = res[0].name
     })
 
+    this.totalPrice$.subscribe(res => {
+      this.amount = res
+    })
+
     // Thiết lập hộp thoại cập nhật trạng thái
     this.modal = new Modal(this.modalEl.nativeElement, this.modalOptions);
   }
@@ -153,21 +158,29 @@ export class PaymentComponent implements OnInit {
         email: this.paymentForm.controls['email'].value!,
         payment_method: this.paymentForm.controls['payment_method'].value!,
         discount: this.discount,
-        code: this.paymentForm.controls['code'].value!
+        code: this.paymentForm.controls['code'].value!,
+        amount: this.amount - this.discount
       },
       order_details: this.order_details,
     };
 
     if(this.methodName === 'VNPAY') {
-      this.paymentService.vnpayPayment(data).subscribe(res => {
-        window.location.assign(res.url);
-      })
+      this.cartService.payment(data).subscribe({
+        next: res => {
+          this.store.dispatch(CartActions.clearCart())
+          this.paymentService.vnpayPayment(data).subscribe(res => {
+            window.location.assign(res.url);
+          })
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
       return;
     }
 
     this.cartService.payment(data).subscribe({
       next:(res) => {
-        console.log('Payment:', res);
         const orderId = res.orderId
         this.store.dispatch(CartActions.clearCart())
         Swal.fire({
