@@ -90,11 +90,7 @@ export class InvoiceDetailComponent implements OnInit {
     });
 
     this.invoiceService.getNextStatus(Number(this.orderId)).subscribe(res => {
-      if(res.statusId <= statusCode.Da_Xac_Nhan) {
-        this.showCancelBtn = true;
-      } else {
-        this.showCancelBtn = false;
-      }
+      this.showCancelBtn = res.isShowCancelBtn
     })
 
 
@@ -223,11 +219,7 @@ export class InvoiceDetailComponent implements OnInit {
           })
           this.statusList$ = this.invoiceService.getListStatus(Number(this.orderId))
           this.invoiceService.getNextStatus(Number(this.orderId)).subscribe(res => {
-            if(res.statusId <= statusCode.Da_Xac_Nhan) {
-              this.showCancelBtn = true;
-            } else {
-              this.showCancelBtn = false;
-            }
+            this.showCancelBtn = res.isShowCancelBtn 
           })
         })
       }

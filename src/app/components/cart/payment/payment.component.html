@@ -70,8 +70,14 @@
         </div>
         <form class="mt-8 grid grid-cols-2" [formGroup]="paymentForm" *ngIf="paymentForm">
             <div>
-                <p class="text-sm text-slate-700 font-bold my-6">Tên khách hàng: <span class="font-normal">{{ paymentForm.controls['name'].value }}</span></p>
-              
+                <app-custom-form-input 
+                    formControlName="name"
+                    [type] = "'text'"
+                    containerClass="flex items-center gap-2 text-base my-6"
+                    inputClass="w-[25%]"
+                    [label] = "'Tên người nhận:'"
+                    [errors]="paymentForm.controls['name'].errors"         
+                ></app-custom-form-input>
                 <app-custom-form-input 
                     formControlName="phone"
                     [type] = "'text'"

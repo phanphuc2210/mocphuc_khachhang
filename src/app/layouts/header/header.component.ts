@@ -45,6 +45,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public logOut() {
+    this.store.dispatch(CartActions.getCart({userId: 0}));
     this.authService.logOut();
     this.router.navigate(['/']);
   }

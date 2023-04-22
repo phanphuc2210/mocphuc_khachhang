@@ -218,8 +218,9 @@ export class PaymentComponent implements OnInit {
     let totalPriceByProductType = this.order_details.reduce((total, product) => {
       if(voucher.applicable_productType === product.productType) {
         return total + (product.price! * product.quantity);
+      } else {
+        return total;
       }
-      return total;
     }, 0)
     result = totalPriceByProductType >= voucher.bill_from;
 
@@ -234,7 +235,9 @@ export class PaymentComponent implements OnInit {
 
   changeCode() {
     if(this.paymentForm.controls['code'].value === '') {
-      this.paymentForm.controls['code'].reset()
+      this.paymentForm.controls['code'].setValue('')
+      this.discount = 0
+      this.invalidVoucher = false
     } else {
       let voucherApply = 
       this.voucherAllList.find(voucher => voucher.code === this.paymentForm.controls['code'].value)

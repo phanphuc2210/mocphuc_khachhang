@@ -16,7 +16,7 @@ export class CartEffects {
                     map((res) => {
                         console.log("products:", res)
                         return CartActions.getCartSuccess({products: res})
-                    })
+                    }),
                 )
             })
         )
