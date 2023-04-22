@@ -2,6 +2,10 @@ gallery, gallery-core {
     background-color: #fff;
 }
 
+::ng-deep lightbox {
+    z-index: 100 !important;
+}
+
 div.stars {
     display: inline-block;
 }

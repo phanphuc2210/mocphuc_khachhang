@@ -29,7 +29,11 @@
         <div class="grid grid-cols-2 gap-8 px-16">
             <div class="w-full">
                 <!-- <img src="{{ product.image }}" alt="{{ product.name }}"> -->
-                <gallery imageSize="contain" [items]="items"></gallery>
+                <gallery 
+                    imageSize="contain" 
+                    [items]="items"
+                    (itemClick)="lightbox.open(0, 'lightbox', {panelClass: 'fullscreen'})"
+                ></gallery>
             </div>
     
             <div>

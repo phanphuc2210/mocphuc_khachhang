@@ -57,6 +57,17 @@ export class DetailComponent implements OnInit {
         this.items = this.product.image.map((i) => 
           new ImageItem({src: i, thumb: i})
         )
+        // Get a lightbox gallery ref
+        const lightboxRef = this.gallery.ref('lightbox');
+
+        // Add custom gallery config to the lightbox (optional)
+        lightboxRef.setConfig({
+          imageSize: ImageSize.Contain,
+          thumbPosition: ThumbnailsPosition.Top
+        });
+
+        // Load items into the lightbox gallery ref
+        lightboxRef.load(this.items);
       });
     this.commentService.getComments(this.productId).subscribe(res => {
       this.commentList = res
