@@ -81,7 +81,7 @@
                             <th scope="col" class="px-6 py-3">
                                 Thành tiền
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th *ngIf="isLogin" scope="col" class="px-6 py-3">
                                 
                             </th>
                         </tr>
@@ -103,7 +103,7 @@
                             <td class="px-6 py-4">
                                 {{ detail.price! * detail.quantity | currency:"VND":'vnđ':'':'vi' }}
                             </td>
-                            <td class="px-6 py-4">
+                            <td *ngIf="isLogin" class="px-6 py-4">
                                 <a 
                                     *ngIf="showCommentBtn"
                                     class="text-blue-600 hover:underline hover:cursor-pointer mx-2"

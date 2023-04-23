@@ -25,6 +25,7 @@ export class InvoiceDetailComponent implements OnInit {
   })
   modalEl!: ElementRef<HTMLDivElement>;
 
+  isLogin = true
   orderId!: string;
   userId: number;
   invoice_info!: Order;
@@ -66,7 +67,8 @@ export class InvoiceDetailComponent implements OnInit {
     private commentService: CommentService,
     private authService: AuthService
   ) {
-    this.userId = this.authService.userSubject.getValue().id
+    this.isLogin = this.authService.loginSubject.getValue()
+    this.userId = this.isLogin? this.authService.userSubject.getValue().id : null
     this.commentForm = this.fb.group({
       star: [0, Validators.required],
       message: ['', Validators.required],
