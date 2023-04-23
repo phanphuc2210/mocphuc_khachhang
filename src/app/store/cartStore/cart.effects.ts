@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, exhaustMap, map, mergeMap } from "rxjs";
+import { catchError, exhaustMap, map, mergeMap, of } from "rxjs";
 import { Cart } from "src/app/models/cart.model";
 import { AuthService } from "src/app/services/auth.service";
 import { CartService } from "src/app/services/cart.service";
@@ -26,15 +26,23 @@ export class CartEffects {
         this.actions$.pipe(
             ofType(CartActions.addProduct),
             mergeMap((action) => {
-                let data: Cart = {
-                    userId: this.authService.userSubject.value.id,
-                    productId: action.product.id!
+                if(this.authService.loginSubject.getValue()) {
+                    let data: Cart = {
+                        userId: this.authService.userSubject.value.id,
+                        productId: action.product.id!
+                    }
+                    return this.cartService.addProduct(data).pipe(
+                        map(() => {
+                            return CartActions.addProductSuccess({product: action.product})
+                        })
+                    )
+                } else {
+                    return of(1).pipe(
+                        map(() => {
+                            return CartActions.addProductSuccess({product: action.product})
+                        })
+                    )
                 }
-                return this.cartService.addProduct(data).pipe(
-                    map(() => {
-                        return CartActions.addProductSuccess({product: action.product})
-                    })
-                )
             })
         )
     )
@@ -43,15 +51,23 @@ export class CartEffects {
         this.actions$.pipe(
             ofType(CartActions.decreaseProduct),
             exhaustMap((action) => {
-                let data: Cart = {
-                    userId: this.authService.userSubject.value.id,
-                    productId: action.product.id!
+                if(this.authService.loginSubject.getValue()) {
+                    let data: Cart = {
+                        userId: this.authService.userSubject.value.id,
+                        productId: action.product.id!
+                    }
+                    return this.cartService.decreaseProduct(data).pipe(
+                        map(() => {
+                            return CartActions.decreaseProductSuccess({product: action.product})
+                        })
+                    )
+                } else {
+                    return of(1).pipe(
+                        map(() => {
+                            return CartActions.decreaseProductSuccess({product: action.product})
+                        })
+                    )
                 }
-                return this.cartService.decreaseProduct(data).pipe(
-                    map(() => {
-                        return CartActions.decreaseProductSuccess({product: action.product})
-                    })
-                )
             })
         )
     )
@@ -60,15 +76,23 @@ export class CartEffects {
         this.actions$.pipe(
             ofType(CartActions.removeProduct),
             exhaustMap((action) => {
-                let data: Cart = {
-                    userId: this.authService.userSubject.value.id,
-                    productId: action.product.id!
+                if(this.authService.loginSubject.getValue()) {
+                    let data: Cart = {
+                        userId: this.authService.userSubject.value.id,
+                        productId: action.product.id!
+                    }
+                    return this.cartService.removeProduct(data).pipe(
+                        map(() => {
+                            return CartActions.removeProductSuccess({product: action.product})
+                        })
+                    )
+                } else {
+                    return of(1).pipe(
+                        map(() => {
+                            return CartActions.removeProductSuccess({product: action.product})
+                        })
+                    )
                 }
-                return this.cartService.removeProduct(data).pipe(
-                    map(() => {
-                        return CartActions.removeProductSuccess({product: action.product})
-                    })
-                )
             })
         )
     )
@@ -77,11 +101,19 @@ export class CartEffects {
         this.actions$.pipe(
             ofType(CartActions.clearCart),
             exhaustMap(() => {
-                return this.cartService.clearCart(this.authService.userSubject.value.id).pipe(
-                    map(() => {
-                        return CartActions.clearCartSuccess()
-                    })
-                )
+                if(this.authService.loginSubject.getValue()) {
+                    return this.cartService.clearCart(this.authService.userSubject.value.id).pipe(
+                        map(() => {
+                            return CartActions.clearCartSuccess()
+                        })
+                    )
+                } else {
+                    return of(1).pipe(
+                        map(() => {
+                            return CartActions.clearCartSuccess()
+                        })
+                    )
+                }
             })
         )
     )

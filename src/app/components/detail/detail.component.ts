@@ -81,14 +81,10 @@ export class DetailComponent implements OnInit {
 
   // Làm chức năng mua hàng cho khách lữ hành thì từ từ sửa lại
   public buyProduct(product: Product) {
-    if(this.authService.userSubject.value) {
-      for(let i = 0; i < this.quantity; i++) {
-        this.store.dispatch(CartAction.addProduct({ product }));
-      }
-      this.router.navigate(['/cart'])
-    } else {
-      this.router.navigate(['/login'])
+    for(let i = 0; i < this.quantity; i++) {
+      this.store.dispatch(CartAction.addProduct({ product }));
     }
+    this.router.navigate(['/cart'])
   }
 
   public decrease() {

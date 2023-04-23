@@ -31,15 +31,15 @@ export class PaymentComponent implements OnInit {
   })
   modalEl!: ElementRef<HTMLDivElement>;
 
-  paymentMethods!: PaymentMethod[]
-  methodName = ''
-  voucherList!: Voucher[]
-  voucherAllList!: Voucher[]
-  userId: number
-  discount: number = 0
-  amount: number = 0
-  invalidVoucher: boolean = false
-  isAllowApply: boolean = false
+  paymentMethods!: PaymentMethod[];
+  methodName = '';
+  voucherList!: Voucher[];
+  voucherAllList!: Voucher[];
+  userId: number;
+  discount: number = 0;
+  amount: number = 0;
+  invalidVoucher: boolean = false;
+  isSoldOutVoucher: boolean = false;
 
   cart$: Observable<ProductInCart[]>;
   count$: Observable<number>;
@@ -47,20 +47,22 @@ export class PaymentComponent implements OnInit {
   user!: User;
   paymentForm = this.fb.group({
     name: ['', Validators.required],
-    phone: ['', Validators.compose([
-      Validators.required, Validators.pattern(/^[0-9]{10}$/i)
-    ])],
+    phone: [
+      '',
+      Validators.compose([
+        Validators.required,
+        Validators.pattern(/^[0-9]{10}$/i),
+      ]),
+    ],
     address: ['', Validators.required],
-    email: ['', Validators.compose([
-      Validators.required, Validators.email
-    ])],
+    email: ['', Validators.compose([Validators.required, Validators.email])],
     payment_method: [1, Validators.required],
-    code: ['']
+    code: [''],
   });
-  order_details!: Order_Detail[]
+  order_details!: Order_Detail[];
 
   // Flowbite config
-  titileModal = 'Thêm mới'
+  titileModal = 'Thêm mới';
   modal!: ModalInterface;
 
   modalOptions: ModalOptions = {
@@ -80,64 +82,70 @@ export class PaymentComponent implements OnInit {
     private paymentService: PaymentService,
     private router: Router
   ) {
-    this.userId = this.authService.userSubject.getValue().id
+    this.userId = this.authService.loginSubject.getValue()? this.authService.userSubject.getValue().id : null;
     this.cart$ = store.pipe(select(CartSelectors.GroupedCartSelector));
     this.count$ = store.pipe(select(CartSelectors.countProductSelector));
     this.totalPrice$ = store.pipe(select(CartSelectors.totalPriceSelector));
 
-    this.paymentForm.controls['code'].valueChanges.pipe(debounceTime(1000)).subscribe(res => {
-      this.changeCode()
-    })
+    this.paymentForm.controls['code'].valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((res) => {
+        this.changeCode();
+      });
   }
 
   ngOnInit(): void {
-    this.authService
+    if(this.authService.loginSubject.getValue()) {
+      this.authService
       .getUser(this.authService.userSubject.value.id)
       .subscribe((res) => {
         this.user = res;
-        this.paymentForm.controls['name'].setValue(this.user.lastname + ' ' + this.user.firstname)
-        this.paymentForm.controls['phone'].setValue(this.user.phone)
-        this.paymentForm.controls['address'].setValue(this.user.address)
-        this.paymentForm.controls['email'].setValue(this.user.email)
-        this.paymentForm.controls['payment_method'].setValue(1)
+        this.paymentForm.controls['name'].setValue(
+          this.user.lastname + ' ' + this.user.firstname
+        );
+        this.paymentForm.controls['phone'].setValue(this.user.phone);
+        this.paymentForm.controls['address'].setValue(this.user.address);
+        this.paymentForm.controls['email'].setValue(this.user.email);
+        this.paymentForm.controls['payment_method'].setValue(1);
       });
 
+      this.voucherService.getVoucherByUserId(this.userId).subscribe((res) => {
+        this.voucherList = res;
+      });
+      this.voucherService.getVoucher(this.userId).subscribe((res) => {
+        this.voucherAllList = res;
+      });
+    }
+
     this.cart$
-    .pipe(
-      map((res) => {
-        let orderDetails: Order_Detail[] = [];
-        res.forEach((o) => {
-          orderDetails.push({ 
-            productId: o.product.id!, 
-            productType: o.product.typeId,
-            name: o.product.name,
-            image: o.product.image[0],
-            price: o.product.price,
-            quantity: o.count,
+      .pipe(
+        map((res) => {
+          let orderDetails: Order_Detail[] = [];
+          res.forEach((o) => {
+            orderDetails.push({
+              productId: o.product.id!,
+              productType: o.product.typeId,
+              name: o.product.name,
+              image: o.product.image[0],
+              price: o.product.price,
+              quantity: o.count,
+            });
           });
-        });
-        return orderDetails;
-      })
-    )
-    .subscribe((res) => {
-      this.order_details = res
+          return orderDetails;
+        })
+      )
+      .subscribe((res) => {
+        this.order_details = res;
+      });
+
+    this.paymentMethodService.getList().subscribe((res) => {
+      this.paymentMethods = res;
+      this.methodName = res[0].name;
     });
 
-    this.voucherService.getVoucherByUserId(this.userId).subscribe(res => {
-      this.voucherList = res
-    })
-    this.voucherService.getVoucher(this.userId).subscribe(res => {
-      this.voucherAllList = res
-    })
-
-    this.paymentMethodService.getList().subscribe(res => {
-      this.paymentMethods = res
-      this.methodName = res[0].name
-    })
-
-    this.totalPrice$.subscribe(res => {
-      this.amount = res
-    })
+    this.totalPrice$.subscribe((res) => {
+      this.amount = res;
+    });
 
     // Thiết lập hộp thoại cập nhật trạng thái
     this.modal = new Modal(this.modalEl.nativeElement, this.modalOptions);
@@ -151,7 +159,7 @@ export class PaymentComponent implements OnInit {
   public payment() {
     const data: Payment = {
       order: {
-        userId: this.user.id!,
+        userId: this.userId? this.userId : 0,
         name: this.paymentForm.controls['name'].value!,
         address: this.paymentForm.controls['address'].value!,
         phone: this.paymentForm.controls['phone'].value!,
@@ -159,49 +167,50 @@ export class PaymentComponent implements OnInit {
         payment_method: this.paymentForm.controls['payment_method'].value!,
         discount: this.discount,
         code: this.paymentForm.controls['code'].value!,
-        amount: this.amount - this.discount
+        amount: this.amount - this.discount,
       },
       order_details: this.order_details,
     };
 
-    if(this.methodName === 'VNPAY') {
+    if (this.methodName === 'VNPAY') {
       this.cartService.payment(data).subscribe({
-        next: res => {
-          this.store.dispatch(CartActions.clearCart())
-          this.paymentService.vnpayPayment(data).subscribe(res => {
+        next: (res) => {
+          this.store.dispatch(CartActions.clearCart());
+          this.paymentService.vnpayPayment(data).subscribe((res) => {
             window.location.assign(res.url);
-          })
+          });
         },
-        error: err => {
+        error: (err) => {
           console.log(err);
-        }
+        },
       });
       return;
     }
 
     this.cartService.payment(data).subscribe({
-      next:(res) => {
-        const orderId = res.orderId
-        this.store.dispatch(CartActions.clearCart())
+      next: (res) => {
+        const orderId = res.orderId;
+        this.store.dispatch(CartActions.clearCart());
         Swal.fire({
           background: '#000',
           icon: 'success',
-          title: '<p class="text-xl text-slate-300">'+ res.message +'</p>',
+          title: '<p class="text-xl text-slate-300">' + res.message + '</p>',
           confirmButtonText: 'Ok',
           confirmButtonColor: '#246224',
-        })
-        this.router.navigate(['/invoice/' + orderId])
+        });
+        this.router.navigate(['/invoice/' + orderId]);
       },
       error: (err) => {
-        console.log(err.error.message)
+        console.log(err.error.message);
         Swal.fire({
           background: '#000',
           icon: 'error',
-          title: '<p class="text-xl text-slate-300">'+ err.error.message +'</p>',
+          title:
+            '<p class="text-xl text-slate-300">' + err.error.message + '</p>',
           confirmButtonText: 'Ok',
           confirmButtonColor: '#c81e1e',
-        })
-      }
+        });
+      },
     });
   }
 
@@ -215,13 +224,16 @@ export class PaymentComponent implements OnInit {
 
   checkCondition(voucher: Voucher): boolean {
     let result: boolean;
-    let totalPriceByProductType = this.order_details.reduce((total, product) => {
-      if(voucher.applicable_productType === product.productType) {
-        return total + (product.price! * product.quantity);
-      } else {
-        return total;
-      }
-    }, 0)
+    let totalPriceByProductType = this.order_details.reduce(
+      (total, product) => {
+        if (voucher.applicable_productType === product.productType) {
+          return total + product.price! * product.quantity;
+        } else {
+          return total;
+        }
+      },
+      0
+    );
     result = totalPriceByProductType >= voucher.bill_from;
 
     return result;
@@ -234,24 +246,25 @@ export class PaymentComponent implements OnInit {
   }
 
   changeCode() {
-    if(this.paymentForm.controls['code'].value === '') {
-      this.paymentForm.controls['code'].setValue('')
-      this.discount = 0
-      this.invalidVoucher = false
+    if (this.paymentForm.controls['code'].value === '') {
+      this.paymentForm.controls['code'].setValue('');
+      this.discount = 0;
+      this.invalidVoucher = false;
     } else {
-      let voucherApply = 
-      this.voucherAllList.find(voucher => voucher.code === this.paymentForm.controls['code'].value)
-      if(voucherApply) {
-        if(this.checkCondition(voucherApply)) {
-          this.discount = voucherApply?.discount!
-          this.invalidVoucher = false
+      let voucherApply = this.voucherAllList.find(
+        (voucher) => voucher.code === this.paymentForm.controls['code'].value
+      );
+      if (voucherApply) {
+        if (this.checkCondition(voucherApply)) {
+          this.discount = voucherApply?.discount!;
+          this.invalidVoucher = false;
         } else {
-          this.discount = 0
-          this.invalidVoucher = true
+          this.discount = 0;
+          this.invalidVoucher = true;
         }
       } else {
-        this.discount = 0
-        this.invalidVoucher = true
+        this.discount = 0;
+        this.invalidVoucher = true;
       }
     }
   }

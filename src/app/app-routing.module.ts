@@ -45,8 +45,8 @@ const routes: Routes = [
     path: 'invoice',
     loadChildren: () => 
       import('./components/invoice/invoice.module').then(m => m.InvoiceModule),
-    canLoad: [AuthGuard],
-    canActivateChild: [AuthGuard]
+    // canLoad: [AuthGuard],
+    // canActivateChild: [AuthGuard]
   }
 ];
 

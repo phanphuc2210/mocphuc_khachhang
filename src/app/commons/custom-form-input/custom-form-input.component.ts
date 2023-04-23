@@ -16,6 +16,7 @@ import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, ValidationErr
 export class CustomFormInputComponent implements ControlValueAccessor {
   @Input() type!: string
   @Input() label!: string
+  @Input() inRow!: boolean
   @Input() containerClass!: string
   @Input() inputClass!: string
   @Input() placeholder: string = ''
