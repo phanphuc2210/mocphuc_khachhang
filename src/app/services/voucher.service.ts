@@ -15,7 +15,11 @@ export class VoucherService {
   constructor(private http: HttpClient) { }
 
   public getVoucher(userId: number): Observable<Voucher[]> {
-    return this.http.get<Voucher[]>(`${this.API_URL}?userId=${userId}`)
+    let query = ''
+    if(userId) {
+      query += `?userId=${userId}`
+    }
+    return this.http.get<Voucher[]>(`${this.API_URL}${query}`)
   }
 
   public getVoucherByUserId(userId: number): Observable<Voucher[]> {

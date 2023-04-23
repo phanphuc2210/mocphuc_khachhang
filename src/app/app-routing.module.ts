@@ -38,8 +38,8 @@ const routes: Routes = [
     path: 'cart', 
     loadChildren: () => 
       import('./components/cart/cart.module').then(m => m.CartModule),
-    canLoad: [AuthGuard],
-    canActivateChild: [AuthGuard]
+    // canLoad: [AuthGuard],
+    // canActivateChild: [AuthGuard]
   },
   { 
     path: 'invoice',

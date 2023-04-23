@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { map, Observable, pluck } from 'rxjs';
 import { Voucher } from 'src/app/models/voucher.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,8 +16,8 @@ export class VouchersComponent implements OnInit {
   voucherOfUser: number[] = []
   userId: number
 
-  constructor(private voucherService: VoucherService, private authService: AuthService) {
-    this.userId = this.authService.userSubject.getValue().id
+  constructor(private voucherService: VoucherService, private authService: AuthService, private router: Router) {
+    this.userId = this.authService.userSubject.getValue() ? this.authService.userSubject.getValue().id : null
   }
 
   ngOnInit(): void {
@@ -24,15 +25,22 @@ export class VouchersComponent implements OnInit {
       this.voucherList = res
     })
 
-    this.voucherService.getVoucherByUserId(this.userId).subscribe(res => {
-      this.voucherOfUser = []
-      res.forEach(voucher => {
-        this.voucherOfUser.push(voucher.id!)
+    if(this.userId) {
+      this.voucherService.getVoucherByUserId(this.userId).subscribe(res => {
+        this.voucherOfUser = []
+        res.forEach(voucher => {
+          this.voucherOfUser.push(voucher.id!)
+        })
       })
-    })
+    }
   }
 
   saveVoucher(voucherId: number) {
+    if(!this.authService.loginSubject.getValue()) {
+      this.router.navigate(['/login'])
+      return
+    }
+
     let data: {userId: number, voucherId: number} = {
       userId: this.userId,
       voucherId: voucherId
