@@ -88,7 +88,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
       // thumbView: 'contain',
     }),
     LightboxModule,
-    NgxStarRatingModule
+    NgxStarRatingModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },
