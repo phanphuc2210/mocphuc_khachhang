@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 import { ProductType } from 'src/app/models/productType.model';
@@ -15,6 +15,7 @@ import * as CartActions from 'src/app/store/cartStore/cart.action';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  currentUrl!: string
   countProducts$: Observable<number>;
   productTypes!: ProductType[];
 
@@ -33,6 +34,14 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentUrl = this.router.url;
+  
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentUrl = event.url;
+      }
+    });
+
     this.authService.userSubject.subscribe((res) => {
       if (res) {
         this.user = res;
