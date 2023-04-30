@@ -6,10 +6,14 @@ import { Lightbox } from 'ng-gallery/lightbox';
 import { Observable } from 'rxjs';
 import { Comment } from 'src/app/models/comment.model';
 import { Product } from 'src/app/models/product.model';
+import { Wood } from 'src/app/models/wood.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommentService } from 'src/app/services/comment.service';
 import { ProductService } from 'src/app/services/product.service';
+import { WoodService } from 'src/app/services/wood.service';
 import * as CartAction from 'src/app/store/cartStore/cart.action';
+import { Modal } from 'flowbite';
+import type { ModalOptions, ModalInterface } from 'flowbite';
 
 @Component({
   selector: 'app-detail',
@@ -18,11 +22,17 @@ import * as CartAction from 'src/app/store/cartStore/cart.action';
 })
 export class DetailComponent implements OnInit {
   @ViewChild('commentDiv') commentDiv!: ElementRef;
+  @ViewChild('modalEl', {
+    read: ElementRef,
+    static: true,
+  })
+  modalEl!: ElementRef<HTMLDivElement>;
 
   items!: GalleryItem[];
   productId: string = '';
   productSlug: string = '';
   product!: Product;
+  wood!: Wood;
   quantity: number = 1;
   commentList!: Comment[]
   amountComment = 0
@@ -37,8 +47,19 @@ export class DetailComponent implements OnInit {
     'Cực kì hài lòng',
   ];
 
+  // Flowbite config
+  modal!: ModalInterface;
+
+  modalOptions: ModalOptions = {
+    placement: 'center',
+    backdrop: 'static',
+    backdropClasses:
+      'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40',
+  };
+
   constructor(
     private productService: ProductService,
+    private woodService: WoodService,
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
@@ -79,7 +100,14 @@ export class DetailComponent implements OnInit {
           })
           this.starTotal = Math.round(this.starTotal / this.amountComment)
         })
+
+        // get wood detail
+        this.woodService.getWood(String(this.product.woodId)).subscribe(res => {
+          this.wood = res
+        })
       });
+
+    this.modal = new Modal(this.modalEl.nativeElement, this.modalOptions);
   }
 
   // Làm chức năng mua hàng cho khách lữ hành thì từ từ sửa lại
@@ -104,5 +132,13 @@ export class DetailComponent implements OnInit {
 
   scrollTo() {
     this.commentDiv.nativeElement.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  public showModal() {
+    this.modal.show();
+  }
+
+  public hideModal() {
+    this.modal.hide();
   }
 }
