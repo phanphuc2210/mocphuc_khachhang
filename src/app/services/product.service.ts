@@ -50,4 +50,27 @@ export class ProductService {
     let search = searchText.split(' ').join('+')
     return this.httpClient.get<any>(`${this.NODE_API}/products?name=${search}`);
   }
+
+  // tìm kiếm nâng cao
+  public searchProduct(name?:string, type?:string, wood?:string, priceFrom?: string, priceTo?: string): Observable<any> {
+    let search = '';
+    if(name) {
+      let nameSplit = name.split(' ')
+      let nameJoin = nameSplit.join('+')
+      search += `name=${nameJoin}`
+    }
+    if(type) {
+      search += `&typeId=${type}`
+    }
+    if(wood) {
+      search += `&woodId=${wood}`
+    }
+    if(priceFrom) {
+      search += `&gte=${priceFrom}`
+    }
+    if(priceTo) {
+      search += `&lte=${priceTo}`
+    }
+    return this.httpClient.get<any>(`${this.NODE_API}/products?${search}`);
+  }
 }
