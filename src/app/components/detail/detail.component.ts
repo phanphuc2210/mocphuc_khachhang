@@ -21,7 +21,7 @@ export class DetailComponent implements OnInit {
 
   items!: GalleryItem[];
   productId: string = '';
-  productslug: string = '';
+  productSlug: string = '';
   product!: Product;
   quantity: number = 1;
   commentList!: Comment[]
@@ -49,9 +49,9 @@ export class DetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.productId = this.route.snapshot.paramMap.get('id')!;
+    this.productSlug = this.route.snapshot.paramMap.get('slug')!;
     this.productService
-      .getProductById(this.productId)
+      .getProductBySlug(this.productSlug)
       .subscribe((res) => {
         this.product = res
         // tạo gallery ảnh
@@ -69,15 +69,17 @@ export class DetailComponent implements OnInit {
 
         // Load items into the lightbox gallery ref
         lightboxRef.load(this.items);
+
+        // load comment
+        this.commentService.getComments(this.product.id!).subscribe(res => {
+          this.commentList = res
+          this.amountComment = res.length
+          this.commentList.forEach(comment => {
+            this.starTotal += comment.star
+          })
+          this.starTotal = Math.round(this.starTotal / this.amountComment)
+        })
       });
-    this.commentService.getComments(this.productId).subscribe(res => {
-      this.commentList = res
-      this.amountComment = res.length
-      this.commentList.forEach(comment => {
-        this.starTotal += comment.star
-      })
-      this.starTotal = Math.round(this.starTotal / this.amountComment)
-    })
   }
 
   // Làm chức năng mua hàng cho khách lữ hành thì từ từ sửa lại

@@ -29,6 +29,10 @@ export class ProductService {
     return this.httpClient.get<Product>(`${this.NODE_API}/products/${id}`);
   }
 
+  public getProductBySlug(slug:string): Observable<Product> {
+    return this.httpClient.get<Product>(`${this.NODE_API}/products/ct/${slug}`);
+  }
+
   public getProductByType(slug:string): Observable<Product[]> {
     return this.httpClient.get<Product[]>(`${this.NODE_API}/products/list/${slug}`)
   }
