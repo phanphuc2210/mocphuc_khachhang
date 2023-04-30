@@ -16,4 +16,5 @@ export interface Product {
     height: number
     woodId?: number
     wood: string
+    slug?: string
 }

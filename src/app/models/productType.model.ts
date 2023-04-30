@@ -1,5 +1,8 @@
 export interface ProductType {
     id?: number
     name: string
-    slug: string
+    parentId: number
+    description: string
+    slug?: string
+    active: number
 }

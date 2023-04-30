@@ -7,7 +7,7 @@
       (afterChange)="afterChange($event)"
       (beforeChange)="beforeChange($event)">
       <div ngxSlickItem *ngFor="let slide of slides" class="slide">
-        <img routerLink="{{slide.linkto}}" src="{{ slide.image }}" alt="" width="100%">
+        <img routerLink="{{slide.linkto}}" src="{{ slide.image }}" class="cursor-pointer" alt="" width="100%">
       </div>
     </ngx-slick-carousel>
 </div>

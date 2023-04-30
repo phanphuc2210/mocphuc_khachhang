@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { select, Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 import { ProductType } from 'src/app/models/productType.model';
@@ -17,7 +18,8 @@ import * as CartActions from 'src/app/store/cartStore/cart.action';
 export class HeaderComponent implements OnInit {
   currentUrl!: string
   countProducts$: Observable<number>;
-  productTypes!: ProductType[];
+  parentTypes!: ProductType[];
+  childrenTypes!: ProductType[];
 
   isLogin = this.authService.loginSubject.asObservable();
   user!: any;
@@ -26,11 +28,20 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private store: Store,
-    private productService: ProductService
+    private productService: ProductService,
+    private sanitizer: DomSanitizer
   ) {
     this.countProducts$ = store.pipe(
       select(CartSelectors.countProductSelector)
     );
+
+    this.productService.getProductTypes().subscribe(res => {
+      this.parentTypes = res.filter(type => type.parentId === 0)
+      this.childrenTypes = res.filter(type => type.parentId !== 0)
+
+      console.log("Parent:", this.parentTypes)
+      console.log("Children:", this.childrenTypes)
+    })
   }
 
   ngOnInit(): void {
@@ -47,10 +58,10 @@ export class HeaderComponent implements OnInit {
         this.user = res;
       }
     });
+  }
 
-    this.productService.getProductTypes().subscribe(res => {
-      this.productTypes = res;
-    })
+  getChildrenTypeByPRId(typeId: number): ProductType[] {
+    return this.childrenTypes.filter(type => type.parentId === typeId)
   }
 
   public logOut() {

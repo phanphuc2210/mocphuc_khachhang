@@ -21,6 +21,7 @@ export class DetailComponent implements OnInit {
 
   items!: GalleryItem[];
   productId: string = '';
+  productslug: string = '';
   product!: Product;
   quantity: number = 1;
   commentList!: Comment[]

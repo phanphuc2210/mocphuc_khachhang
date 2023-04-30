@@ -13,8 +13,12 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getProductTypes(): Observable<any> {
-    return this.httpClient.get<any>(`${this.NODE_API}/types/parent`);
+  public getProductTypes(): Observable<ProductType[]> {
+    return this.httpClient.get<ProductType[]>(`${this.NODE_API}/types`);
+  }
+
+  public getChildrenType(parentId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.NODE_API}/types/children/${parentId}`);
   }
 
   public getTypeBySlug(slug: string): Observable<any> {
