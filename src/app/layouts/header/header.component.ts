@@ -36,8 +36,8 @@ export class HeaderComponent implements OnInit {
     );
 
     this.productService.getProductTypes().subscribe(res => {
-      this.parentTypes = res.filter(type => type.parentId === 0)
-      this.childrenTypes = res.filter(type => type.parentId !== 0)
+      this.parentTypes = res.filter(type => type.parentId === 0 && type.active === 1)
+      this.childrenTypes = res.filter(type => type.parentId !== 0 && type.active === 1)
     })
   }
 
