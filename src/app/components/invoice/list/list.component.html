@@ -21,6 +21,46 @@
         </ol>
     </nav>
 
+    <form class="my-container flex-col justify-center items-center mt-6" [formGroup]="searchForm">
+        <div class="grid grid-cols-5 gap-4">
+            <app-custom-form-input 
+                formControlName="from"
+                [type] = "'date'"
+                label = "Từ ngày"
+                inputClass="mt-2"
+                [errors]="searchForm.controls['from'].errors"
+            ></app-custom-form-input>
+
+            <app-custom-form-input 
+                formControlName="to"
+                [type] = "'date'"
+                label = "Đến ngày"
+                inputClass="mt-2"
+                [errors]="searchForm.controls['to'].errors"
+            ></app-custom-form-input>
+
+            <app-custom-select
+                formControlName="payment"
+                label="Phương thức thanh toán"
+                [options]="payments$ | async"
+                selectedOptionLabel="Tất cả"
+                selectedOptionValue=""
+            ></app-custom-select>
+
+            <app-custom-select
+                formControlName="status"
+                label="Trạng thái"
+                [options]="status$ | async"
+                selectedOptionLabel="Tất cả"
+                selectedOptionValue=""
+            ></app-custom-select>
+
+            <div class="mb-4 flex items-end">
+                <button (click)="searchInvoice()" type="button" class="py-2 px-3 w-fit text-xs font-medium text-center text-white bg-gray-900 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-800">Lọc hóa đơn</button>
+            </div>   
+        </div>
+    </form>
+
     <div *ngIf="invoice$ | async as invoice" class="my-container mt-4">
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">

@@ -28,6 +28,10 @@ export class ValidateInputComponent implements OnChanges{
       return `*${this.label} không được nhiều hơn ${this.errors?.['maxlength']?.['requiredLength']} ký tự!`
     } else if(this.errors?.['email'] || this.errors?.['pattern']) {
       return `*${this.label} không đúng định dạng!`
+    } else if(this.errors?.['toDateInvalid']) {
+      return `*Ngày đến phải lớn hơn ngày từ!`
+    } else if(this.errors?.['fromDateInvalid']) {
+      return `*Ngày từ phải nhỏ hơn ngày đến!`
     }
 
     return ""

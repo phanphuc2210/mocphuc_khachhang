@@ -3,7 +3,7 @@
     <div class="my-container mt-12">
         <h2 class="text-center text-3xl font-semibold">Sản phẩm mới</h2>
         <div class="grid grid-cols-1 mt-6 sm:grid-cols-2 md:grid-cols-4 justify-center gap-5"> 
-            <app-product-card data-aos="fade-down" *ngFor="let product of products$ | async" [product]="product"></app-product-card>
+            <app-product-card *ngFor="let product of products$ | async" [product]="product"></app-product-card>
         </div>   
     </div>
     
@@ -32,7 +32,7 @@
     <div class="my-container mt-12">
         <h2 class="text-center text-3xl font-semibold">Sản phẩm bạn có thể thích</h2>
         <div class="grid grid-cols-1 mt-6 sm:grid-cols-2 md:grid-cols-4 justify-center gap-5"> 
-            <app-product-card data-aos="fade-right" *ngFor="let product of products$ | async" [product]="product"></app-product-card>
+            <app-product-card *ngFor="let product of products$ | async" [product]="product"></app-product-card>
         </div>   
     </div>
 </div>

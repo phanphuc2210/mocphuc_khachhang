@@ -13,8 +13,22 @@ export class InvoiceService {
 
   constructor(private http: HttpClient) { }
 
-  public getList(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.API_URL}/list/${userId}`)
+  public getList(userId: number, from?:string, to?: string, payment?: string, status?:string): Observable<any> {
+    let search = '';
+    if(from) {
+      search += `&from=${from}`
+    }
+    if(to) {
+      search += `&to=${to}`
+    }
+    if(payment) {
+      search += `&payment=${payment}`
+    }
+    if(status) {
+      search += `&status=${status}`
+    }
+
+    return this.http.get<any>(`${this.API_URL}/list/${userId}?${search}`)
   }
 
   public getDetail(orderId: number): Observable<any> {
