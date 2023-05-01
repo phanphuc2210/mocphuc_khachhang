@@ -7,6 +7,7 @@ import { NgxStarRatingModule } from 'ngx-star-rating';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonsModule } from 'src/app/commons/commons.module';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 const routes: Routes = [
   { path: '', component: ListComponent},
@@ -24,7 +25,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonsModule,
     NgxPaginationModule,
-    NgxStarRatingModule
+    NgxStarRatingModule,
+    SlickCarouselModule,
   ]
 })
 export class InvoiceModule { }

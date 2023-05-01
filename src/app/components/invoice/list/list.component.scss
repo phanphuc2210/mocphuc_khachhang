@@ -26,3 +26,47 @@
     padding-right: 12px;
     text-decoration: none;
   }
+
+  .slick-slider {
+    width: 100%;
+    margin: auto;
+    background: transparent;
+  }
+  
+body .slick-prev, 
+body .slick-next {
+    height: 45px;
+    width: 40px;
+    background: grey !important;
+    z-index: 100;
+}
+
+:host::ng-deep .slick-track {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+:host::ng-deep .slick-prev {
+    left: -10px !important;
+}
+
+:host::ng-deep .slick-next {
+    right: -10px !important;
+}
+
+:host::ng-deep label.star {
+  padding: 0 8px !important;
+  font-size: 2rem !important;
+  color: #ddd !important;
+  &::before {
+      content: "\f005" !important;
+  }
+  &:hover {
+      transform: rotate(0deg) scale(1.2) !important;
+  }
+}
+
+:host::ng-deep input.star-5:checked ~ label.star::before {
+  color: #fe7 !important;
+  text-shadow: 0 0 0 #fe7 !important;
+}

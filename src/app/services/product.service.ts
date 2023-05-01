@@ -73,4 +73,8 @@ export class ProductService {
     }
     return this.httpClient.get<any>(`${this.NODE_API}/products?${search}`);
   }
+
+  public getProductNotComment(userId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.NODE_API}/products/comment/${userId}`);
+  }
 }
