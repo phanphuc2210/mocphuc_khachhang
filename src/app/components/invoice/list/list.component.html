@@ -50,7 +50,7 @@
                     </tr>
                 </thead>
                 <tbody *ngIf="invoice.length > 0; else noOrder">
-                    <tr *ngFor="let order of invoice" class="bg-white border-b text-gray-900 dark:text-white dark:bg-gray-900 dark:border-gray-700">
+                    <tr *ngFor="let order of invoice | paginate: { itemsPerPage, currentPage: p }" class="bg-white border-b text-gray-900 dark:text-white dark:bg-gray-900 dark:border-gray-700">
                         <td class="px-6 py-4">
                             #{{ order.id }}
                         </td>
@@ -86,5 +86,9 @@
                 </ng-template>
             </table>
         </div>
+    </div>
+
+    <div class="mt-8 flex justify-center items-center"> 
+        <pagination-controls previousLabel="" nextLabel="" class="paginator" (pageChange)="p = $event"></pagination-controls>
     </div>
 </div>

@@ -1,0 +1,28 @@
+.paginator ::ng-deep .ngx-pagination .current { 
+    background: linear-gradient(to right, #1c64f2, #1e429f);
+    border-radius: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin: 0 4px;
+  }
+
+  .paginator ::ng-deep .ngx-pagination a,
+  .ngx-pagination button {
+    color: #fff;
+    background: #1f2937;
+    border-radius: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin: 0 4px;
+    text-decoration: none;
+  }
+  
+  .paginator ::ng-deep .ngx-pagination a:hover,
+  .ngx-pagination button:hover {
+    color: white;
+    background: #111827;
+    border-radius: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
+    text-decoration: none;
+  }

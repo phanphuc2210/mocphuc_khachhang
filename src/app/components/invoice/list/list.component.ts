@@ -11,6 +11,8 @@ import { Observable } from 'rxjs';
 })
 export class ListComponent implements OnInit {
   invoice$!: Observable<Order[]>
+  p: number = 1;
+  itemsPerPage: number = 5;
 
   constructor(private invoiceService: InvoiceService, private authService: AuthService) {}
 

@@ -6,6 +6,7 @@ import { InvoiceDetailComponent } from './invoice-detail/invoice-detail.componen
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonsModule } from 'src/app/commons/commons.module';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 const routes: Routes = [
   { path: '', component: ListComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     CommonsModule,
+    NgxPaginationModule,
     NgxStarRatingModule
   ]
 })
