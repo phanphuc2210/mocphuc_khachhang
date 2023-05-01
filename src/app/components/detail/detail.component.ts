@@ -38,6 +38,8 @@ export class DetailComponent implements OnInit {
   amountComment = 0
   starTotal = 0
 
+  sameProducts!: Product[];
+
   starLabel = [
     'Vui lòng đánh giá',
     'Rất không hài lòng',
@@ -57,6 +59,9 @@ export class DetailComponent implements OnInit {
       'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40',
   };
 
+  // config slider for same products
+  slideConfig = { slidesToShow: 4, slidesToScroll: 4 };
+
   constructor(
     private productService: ProductService,
     private woodService: WoodService,
@@ -70,8 +75,9 @@ export class DetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.productSlug = this.route.snapshot.paramMap.get('slug')!;
-    this.productService
+    this.route.params.subscribe((params) => {
+      this.productSlug = params['slug'];
+      this.productService
       .getProductBySlug(this.productSlug)
       .subscribe((res) => {
         this.product = res
@@ -105,7 +111,13 @@ export class DetailComponent implements OnInit {
         this.woodService.getWood(String(this.product.woodId)).subscribe(res => {
           this.wood = res
         })
+
+        // get same product
+        this.productService.getAllProducts(String(this.product.typeId)).subscribe(res => {
+          this.sameProducts = res.filter(val => val.id !== this.product.id)
+        })
       });
+    });
 
     this.modal = new Modal(this.modalEl.nativeElement, this.modalOptions);
   }

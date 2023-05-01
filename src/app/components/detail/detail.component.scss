@@ -67,3 +67,25 @@ div.stars {
         list-style-type: decimal;
     }
 }
+
+.slick-slider {
+    width: 100%;
+    margin: auto;
+    background: transparent;
+  }
+  
+body .slick-prev, 
+body .slick-next {
+    height: 45px;
+    width: 40px;
+    background: grey !important;
+    z-index: 100;
+}
+
+:host::ng-deep .slick-prev {
+    left: -10px !important;
+}
+
+:host::ng-deep .slick-next {
+    right: -10px !important;
+}

@@ -44,8 +44,6 @@ import { UserVoucherComponent } from './components/user-voucher/user-voucher.com
 import { SuccessComponent } from './components/success/success.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { NextDirective } from './directive/next.directive';
-import { PrevDirective } from './directive/prev.directive';
 
 @NgModule({
   declarations: [
@@ -69,8 +67,6 @@ import { PrevDirective } from './directive/prev.directive';
     SuccessComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    NextDirective,
-    PrevDirective,
   ],
   imports: [
     BrowserModule,
