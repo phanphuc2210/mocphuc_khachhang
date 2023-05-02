@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { Comment } from '../models/comment.model';
+import { Comment, CommentsHome } from '../models/comment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,10 @@ export class CommentService {
 
   public getComments(productId: number | string): Observable<Comment[]> {
     return this.httpClient.get<Comment[]>(`${this.API_URL}/${productId}`)
+  }
+
+  public getAll(): Observable<CommentsHome[]> {
+    return this.httpClient.get<CommentsHome[]>(`${this.API_URL}`)
   }
 
   public getSingleComment(userId: number | string, productId: number | string): Observable<Comment> {

@@ -42,8 +42,18 @@ export class ProductService {
     return this.httpClient.get<Product[]>(`${this.NODE_API}/products?${classify}`);
   }
 
-  public getProductsByQuantity(quantity: number): Observable<any> {
-    return this.httpClient.get<any>(`${this.NODE_API}/products?limit=${quantity}`);
+  public getProductsByQuantity(data: {quantity?: number, isNew?: boolean, bestSeller?: boolean}): Observable<any> {
+    let search = '';
+    if(data.quantity) {
+      search += `limit=${data.quantity}`
+    }
+    if(data.isNew) {
+      search += `&isNew=${data.isNew}`
+    }
+    if(data.bestSeller) {
+      search += `&bestSeller=${data.bestSeller}`
+    }
+    return this.httpClient.get<any>(`${this.NODE_API}/products?${search}`);
   }
 
   public search(searchText: any): Observable<any> {

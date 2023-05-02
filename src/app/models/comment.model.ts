@@ -6,3 +6,11 @@ export interface Comment {
     star: number
     time?: Date
 }
+
+export interface CommentsHome {
+    image: string
+    username: string
+    star: number
+    message: string
+    slug: string
+}
