@@ -30,97 +30,100 @@
                 </select>
             </div> -->
         </div>
-
-        <form class="flex-col justify-center items-center mt-6" [formGroup]="searchForm">
-          <div class="grid grid-cols-6 gap-4">
-              <app-custom-form-input 
-                  formControlName="name"
-                  [type] = "'text'"
-                  label = "Tên sản phẩm"
-                  inputClass="mt-2"
-              ></app-custom-form-input>
-      
-              <!-- <app-custom-select
-                  formControlName="type"
-                  label="Loại sản phẩm"
-                  [options]="types"
-                  selectedOptionLabel="Tất cả"
-                  selectedOptionValue=""
-              ></app-custom-select> -->
-      
-              <div class="mb-4" *ngIf="types && slug === 'all'">
-                <label  class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Loại sản phẩm</label>
-                <select 
-                    formControlName="type"
-                    [ngClass]="{
-                        'my-input' : true,
-                        'input-error': searchForm.controls['type'].dirty && searchForm.controls['type'].invalid
-                    }"
-                >   
-                    <option selected value="">Tất cả</option>
-                    <ng-container *ngFor="let type of types">
-                      <optgroup *ngIf="type.parentId === 0 && quantityChildren(type.id!) > 0; else notChildren" label="{{ type.name }}">
-                        <ng-container *ngFor="let typeChild of types">
-                          <option *ngIf="typeChild.parentId === type.id" value="{{ typeChild.id }}">
-                            {{ typeChild.name }}
-                          </option>
-                        </ng-container>
-                      </optgroup>
-                      <ng-template #notChildren>
-                        <option *ngIf="type.parentId === 0" value="{{ type.id }}">
-                          {{ type.name }}
-                        </option>
-                      </ng-template>
-                    </ng-container>
-                </select>
-                <app-validate-input [label]="'Loại sản phẩm'" [isDirty]="searchForm.controls['type'].dirty" [errors]="searchForm.controls['type'].errors"></app-validate-input>
-              </div>
-
-              <app-custom-select
-                formControlName="wood"
-                label="Loại gỗ"
-                [options]="woods"
-                selectedOptionLabel="Tất cả"
-                selectedOptionValue=""
-              ></app-custom-select>
-      
-              <app-custom-select
-                  formControlName="priceFrom"
-                  label="Giá từ"
-                  [options]="priceFromArr"
-                  selectedOptionLabel="Tất cả"
-                  selectedOptionValue=""
-                  optionsValue="value"
-                  optionsLabel="price"
-              ></app-custom-select>
-      
-              <app-custom-select
-                  formControlName="priceTo"
-                  label="Giá đến"
-                  [options]="priceToArr"
-                  selectedOptionLabel="Tất cả"
-                  selectedOptionValue=""
-                  optionsValue="value"
-                  optionsLabel="price"
-              ></app-custom-select>
-      
-              <div class="mb-4 flex items-end">
-                <button (click)="searchProduct()" type="button" class="py-2 px-3 w-fit text-xs font-medium text-center text-white bg-gray-900 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-800">Lọc sản phẩm</button>
-              </div>   
-          </div>
-        </form>
     
-        <hr>
-    
-        <div *ngIf="products$ | async as products" class="grid grid-cols-1 mt-6 md:grid-cols-2 lg:grid-cols-4 justify-center gap-5"> 
+        <ng-container *ngIf="products$ | async as products"> 
             <ng-container *ngIf="products.length > 0; else notProduct">
-              <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+              <form  class="flex-col justify-center items-center mt-6" [formGroup]="searchForm">
+                <div class="grid grid-cols-6 gap-4">
+                    <app-custom-form-input 
+                        formControlName="name"
+                        [type] = "'text'"
+                        label = "Tên sản phẩm"
+                        inputClass="mt-2"
+                    ></app-custom-form-input>
+            
+                    <!-- <app-custom-select
+                        formControlName="type"
+                        label="Loại sản phẩm"
+                        [options]="types"
+                        selectedOptionLabel="Tất cả"
+                        selectedOptionValue=""
+                    ></app-custom-select> -->
+            
+                    <div class="mb-4" *ngIf="types && slug === 'all'">
+                      <label  class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Loại sản phẩm</label>
+                      <select 
+                          formControlName="type"
+                          [ngClass]="{
+                              'my-input' : true,
+                              'input-error': searchForm.controls['type'].dirty && searchForm.controls['type'].invalid
+                          }"
+                      >   
+                          <option selected value="">Tất cả</option>
+                          <ng-container *ngFor="let type of types">
+                            <optgroup *ngIf="type.parentId === 0 && quantityChildren(type.id!) > 0; else notChildren" label="{{ type.name }}">
+                              <ng-container *ngFor="let typeChild of types">
+                                <option *ngIf="typeChild.parentId === type.id" value="{{ typeChild.id }}">
+                                  {{ typeChild.name }}
+                                </option>
+                              </ng-container>
+                            </optgroup>
+                            <ng-template #notChildren>
+                              <option *ngIf="type.parentId === 0" value="{{ type.id }}">
+                                {{ type.name }}
+                              </option>
+                            </ng-template>
+                          </ng-container>
+                      </select>
+                      <app-validate-input [label]="'Loại sản phẩm'" [isDirty]="searchForm.controls['type'].dirty" [errors]="searchForm.controls['type'].errors"></app-validate-input>
+                    </div>
+      
+                    <app-custom-select
+                      formControlName="wood"
+                      label="Loại gỗ"
+                      [options]="woods"
+                      selectedOptionLabel="Tất cả"
+                      selectedOptionValue=""
+                    ></app-custom-select>
+            
+                    <app-custom-select
+                        formControlName="priceFrom"
+                        label="Giá từ"
+                        [options]="priceFromArr"
+                        selectedOptionLabel="Tất cả"
+                        selectedOptionValue=""
+                        optionsValue="value"
+                        optionsLabel="price"
+                    ></app-custom-select>
+            
+                    <app-custom-select
+                        formControlName="priceTo"
+                        label="Giá đến"
+                        [options]="priceToArr"
+                        selectedOptionLabel="Tất cả"
+                        selectedOptionValue=""
+                        optionsValue="value"
+                        optionsLabel="price"
+                    ></app-custom-select>
+            
+                    <div class="mb-4 flex items-end">
+                      <button (click)="searchProduct()" type="button" class="py-2 px-3 w-fit text-xs font-medium text-center text-white bg-gray-900 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-800">Lọc sản phẩm</button>
+                    </div>   
+                </div>
+              </form>
+          
+              <hr>
+              
+              <div class="grid grid-cols-1 mt-6 md:grid-cols-2 lg:grid-cols-4 justify-center gap-5">
+                <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+              </div>
+             
             </ng-container>
             <ng-template #notProduct>
               <p class="py-4 text-center md:col-span-2 lg:col-span-4">
                 Chưa có sản phẩm nào thuộc loại {{ title }}! Vui lòng quay lại sau.
               </p>
             </ng-template>
-        </div>   
+        </ng-container>   
     </div>
 </div>

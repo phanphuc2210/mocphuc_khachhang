@@ -44,6 +44,7 @@ import { UserVoucherComponent } from './components/user-voucher/user-voucher.com
 import { SuccessComponent } from './components/success/success.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ToggleSubmenuDirective } from './directives/toggle-submenu.directive';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     SuccessComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    ToggleSubmenuDirective,
   ],
   imports: [
     BrowserModule,
