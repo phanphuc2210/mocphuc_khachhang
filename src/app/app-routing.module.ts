@@ -17,11 +17,15 @@ import { UserVoucherComponent } from './components/user-voucher/user-voucher.com
 import { VouchersComponent } from './components/vouchers/vouchers.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NotfoundComponent } from './components/notfound/notfound.component';
+import { ReturnPolicyComponent } from './components/return-policy/return-policy.component';
+import { WarrantyPolicyComponent } from './components/warranty-policy/warranty-policy.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
+  {path: 'return-policy', component: ReturnPolicyComponent},
+  {path: 'warranty-policy', component: WarrantyPolicyComponent},
   {path: 'product/:slug', component: DetailComponent},
   {path: 'list-product/:slug', component: ProductsComponent},
   // {path: 'product', component: ProductsComponent},

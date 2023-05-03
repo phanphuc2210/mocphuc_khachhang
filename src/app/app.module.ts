@@ -46,6 +46,8 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ToggleSubmenuDirective } from './directives/toggle-submenu.directive';
 import { NotfoundComponent } from './components/notfound/notfound.component';
+import { ReturnPolicyComponent } from './components/return-policy/return-policy.component';
+import { WarrantyPolicyComponent } from './components/warranty-policy/warranty-policy.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +73,8 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
     ResetPasswordComponent,
     ToggleSubmenuDirective,
     NotfoundComponent,
+    ReturnPolicyComponent,
+    WarrantyPolicyComponent,
   ],
   imports: [
     BrowserModule,
