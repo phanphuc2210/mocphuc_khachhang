@@ -224,6 +224,14 @@ export class PaymentComponent implements OnInit {
 
   checkCondition(voucher: Voucher): boolean {
     let result: boolean;
+
+    const currentDate = new Date();
+    const expirationDate = new Date(voucher.expiration_date);
+
+    if (currentDate > expirationDate) {
+      return false;
+    }
+
     let totalPriceByProductType = this.order_details.reduce(
       (total, product) => {
         if (voucher.applicable_productType === product.productType) {

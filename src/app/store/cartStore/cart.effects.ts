@@ -14,7 +14,6 @@ export class CartEffects {
             mergeMap((action) => {
                 return this.cartService.getCart(action.userId).pipe(
                     map((res) => {
-                        console.log("products:", res)
                         return CartActions.getCartSuccess({products: res})
                     }),
                 )

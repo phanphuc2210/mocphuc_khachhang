@@ -21,7 +21,7 @@ export class SliderComponent implements OnInit{
     "slidesToScroll": 1,
     "dots": true,
     "autoplay": true,
-    "autoplaySpeed": 3000
+    "autoplaySpeed": 2000
   };
   
   constructor(private sliderService: SliderService) {}

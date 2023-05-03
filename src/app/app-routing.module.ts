@@ -16,6 +16,7 @@ import { UserDetailComponent } from './components/user-detail/user-detail.compon
 import { UserVoucherComponent } from './components/user-voucher/user-voucher.component';
 import { VouchersComponent } from './components/vouchers/vouchers.component';
 import { AuthGuard } from './guards/auth.guard';
+import { NotfoundComponent } from './components/notfound/notfound.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -47,7 +48,8 @@ const routes: Routes = [
       import('./components/invoice/invoice.module').then(m => m.InvoiceModule),
     // canLoad: [AuthGuard],
     // canActivateChild: [AuthGuard]
-  }
+  },
+  { path: '**', component: NotfoundComponent }
 ];
 
 @NgModule({
