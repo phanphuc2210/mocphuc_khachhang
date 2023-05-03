@@ -109,16 +109,16 @@
         </div>
 
         <div class="bg-slate-50 rounded-md min-h-[4rem] p-4 mt-12">
-            <h3 class="text-xl font-semibold mb-4">Mô tả</h3>
+            <h3 class="text-xl font-bold mb-4">Mô tả</h3>
             <hr>
             <div 
-                class="description h-[532px] overflow-y-scroll mt-4"
+                class="description h-[632px] overflow-y-scroll mt-4"
                 [innerHTML]="product.description"
             ></div>
         </div>
       
         <div #commentDiv *ngIf="commentList" class="bg-slate-50 rounded-md min-h-[4rem] p-4 mt-12">
-            <h3 class="text-xl font-semibold mb-4">Đánh Giá - Nhận Xét Từ Khách Hàng</h3>
+            <h3 class="text-xl font-bold mb-4">Đánh Giá - Nhận Xét Từ Khách Hàng</h3>
             <div class="h-[432px] overflow-y-scroll">
                 <div *ngIf="commentList.length > 0; else noComment">
                     <div *ngFor="let comment of commentList">

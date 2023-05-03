@@ -30,6 +30,10 @@ export class VoucherService {
     return this.http.post<any>(`${this.API_URL}/save`, data)
   }
 
+  public deleteVoucher(userId: number, voucherId: number): Observable<any> {
+    return this.http.delete<any>(`${this.API_URL}/remove/${userId}/${voucherId}`)
+  }
+
   public checkAllowApplyVoucher(userId: number, code: string): Observable<any> {
     return this.http.get<any>(`${this.API_URL}/check-apply?userId=${userId}&code=${code}`)
   }
