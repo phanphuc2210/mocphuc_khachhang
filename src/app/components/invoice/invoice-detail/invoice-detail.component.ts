@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
 import statusCode from 'src/app/constant/status';
 import { Observable } from 'rxjs';
+import { fileUploadValidator } from 'src/app/helper/validateUploadFile';
 
 @Component({
   selector: 'app-invoice-detail',
@@ -60,6 +61,11 @@ export class InvoiceDetailComponent implements OnInit {
     'Cực kì hài lòng',
   ];
 
+  img_url: any = '';
+  defaultImgUrl!:string
+  // Array of valid extensions
+  allowedFileExtensions = ['jpg', 'jpeg', 'png'];
+
   constructor(
     private route: ActivatedRoute,
     private invoiceService: InvoiceService,
@@ -72,6 +78,10 @@ export class InvoiceDetailComponent implements OnInit {
     this.commentForm = this.fb.group({
       star: [0, Validators.required],
       message: ['', Validators.required],
+      image: [
+        { value: '', disabled: false },
+        [fileUploadValidator(this.allowedFileExtensions)]
+      ],
     });
   }
 
@@ -99,6 +109,10 @@ export class InvoiceDetailComponent implements OnInit {
     this.modal = new Modal(this.modalEl.nativeElement, this.modalOptions);
   }
 
+  public receiveImgUrl(event:any) {
+    this.img_url = event
+  }
+
   public showCommentModal(productId: number) {
     // this.commentForm.controls['star'].setValue(0);
     // this.commentForm.controls['message'].setValue('');
@@ -107,6 +121,8 @@ export class InvoiceDetailComponent implements OnInit {
         this.isCommented = true
         this.commentForm.controls['star'].setValue(res.star);
         this.commentForm.controls['message'].setValue(res.message);
+        this.defaultImgUrl = res.image!;
+        this.img_url = res.image!
 
         this.productReview = this.invoice_details.find(
           (d) => d.productId === productId
@@ -117,6 +133,9 @@ export class InvoiceDetailComponent implements OnInit {
         if(err.error.message === 'Comment không tồn tại') { 
           this.commentForm.controls['star'].setValue(0);
           this.commentForm.controls['message'].setValue('');
+          this.defaultImgUrl = ''
+          this.img_url = ''
+
           this.isCommented = false;
           this.productReview = this.invoice_details.find(
             (d) => d.productId === productId
@@ -141,6 +160,7 @@ export class InvoiceDetailComponent implements OnInit {
         productId: this.productReview.productId,
         star: this.commentForm.controls['star'].value,
         message: this.commentForm.controls['message'].value,
+        image: this.img_url,
       };
 
       if(!this.isCommented) {

@@ -14,6 +14,7 @@ import { Modal } from 'flowbite';
 import type { ModalOptions, ModalInterface } from 'flowbite';
 import Swal from 'sweetalert2';
 import { CommentService } from 'src/app/services/comment.service';
+import { fileUploadValidator } from 'src/app/helper/validateUploadFile';
 
 @Component({
   selector: 'app-list',
@@ -70,6 +71,10 @@ export class ListComponent implements OnInit {
     'Cực kì hài lòng',
   ];
 
+  img_url: any = '';
+  // Array of valid extensions
+  allowedFileExtensions = ['jpg', 'jpeg', 'png'];
+
   constructor(
     private invoiceService: InvoiceService,
     private statusService: StatusService,
@@ -82,6 +87,10 @@ export class ListComponent implements OnInit {
     this.commentForm = this.fb.group({
       star: [0, Validators.required],
       message: ['', Validators.required],
+      image: [
+        { value: '', disabled: false },
+        [fileUploadValidator(this.allowedFileExtensions)]
+      ],
     });
 
     this.searchForm.get('to')?.valueChanges.subscribe(val => {
@@ -124,6 +133,10 @@ export class ListComponent implements OnInit {
     this.modal = new Modal(this.modalEl.nativeElement, this.modalOptions);
   }
 
+  public receiveImgUrl(event:any) {
+    this.img_url = event
+  }
+
   // Lọc hóa đơn
   public searchInvoice() {
     const from = this.searchForm.controls.from.value!;
@@ -140,6 +153,7 @@ export class ListComponent implements OnInit {
     // this.commentForm.controls['message'].setValue('');
     this.commentForm.controls['star'].setValue(0);
     this.commentForm.controls['message'].setValue('');
+    this.img_url = ''
     this.commentProducts$.subscribe(res => {
       this.productReview  = res.find(p => p.id === productId)
     })
@@ -159,6 +173,7 @@ export class ListComponent implements OnInit {
         productId: this.productReview.id,
         star: this.commentForm.controls['star'].value,
         message: this.commentForm.controls['message'].value,
+        image: this.img_url,
       };
 
   
@@ -173,6 +188,10 @@ export class ListComponent implements OnInit {
             confirmButtonColor: '#1a56db',
           })
           this.commentProducts$ = this.productService.getProductNotComment(this.authService.userSubject.value.id)
+          this.commentForm.reset();
+          this.commentForm.controls['star'].setValue(0);
+          this.commentForm.controls['message'].setValue('');
+          this.img_url = ''
         },
         error: err => {
           this.modal.hide();

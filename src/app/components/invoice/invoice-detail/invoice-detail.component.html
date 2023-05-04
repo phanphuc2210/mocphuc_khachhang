@@ -157,9 +157,9 @@
                     <img class="w-14" src="{{ productReview.image }}" alt="{{ productReview.name }}">
                     <span class="text-xl font-medium text-gray-900 dark:text-white">{{ productReview.name }}</span>
                 </div>
-                <form class="space-y-6" [formGroup]="commentForm">
+                <form class="space-y-6 max-h-[26rem] overflow-y-scroll" [formGroup]="commentForm">
                     <div class="flex flex-col justify-center items-center">
-                        <label class="text-lg font-semibold mb-2">
+                        <label class="text-lg font-semibold">
                             <span>{{ starLabel[commentForm.controls['star'].value] }}</span>
                         </label>
                         <div class="flex justify-center">
@@ -177,7 +177,29 @@
                             placeholder="Hãy chia sẻ cảm nhận, đánh giá của bạn về sản phẩm này nhé.">
                         </textarea>
                     </div>
-            
+                    
+                    <div class="mt-4">
+                        <ng-container *ngIf="!isCommented; else commented">
+                            <app-custom-image-input
+                                formControlName="image"
+                                label="Thêm hình ảnh"
+                                (imageUrl)="receiveImgUrl($event)"
+                                [inputClass]="'w-[50%]'"
+                                [errors]="commentForm.controls['image'].errors"
+                            ></app-custom-image-input>
+                        </ng-container>
+                        <ng-template #commented>
+                            <app-custom-image-input
+                                formControlName="image"
+                                label="Thêm hình ảnh"
+                                [defaultImgUrl]="defaultImgUrl"
+                                (imageUrl)="receiveImgUrl($event)"
+                                [inputClass]="'w-[50%]'"
+                                [errors]="commentForm.controls['image'].errors"
+                            ></app-custom-image-input>
+                        </ng-template>
+                    </div>
+
                     <button  
                         (click)="submitReview()" 
                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
