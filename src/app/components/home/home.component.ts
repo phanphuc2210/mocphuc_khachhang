@@ -15,6 +15,7 @@ import { CommentService } from 'src/app/services/comment.service';
 export class HomeComponent implements OnInit{
   products$!: Observable<Product[]>
   bestSeller$!: Observable<Product[]>
+  allProduct$!: Observable<Product[]>
   comments$!: Observable<CommentsHome[]>
 
   // config slider for products
@@ -83,6 +84,7 @@ export class HomeComponent implements OnInit{
 
     this.products$ = this.productService.getProductsByQuantity({quantity: 7, isNew: true})
     this.bestSeller$ = this.productService.getProductsByQuantity({quantity: 7, bestSeller: true})
+    this.allProduct$ = this.productService.getProductByType('all')
     this.comments$ = this.commentService.getAll()
   }
 }

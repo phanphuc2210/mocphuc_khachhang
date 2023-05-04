@@ -62,6 +62,18 @@
     </div>
 
     <div class="my-container mt-12">
+        <h2 class="text-center text-2xl font-bold mb-8">Sản phẩm của chúng tôi</h2>
+        <ngx-slick-carousel class="carousel" 
+            #slickModal="slick-carousel" 
+            [config]="slideProductConfig" 
+        >
+            <div ngxSlickItem *ngFor="let product of allProduct$ | async" class="slide mx-3">
+                <app-product-card [product]="product"></app-product-card>
+            </div>
+        </ngx-slick-carousel>   
+    </div>
+
+    <div class="my-container mt-12">
         <h2 class="text-center text-2xl font-bold mb-8">Đánh giá thực tế</h2>
         <ngx-slick-carousel class="carousel" 
             #slickModal="slick-carousel" 

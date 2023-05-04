@@ -32,6 +32,7 @@ export class SignupComponent {
     const data: User = {
       firstname: this.signupForm.controls['firstname'].value!,
       lastname: this.signupForm.controls['lastname'].value!,
+      avatar: 'https://i.imgur.com/5vA8Plm.png',
       phone: this.signupForm.controls['phone'].value!,
       address: this.signupForm.controls['address'].value!,
       email: this.signupForm.controls['email'].value!,

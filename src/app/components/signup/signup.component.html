@@ -5,16 +5,16 @@
             <form class="mt-3" [formGroup]="signupForm" (ngSubmit)="signUp()">
                 <div class="grid grid-cols-2 gap-2">
                   <app-custom-form-input 
-                    formControlName="firstname"
-                    [type] = "'text'"
-                    [label] = "'Tên'"
-                    [errors]="signupForm.controls['firstname'].errors"
-                  ></app-custom-form-input>
-                  <app-custom-form-input 
                     formControlName="lastname"
                     [type] = "'text'"
                     [label] = "'Họ'"
                     [errors]="signupForm.controls['lastname'].errors"
+                  ></app-custom-form-input>
+                  <app-custom-form-input 
+                    formControlName="firstname"
+                    [type] = "'text'"
+                    [label] = "'Tên'"
+                    [errors]="signupForm.controls['firstname'].errors"
                   ></app-custom-form-input>
                 </div>
                 <app-custom-form-input 

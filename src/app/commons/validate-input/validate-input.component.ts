@@ -26,8 +26,16 @@ export class ValidateInputComponent implements OnChanges{
       return `*${this.label} phải từ ${this.errors?.['minlength']?.['requiredLength']} ký tự trở lên!`
     } else if(this.errors?.['maxlength']) {
       return `*${this.label} không được nhiều hơn ${this.errors?.['maxlength']?.['requiredLength']} ký tự!`
+    } else if(this.errors?.['min']) {
+      return `*${this.label} tối thiểu là ${this.errors?.['min']?.['min']}!`
+    } else if(this.errors?.['max']) {
+      return `*${this.label} tối thiểu là ${this.errors?.['max']?.['max']}!`
     } else if(this.errors?.['email'] || this.errors?.['pattern']) {
       return `*${this.label} không đúng định dạng!`
+    } else if(this.errors?.['extensionFile']) {
+      return `*${this.label} phải có phần mở rộng là ${this.errors?.['extensionFile']?.['allowedExtensions']}!`
+    } else if(this.errors?.['isDuplicateCode']) {
+      return `*${this.label} bị trùng lặp!`
     } else if(this.errors?.['toDateInvalid']) {
       return `*Ngày đến phải lớn hơn ngày từ!`
     } else if(this.errors?.['fromDateInvalid']) {

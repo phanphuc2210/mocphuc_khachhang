@@ -5,6 +5,7 @@ import { ValidateInputComponent } from './validate-input/validate-input.componen
 import { SliderComponent } from './slider/slider.component';
 import { FormsModule } from '@angular/forms';
 import { CustomSelectComponent } from './custom-select/custom-select.component';
+import { CustomImageInputComponent } from './custom-image-input/custom-image-input.component';
 
 
 
@@ -12,7 +13,8 @@ import { CustomSelectComponent } from './custom-select/custom-select.component';
   declarations: [
     CustomFormInputComponent,
     ValidateInputComponent,
-    CustomSelectComponent
+    CustomSelectComponent,
+    CustomImageInputComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { CustomSelectComponent } from './custom-select/custom-select.component';
   exports: [
     CustomFormInputComponent,
     CustomSelectComponent,
-    ValidateInputComponent
+    ValidateInputComponent,
+    CustomImageInputComponent
   ]
 })
 export class CommonsModule { }

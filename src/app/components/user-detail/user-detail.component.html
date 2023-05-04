@@ -21,38 +21,53 @@
     </nav>
     <div class="my-container">
       <form class="mt-3" [formGroup]="userForm" (ngSubmit)="changeInfo()">
-        <app-custom-form-input 
-            formControlName="firstname"
-            [type] = "'text'"
-            [label] = "'Tên'"
-            [errors]="userForm.controls['firstname'].errors"
-        ></app-custom-form-input>
-        <app-custom-form-input 
-          formControlName="lastname"
-          [type] = "'text'"
-          [label] = "'Họ'"
-          [errors]="userForm.controls['lastname'].errors"
-        ></app-custom-form-input>
-        <app-custom-form-input 
-            formControlName="phone"
-            [type] = "'text'"
-            [placeholder]="'vd: 0708288212'"
-            [label] = "'Số điện thoại'"
-            [errors]="userForm.controls['phone'].errors"
-        ></app-custom-form-input>
-        <app-custom-form-input 
-            formControlName="address"
-            [type] = "'text'"
-            [label] = "'Địa chỉ'"
-            [errors]="userForm.controls['address'].errors"
-        ></app-custom-form-input>
-        <app-custom-form-input 
-            formControlName="email"
-            [type] = "'text'"
-            [label] = "'Email'"
-            [placeholder]="'vd: example@gmail.com'"
-            [errors]="userForm.controls['email'].errors"
-        ></app-custom-form-input>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <app-custom-image-input
+                formControlName="avatar"
+                label="Ảnh đại diện"
+                [inputClass]="'w-[25%]'"
+                [defaultImgUrl]="defaultImgUrl"
+                (imageUrl)="receiveImgUrl($event)"
+                [errors]="userForm.controls['avatar'].errors"
+            ></app-custom-image-input>
+          </div>
+
+          <div>
+            <app-custom-form-input 
+              formControlName="lastname"
+              [type] = "'text'"
+              [label] = "'Họ'"
+              [errors]="userForm.controls['lastname'].errors"
+            ></app-custom-form-input>
+            <app-custom-form-input 
+                formControlName="firstname"
+                [type] = "'text'"
+                [label] = "'Tên'"
+                [errors]="userForm.controls['firstname'].errors"
+            ></app-custom-form-input>
+            <app-custom-form-input 
+                formControlName="phone"
+                [type] = "'text'"
+                [placeholder]="'vd: 0708288212'"
+                [label] = "'Số điện thoại'"
+                [errors]="userForm.controls['phone'].errors"
+            ></app-custom-form-input>
+            <app-custom-form-input 
+                formControlName="address"
+                [type] = "'text'"
+                [label] = "'Địa chỉ'"
+                [errors]="userForm.controls['address'].errors"
+            ></app-custom-form-input>
+            <app-custom-form-input 
+                formControlName="email"
+                [type] = "'text'"
+                [label] = "'Email'"
+                [placeholder]="'vd: example@gmail.com'"
+                [errors]="userForm.controls['email'].errors"
+            ></app-custom-form-input>
+          </div>
+        </div>
         <div class="mb-4">
             <button [disabled]="userForm.invalid" type="submit" class="text-white bg-gray-800 disabled:bg-gray-600 disabled:text-slate-300 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                 Thay đổi thông tin
