@@ -17,4 +17,5 @@ export interface Product {
     woodId?: number
     wood: string
     slug?: string
+    sold?: number
 }
