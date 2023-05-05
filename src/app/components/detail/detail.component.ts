@@ -29,6 +29,7 @@ export class DetailComponent implements OnInit {
   modalEl!: ElementRef<HTMLDivElement>;
 
   items!: GalleryItem[];
+  commentImages!: GalleryItem[];
   productId: string = '';
   productSlug: string = '';
   product!: Product;
@@ -105,6 +106,26 @@ export class DetailComponent implements OnInit {
             this.starTotal += comment.star
           })
           this.starTotal = Math.round(this.starTotal / this.amountComment)
+
+          const commentImages: string[] = []
+          this.commentList.forEach(c => {
+            if(c.image) {
+              commentImages.push(c.image)
+            }
+          })
+
+          // gallery ảnh cho ảnh đánh giá của khách hàng
+          this.commentImages = commentImages.map((i) => new ImageItem({src: i, thumb: i}))
+          // Get a lightbox gallery ref
+          const commentLightboxRef = this.gallery.ref('commentLightbox');
+          // Add custom gallery config to the lightbox (optional)
+          commentLightboxRef.setConfig({
+            imageSize: ImageSize.Contain,
+            thumbPosition: ThumbnailsPosition.Top
+          });
+
+          // Load items into the lightbox gallery ref
+          commentLightboxRef.load(this.commentImages);
         })
 
         // get wood detail

@@ -11,6 +11,7 @@ export interface Comment {
 
 export interface CommentsHome {
     image: string
+    image_product: string
     username: string
     star: number
     message: string
