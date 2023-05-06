@@ -22,7 +22,7 @@
     </nav>
 
     <form class="my-container flex-col justify-center items-center mt-6" [formGroup]="searchForm">
-        <div class="grid grid-cols-5 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-x-2 gap-y-1 md:gap-4">
             <app-custom-form-input 
                 formControlName="from"
                 [type] = "'date'"
@@ -56,14 +56,14 @@
             ></app-custom-select>
 
             <div class="mb-4">
-                <div ngClass="block mb-1 h-6"></div>
-                <button (click)="searchInvoice()" type="button" class="py-2 px-3 w-fit text-xs font-medium text-center text-white bg-gray-900 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-800">Lọc hóa đơn</button>
+                <div ngClass="hidden md:block mb-1 h-6"></div>
+                <button (click)="searchInvoice()" type="button" class="py-2 px-3 w-full md:w-fit text-xs font-medium text-center text-white bg-gray-900 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-800">Lọc hóa đơn</button>
             </div>   
         </div>
     </form>
 
     <div *ngIf="invoice$ | async as invoice" class="my-container mt-4">
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div class="hidden md:block relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
                 <thead class="text-sm text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -118,14 +118,37 @@
                 <ng-template #noOrder>
                     <tr>
                         <td colspan="6">
-                            <p class="py-4">
-                                Bạn chưa có bất kỳ hóa đơn nào!
+                            <p class="py-4 text-center">
+                                Bạn chưa có bất kỳ hóa đơn nào! <br>
                                 <a class="text-blue-600 hover:underline" routerLink="/product">Tiến hành mua hàng.</a>
                             </p>
                         </td>
                     </tr>
                 </ng-template>
             </table>
+        </div>
+
+        <div class="md:hidden">
+            <div *ngFor="let order of invoice | paginate: { itemsPerPage, currentPage: p }" class="p-4 bg-slate-50 rounded-lg mb-2">
+                <div class="flex my-1">
+                    <span class="text-sm font-semibold block w-28">Mã hóa đơn:</span>
+                    <span class="text-sm">#{{ order.id }}</span>
+                </div>
+                <div class="flex my-1">
+                    <span class="text-sm font-semibold block w-28">Ngày đặt:</span>
+                    <span class="text-sm">{{ order.order_date | date: 'dd/MM/YYYY' }}</span>
+                </div>
+                <div class="flex my-1">
+                    <span class="text-sm font-semibold block w-28">Phương thức:</span>
+                    <span class="text-sm">{{ order.payment_method }}</span>
+                </div>
+                <div class="flex my-1">
+                    <span class="text-sm font-semibold block w-28">Trạng thái:</span>
+                    <span class="text-sm">{{ order.status_name }}</span>
+                </div>
+                
+                <p routerLink="/invoice/{{ order.id }}" class="text-blue-600 text-right mt-3 hover:underline cursor-pointer">Chi tiết</p>
+            </div>
         </div>
     </div>
 
