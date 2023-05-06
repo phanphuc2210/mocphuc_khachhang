@@ -1,6 +1,6 @@
 <div class="mb-16">
     <div class="banner-page">
-        <i class="text-5xl font-semibold text-white">{{ title }}</i>
+        <i class="text-3xl md:text-5xl font-semibold text-white">{{ title }}</i>
     </div>
     <!-- Breadcrumb -->
     <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
@@ -34,13 +34,13 @@
         <ng-container *ngIf="products$ | async as products"> 
             <ng-container *ngIf="products.length > 0; else notProduct">
               <form  class="flex-col justify-center items-center mt-6" [formGroup]="searchForm">
-                <div class="grid grid-cols-6 gap-4">
-                    <app-custom-form-input 
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-x-2 gap-y-1 md:gap-4">
+                    <!-- <app-custom-form-input 
                         formControlName="name"
                         [type] = "'text'"
                         label = "Tên sản phẩm"
                         inputClass="mt-2"
-                    ></app-custom-form-input>
+                    ></app-custom-form-input> -->
             
                     <!-- <app-custom-select
                         formControlName="type"
@@ -50,7 +50,7 @@
                         selectedOptionValue=""
                     ></app-custom-select> -->
             
-                    <div class="mb-4" *ngIf="types && slug === 'all'">
+                    <div class="mb-2 md:mb-4" *ngIf="types && slug === 'all'">
                       <label  class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Loại sản phẩm</label>
                       <select 
                           formControlName="type"
@@ -107,7 +107,7 @@
                     ></app-custom-select>
             
                     <div class="mb-4 flex items-end">
-                      <button (click)="searchProduct()" type="button" class="py-2 px-3 w-fit text-xs font-medium text-center text-white bg-gray-900 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-800">Lọc sản phẩm</button>
+                      <button (click)="searchProduct()" type="button" class="py-2 px-3 w-full md:w-fit text-xs font-medium text-center text-white bg-gray-900 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-800">Lọc sản phẩm</button>
                     </div>   
                 </div>
               </form>
