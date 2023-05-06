@@ -22,18 +22,18 @@
     </nav>
 
     <div *ngIf="voucherList" class="my-container mt-8">
-        <div class="grid grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <ng-container *ngIf="voucherList.length > 0; else noVoucher">
                 <div *ngFor="let voucher of voucherList" class="flex items-center border rounded-lg shadow md:max-w-xl border-gray-700 bg-gray-900">
-                    <div class="flex justify-center items-center py-6 px-8 border-r border-gray-700">
+                    <div class="flex justify-center items-center py-6 px-4 lg:px-8 border-r border-gray-700">
                         <p class="font-extrabold text-sm text-white">MộcPhúc.</p>
                     </div>
                     <div class="flex flex-col justify-between p-4 leading-normal w-full">
-                        <div class="mb-2 flex justify-between">
-                            <p class="text-base text-white font-bold tracking-tight">Giảm {{ voucher.discount | currency:"VND":'vnđ':'':'vi'}}</p>
-                            <p class="text-sm text-white font-normal tracking-tight">Mã: <span class="ml-2">{{ voucher.code}}</span></p>
+                        <div class="mb-2 flex justify-between items-center">
+                            <p class="text-sm lg:text-base text-white font-bold tracking-tight">Giảm {{ voucher.discount | currency:"VND":'vnđ':'':'vi'}}</p>
+                            <p class="text-xs lg:text-sm text-white font-normal tracking-tight">Mã: <span class="ml-1 lg:ml-2">{{ voucher.code}}</span></p>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 text-xs lg:text-base">
                             <p class="font-normal text-gray-400">Điều kiện</p>
                             <ul class="list-disc ml-4">
                                 <li class="font-normal text-gray-400">Áp dụng cho sản phẩm thuộc loại {{ voucher.applicable_productTypeName }}.</li>
@@ -41,7 +41,7 @@
                             </ul>
                         </div>
                         <div class="flex justify-between items-center">
-                            <p class="font-normal text-gray-400">HSD: {{ voucher.expiration_date | date: 'dd/MM/YYYY' }}</p>
+                            <p class="text-sm lg:text-base font-normal text-gray-400">HSD: {{ voucher.expiration_date | date: 'dd/MM/YYYY' }}</p>
                             <button 
                                 (click)="saveVoucher(voucher.id!)"
                                 *ngIf="!voucherOfUser.includes(voucher.id!); else saved"
