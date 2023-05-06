@@ -48,6 +48,9 @@ import { ToggleSubmenuDirective } from './directives/toggle-submenu.directive';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { ReturnPolicyComponent } from './components/return-policy/return-policy.component';
 import { WarrantyPolicyComponent } from './components/warranty-policy/warranty-policy.component';
+import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import { ClickSidebarDirective } from './directives/click-sidebar.directive';
+import { ClickSidebarCoverDirective } from './directives/click-sidebar-cover.directive';
 
 @NgModule({
   declarations: [
@@ -75,6 +78,9 @@ import { WarrantyPolicyComponent } from './components/warranty-policy/warranty-p
     NotfoundComponent,
     ReturnPolicyComponent,
     WarrantyPolicyComponent,
+    SidebarComponent,
+    ClickSidebarDirective,
+    ClickSidebarCoverDirective
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { select, Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 import { ProductType } from 'src/app/models/productType.model';
@@ -29,7 +28,6 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private store: Store,
     private productService: ProductService,
-    private sanitizer: DomSanitizer
   ) {
     this.countProducts$ = store.pipe(
       select(CartSelectors.countProductSelector)

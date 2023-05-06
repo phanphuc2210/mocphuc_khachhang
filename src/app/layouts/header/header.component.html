@@ -1,10 +1,17 @@
 
-<nav class="bg-white border-gray-200 px-2 sm:px-5 py-2.5 dark:bg-gray-900 sticky top-0 z-40 opacity-95">
+<nav class="header bg-white border-gray-200 px-2 sm:px-5 py-2.5 dark:bg-gray-900 sticky top-0 z-40 opacity-95">
   <div class="container flex flex-wrap items-center justify-between mx-auto">
-  <a routerLink="/" class="flex items-center">
-    <img src="../../../assets/logo.png" class="h-9 mr-3 sm:h-12" alt="Logo" />
-    <span class="self-center text-xl md:text-2xl hidden lg:inline font-extrabold whitespace-nowrap dark:text-white">MộcPhúc.</span>
-  </a>
+    <div class="flex">
+      <button appClickSidebar type="button" class="inline-flex items-center p-2 mr-2 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700">
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+           <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+        </svg>
+     </button>
+    <a routerLink="/" class="flex items-center">
+      <img src="../../../assets/logo.png" class="h-9 mr-3 sm:h-12" alt="Logo" />
+      <span class="self-center text-xl md:text-2xl hidden lg:inline font-extrabold whitespace-nowrap dark:text-white">MộcPhúc.</span>
+    </a>
+    </div>
   <div class="flex items-center md:order-2">
     <div *ngIf="!(isLogin | async),else login" class="flex gap-2 text-sm mr-0 md:text-base md:gap-4">
       <span routerLink="/signup" class="hidden md:inline text-gray-700 cursor-pointer">Đăng ký</span>
@@ -151,10 +158,10 @@
       </svg>
       <span>({{ countProducts$ | async }})</span>
     </span>
-    <button data-collapse-toggle="mega-menu-full" type="button" class="inline-flex items-center p-2 ml-1 md:ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mega-menu-full" aria-expanded="false">
+    <!-- <button data-collapse-toggle="mega-menu-full" type="button" class="inline-flex items-center p-2 ml-1 md:ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mega-menu-full" aria-expanded="false">
       <span class="sr-only">Open main menu</span>
       <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-    </button>
+    </button> -->
   </div>
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" class="hidden w-full md:block md:w-auto" id="mega-menu-full">
       <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">

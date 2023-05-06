@@ -1,3 +1,5 @@
 <app-header></app-header>
-    <router-outlet></router-outlet>
+<app-sidebar class="w-[60%] lg:hidden fixed z-50 transition-transform -translate-x-full"></app-sidebar>
+<div appClickSidebarCover class="fixed h-full w-full z-40 bg-gray-500 hidden opacity-50 lg:hidden"></div>
+<router-outlet></router-outlet>
 <app-footer></app-footer>
