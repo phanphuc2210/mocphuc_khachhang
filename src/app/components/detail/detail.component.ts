@@ -61,7 +61,33 @@ export class DetailComponent implements OnInit {
   };
 
   // config slider for same products
-  slideConfig = { slidesToShow: 4, slidesToScroll: 4 };
+  slideConfig = { 
+    slidesToShow: 4, 
+    slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        }
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      }
+    ]
+  };
 
   constructor(
     private productService: ProductService,
@@ -101,6 +127,7 @@ export class DetailComponent implements OnInit {
         // load comment
         this.commentService.getComments(this.product.id!).subscribe(res => {
           this.commentList = res
+          this.starTotal = 0
           this.amountComment = res.length
           this.commentList.forEach(comment => {
             this.starTotal += comment.star
