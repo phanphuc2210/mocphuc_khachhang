@@ -3,24 +3,24 @@
   <div class="container flex flex-wrap items-center justify-between mx-auto">
   <a routerLink="/" class="flex items-center">
     <img src="../../../assets/logo.png" class="h-9 mr-3 sm:h-12" alt="Logo" />
-    <span class="self-center text-xl md:text-2xl font-extrabold whitespace-nowrap dark:text-white">MộcPhúc.</span>
+    <span class="self-center text-xl md:text-2xl hidden lg:inline font-extrabold whitespace-nowrap dark:text-white">MộcPhúc.</span>
   </a>
   <div class="flex items-center md:order-2">
-    <div *ngIf="!(isLogin | async),else login" class="flex gap-2 text-sm mr-1 md:mr-0 md:text-base md:gap-4">
-      <span routerLink="/signup" class="text-gray-700 cursor-pointer">Đăng ký</span>
+    <div *ngIf="!(isLogin | async),else login" class="flex gap-2 text-sm mr-0 md:text-base md:gap-4">
+      <span routerLink="/signup" class="hidden md:inline text-gray-700 cursor-pointer">Đăng ký</span>
       <span routerLink="/login" class="text-gray-700 cursor-pointer">Đăng nhập</span>
     </div>
     <ng-template #login>
-      <div class="flex mr-1 md:mr-0">
+      <div class="flex mr-0">
         <div class=" relative inline-block text-left dropdown">
           <span class="">
             <button class="flex items-center justify-between w-full px-2 md:px-4 py-2 text-sm font-medium leading-5 text-gray-700 hover:text-gray-500" 
               aria-haspopup="true" aria-expanded="true" aria-controls="headlessui-menu-items-117">
-              <div class="w-7 h-7 overflow-hidden rounded-full mr-2">
+              <div class="w-7 h-7 overflow-hidden rounded-full mr-1 md:mr-2">
                 <img src="{{ user.avatar }}" alt="avatar">
               </div>
-              <span>Hello, {{ user.firstname }}</span>
-              <svg class="w-5 h-5 -mr-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              <span class="hidden md:inline">Hello, {{ user.firstname }}</span>
+              <svg class="w-5 h-5 -mr-1 hidden md:inline" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button
           ></span>
           <div class="opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95">
@@ -145,13 +145,13 @@
     </div>
     </ng-template>
     <!-- ----- Giỏ hàng ------ -->
-    <span routerLink="/cart" class="mx-3 text-gray-700 hover:text-gray-500 flex items-center justify-between cursor-pointer">
+    <span routerLink="/cart" class="mx-2 lg:mx-3 text-gray-700 hover:text-gray-500 flex items-center justify-between cursor-pointer">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"></path>
       </svg>
       <span>({{ countProducts$ | async }})</span>
     </span>
-    <button data-collapse-toggle="mega-menu-full" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mega-menu-full" aria-expanded="false">
+    <button data-collapse-toggle="mega-menu-full" type="button" class="inline-flex items-center p-2 ml-1 md:ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mega-menu-full" aria-expanded="false">
       <span class="sr-only">Open main menu</span>
       <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
     </button>

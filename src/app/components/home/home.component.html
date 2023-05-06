@@ -1,7 +1,7 @@
 <div class="">
     <app-slider></app-slider>
-    <div class="my-container mt-12">
-        <h2 class="text-center text-2xl font-bold mb-8">Sản phẩm mới</h2>
+    <div class="my-container mt-8 md:mt-12">
+        <h2 class="text-center text-xl md:text-2xl font-bold mb-6 md:mb-8">Sản phẩm mới</h2>
         <ngx-slick-carousel class="carousel" 
             #slickModal="slick-carousel" 
             [config]="slideProductConfig" 
@@ -34,8 +34,8 @@
         </div>
     </div>
     
-    <div class="my-container mt-12">
-        <h2 class="text-center text-2xl font-bold mb-8">Sản phẩm bán chạy</h2>
+    <div class="my-container mt-8 md:mt-12">
+        <h2 class="text-center text-xl md:text-2xl font-bold mb-6 md:mb-8">Sản phẩm bán chạy</h2>
         <ngx-slick-carousel class="carousel" 
             #slickModal="slick-carousel" 
             [config]="slideProductConfig" 
@@ -47,10 +47,10 @@
     </div>
 
     <div class="mt-12 bg-gray-900">
-        <div class="grid grid-cols-2 gap-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             <img src="../../../assets/images/xuongmoc.jpg" alt="xưỡng mộc">
-            <div class="flex flex-col items-center">
-                <p class="text-justify text-white p-8 font-semibold">
+            <div class="flex flex-col items-center p-4">
+                <p class="text-justify text-white p-8 text-sm md:text-base font-semibold">
                     Trại mộc Mộc Phúc (địa chỉ số 40 Ngọc Sơn, Vũng Đình, Hòn Nghê, Nha Trang, Khánh Hòa) 
                     là một trong những doanh nghiệp nhận làm đồ nội thất bằng gỗ như bàn, ghế, giường, tủ, 
                     cầu thang,… ở Nha Trang, Khánh Hòa. Tại đây, khách hàng sẽ tìm thấy những món đồ nội thất
@@ -61,8 +61,8 @@
         </div>
     </div>
 
-    <div class="my-container mt-12">
-        <h2 class="text-center text-2xl font-bold mb-8">Sản phẩm của chúng tôi</h2>
+    <div class="my-container mt-8 md:mt-12">
+        <h2 class="text-center text-xl md:text-2xl font-bold mb-6 md:mb-8">Sản phẩm của chúng tôi</h2>
         <ngx-slick-carousel class="carousel" 
             #slickModal="slick-carousel" 
             [config]="slideProductConfig" 
@@ -73,21 +73,21 @@
         </ngx-slick-carousel>   
     </div>
 
-    <div class="my-container mt-12">
-        <h2 class="text-center text-2xl font-bold mb-8">Đánh giá thực tế</h2>
+    <div class="my-container mt-8 md:mt-12">
+        <h2 class="text-center text-xl md:text-2xl font-bold mb-6 md:mb-8">Đánh giá thực tế</h2>
         <ngx-slick-carousel class="carousel" 
             #slickModal="slick-carousel" 
             [config]="slideCommentConfig" 
         >
             <div ngxSlickItem *ngFor="let comment of comments$ | async" class="slide mx-3">
                 <div routerLink="/product/{{ comment.slug }}" class="max-w-sm cursor-pointer bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <div class="overflow-hidden h-60">
+                    <div class="overflow-hidden h-36 md:h-44 lg:h-60">
                         <img *ngIf="comment.image; else notImage" class="rounded-t-lg hover:scale-110" src="{{comment.image}}" alt="{{comment.slug}}" />
                         <ng-template #notImage>
                             <img class="rounded-t-lg hover:scale-110" src="{{comment.image_product}}" alt="{{comment.slug}}" />
                         </ng-template>
                     </div>
-                    <div class="p-5">
+                    <div class="p-3 lg:p-5">
                         
                         <h5 class="mb-1 text-sm font-semibold text-center tracking-tight text-gray-900 dark:text-white">{{comment.username}}</h5>
                         <!-- <p class="text-base font-normal text-gray-900 dark:text-white">Loại sản phẩm: {{product.type_name}}</p> -->
@@ -96,7 +96,7 @@
                             <ngx-star-rating ngModel="{{ comment.star }}" [id]="'rating'" [disabled] ="true"></ngx-star-rating>
                         </div >
                 
-                        <p class="mb-4 h-14 text-base text-center font-normal text-gray-900 dark:text-white">
+                        <p class="my-2 h-16 text-sm lg:text-base text-center font-normal text-gray-900 dark:text-white">
                             {{comment.message}}
                         </p>
                     </div>
@@ -106,7 +106,7 @@
     </div>
 
     <div class="mt-12 bg-gray-400">
-        <div class="my-container grid grid-cols-4 gap-8 py-8">
+        <div class="my-container grid grid-cols-2 md:grid-cols-4 gap-8 py-8">
             <div class="flex flex-col justify-center items-center">
                 <svg class="flex-shrink-0 w-14 h-14 font-medium text-white" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" stroke-linecap="round" stroke-linejoin="round"></path>
