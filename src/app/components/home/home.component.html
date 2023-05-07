@@ -34,13 +34,13 @@
         </div>
     </div>
     
-    <div class="my-container mt-8 md:mt-12">
+    <div *ngIf="bestSeller" class="my-container mt-8 md:mt-12">
         <h2 class="text-center text-xl md:text-2xl font-bold mb-6 md:mb-8">Sản phẩm bán chạy</h2>
         <ngx-slick-carousel class="carousel" 
             #slickModal="slick-carousel" 
             [config]="slideProductConfig" 
         >
-            <div ngxSlickItem *ngFor="let product of bestSeller$ | async" class="slide mx-3">
+            <div ngxSlickItem *ngFor="let product of bestSeller" class="slide mx-3">
                 <app-product-card [product]="product"></app-product-card>
             </div>
         </ngx-slick-carousel>   

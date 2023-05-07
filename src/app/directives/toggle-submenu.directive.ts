@@ -8,7 +8,6 @@ export class ToggleSubmenuDirective {
   constructor(private el: ElementRef) { }
 
   @HostListener('click')
-  @HostListener('focusout')
   toggleFunc() {
     let elm = this.el.nativeElement.children[1];
     if (elm.classList.contains("hidden")) {
@@ -16,5 +15,11 @@ export class ToggleSubmenuDirective {
     } else {
       elm.classList.add("hidden")
     }
+  }
+
+  @HostListener('focusout')
+  hide() {
+    let elm = this.el.nativeElement.children[1];
+    elm.classList.add("hidden")
   }
 }

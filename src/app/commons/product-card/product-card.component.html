@@ -14,11 +14,20 @@
                 </div >
                 <span class="text-sm">({{ product.amountComment }})</span>
             </div>
+            <br class="md:hidden">
             <p class="text-sm lg:text-base font-normal text-gray-900 dark:text-white">Đã bán: {{product.sold}}</p>
         </div>
 
         <p class="mb-4 text-sm lg:text-base font-normal text-gray-900 dark:text-white">
             <span class="hidden lg:inline-block mr-1">Giá bán:</span> <span class="text-red-700 dark:text-red-500 font-semibold">{{product.price | currency:"VND":'vnđ':'':'vi'}}</span>
         </p>
+        <!-- <div class="mt-4">
+            <button [disabled]="product.quantity == 0" type="button" (click)="buyProduct()" class="text-white font-bold w-full bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                <span *ngIf="product.quantity > 0; else outOfStock">Thêm vào giỏ hàng</span>
+                <ng-template #outOfStock>
+                    <span class="text-red-600">Tạm thời hết hàng.</span>
+                </ng-template>
+            </button>
+        </div> -->
     </div>
 </div>

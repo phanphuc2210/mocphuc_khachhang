@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 import { ProductType } from 'src/app/models/productType.model';
 import { ProductService } from 'src/app/services/product.service';
-import * as AOS from 'aos';
 import { Observable } from 'rxjs';
 import { CommentsHome } from 'src/app/models/comment.model';
 import { CommentService } from 'src/app/services/comment.service';
@@ -14,7 +13,7 @@ import { CommentService } from 'src/app/services/comment.service';
 })
 export class HomeComponent implements OnInit{
   products$!: Observable<Product[]>
-  bestSeller$!: Observable<Product[]>
+  bestSeller!: Product[]
   allProduct$!: Observable<Product[]>
   comments$!: Observable<CommentsHome[]>
 
@@ -51,7 +50,7 @@ export class HomeComponent implements OnInit{
     slidesToShow: 4, 
     slidesToScroll: 4,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 2000,
     responsive: [
       {
         breakpoint: 1280,
@@ -80,10 +79,16 @@ export class HomeComponent implements OnInit{
   constructor(private productService: ProductService, private commentService: CommentService) {}
 
   ngOnInit(): void {
-    AOS.init()
-
     this.products$ = this.productService.getProductsByQuantity({quantity: 7, isNew: true})
-    this.bestSeller$ = this.productService.getProductsByQuantity({quantity: 7, bestSeller: true})
+    this.productService.getProductsByQuantity({quantity: 7, bestSeller: true}).subscribe(res => {
+      this.bestSeller = []
+      res.forEach((val:any) => {
+        this.commentService.getComments(val.id).subscribe(res => {
+          val['amountComment'] = res.length
+          this.bestSeller.push(val)
+        })
+      })
+    })
     this.allProduct$ = this.productService.getProductByType('all')
     this.comments$ = this.commentService.getAll()
   }

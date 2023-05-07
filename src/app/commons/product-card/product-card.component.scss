@@ -4,7 +4,7 @@ div.stars {
 
 :host::ng-deep label.star {
     padding: 0 4px 0 0 !important;
-    font-size: 16px !important;
+    font-size: 12px !important;
     color: #ddd !important;
     &::before {
         content: "\f005" !important;
