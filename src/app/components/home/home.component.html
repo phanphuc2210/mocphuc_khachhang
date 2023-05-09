@@ -81,10 +81,10 @@
         >
             <div ngxSlickItem *ngFor="let comment of comments$ | async" class="slide mx-2 md:mx-3">
                 <div routerLink="/product/{{ comment.slug }}" class="max-w-sm cursor-pointer bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <div class="overflow-hidden h-36 md:h-44 lg:h-60">
-                        <img *ngIf="comment.image; else notImage" class="rounded-t-lg hover:scale-110 h-full w-full object-cover object-center" src="{{comment.image}}" alt="{{comment.slug}}" />
+                    <div class="overflow-hidden rounded-t-lg h-36 md:h-44 lg:h-60">
+                        <img *ngIf="comment.image; else notImage" class=" hover:scale-110 h-full w-full object-cover object-center" src="{{comment.image}}" alt="{{comment.slug}}" />
                         <ng-template #notImage>
-                            <img class="rounded-t-lg hover:scale-110" src="{{comment.image_product}}" alt="{{comment.slug}}" />
+                            <img class="hover:scale-110 h-full w-full object-cover object-center" src="{{comment.image_product}}" alt="{{comment.slug}}" />
                         </ng-template>
                     </div>
                     <div class="p-3 lg:p-5">
