@@ -6,7 +6,7 @@
             #slickModal="slick-carousel" 
             [config]="slideProductConfig" 
         >
-            <div ngxSlickItem *ngFor="let product of products$ | async" class="slide mx-3">
+            <div ngxSlickItem *ngFor="let product of products$ | async" class="slide mx-1 md:mx-3">
                 <app-product-card [product]="product"></app-product-card>
             </div>
         </ngx-slick-carousel>  
@@ -40,7 +40,7 @@
             #slickModal="slick-carousel" 
             [config]="slideProductConfig" 
         >
-            <div ngxSlickItem *ngFor="let product of bestSeller" class="slide mx-3">
+            <div ngxSlickItem *ngFor="let product of bestSeller" class="slide mx-1 md:mx-3">
                 <app-product-card [product]="product"></app-product-card>
             </div>
         </ngx-slick-carousel>   
@@ -67,7 +67,7 @@
             #slickModal="slick-carousel" 
             [config]="slideProductConfig" 
         >
-            <div ngxSlickItem *ngFor="let product of allProduct$ | async" class="slide mx-3">
+            <div ngxSlickItem *ngFor="let product of allProduct$ | async" class="slide mx-1 md:mx-3">
                 <app-product-card [product]="product"></app-product-card>
             </div>
         </ngx-slick-carousel>   
@@ -79,10 +79,10 @@
             #slickModal="slick-carousel" 
             [config]="slideCommentConfig" 
         >
-            <div ngxSlickItem *ngFor="let comment of comments$ | async" class="slide mx-3">
+            <div ngxSlickItem *ngFor="let comment of comments$ | async" class="slide mx-2 md:mx-3">
                 <div routerLink="/product/{{ comment.slug }}" class="max-w-sm cursor-pointer bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <div class="overflow-hidden h-36 md:h-44 lg:h-60">
-                        <img *ngIf="comment.image; else notImage" class="rounded-t-lg hover:scale-110" src="{{comment.image}}" alt="{{comment.slug}}" />
+                        <img *ngIf="comment.image; else notImage" class="rounded-t-lg hover:scale-110 h-full w-full object-cover object-center" src="{{comment.image}}" alt="{{comment.slug}}" />
                         <ng-template #notImage>
                             <img class="rounded-t-lg hover:scale-110" src="{{comment.image_product}}" alt="{{comment.slug}}" />
                         </ng-template>
@@ -96,7 +96,7 @@
                             <ngx-star-rating ngModel="{{ comment.star }}" [id]="'rating'" [disabled] ="true"></ngx-star-rating>
                         </div >
                 
-                        <p class="my-2 h-16 text-sm lg:text-base text-center font-normal text-gray-900 dark:text-white">
+                        <p class="my-2 h-16 text-xs lg:text-sm text-center font-normal text-gray-900 dark:text-white">
                             {{comment.message}}
                         </p>
                     </div>
