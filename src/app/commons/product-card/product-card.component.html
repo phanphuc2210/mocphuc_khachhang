@@ -1,10 +1,10 @@
 <div routerLink="/product/{{ product.slug }}" class="max-w-sm h-full cursor-pointer bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-    <div class="overflow-hidden h-36 md:h-44 lg:h-60">
-        <img class="rounded-t-lg hover:scale-110" src="{{product.image}}" alt="{{product.name}}" />
+    <div class="overflow-hidden rounded-t-lg h-36 md:h-44 lg:h-60">
+        <img class="hover:scale-110 h-full w-full object-cover object-center" src="{{product.image}}" alt="{{product.name}}" />
     </div>
-    <div class="p-3 lg:p-5">
+    <div class="p-2 lg:p-5">
         
-        <h5 class="mb-1 text-sm lg:text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{product.name}}</h5>
+        <h5 class="mb-1 text-sm lg:text-lg font-semibold md:font-bold tracking-tight text-gray-900 dark:text-white">{{product.name}}</h5>
         <!-- <p class="text-base font-normal text-gray-900 dark:text-white">Loại sản phẩm: {{product.type_name}}</p> -->
         
         <div class="flex justify-between flex-wrap mb-1">
@@ -12,7 +12,7 @@
                 <div class="stars">
                     <ngx-star-rating ngModel="{{ product.starTotal }}" [id]="'rating'" [disabled] ="true"></ngx-star-rating>
                 </div >
-                <span class="text-sm">({{ product.amountComment }})</span>
+                <span class="text-xs md:text-sm">({{ product.amountComment }})</span>
             </div>
             <br class="md:hidden">
             <p class="text-sm lg:text-base font-normal text-gray-900 dark:text-white">Đã bán: {{product.sold}}</p>

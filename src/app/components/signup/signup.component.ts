@@ -58,7 +58,7 @@ export class SignupComponent {
       error: err => {
         Swal.fire({
           background: '#000',
-          icon: 'success',
+          icon: 'error',
           title: '<p class="text-xl text-slate-300">'+ err.error.message +'</p>',
           confirmButtonText: 'Ok',
           confirmButtonColor: '#0e9f6e',
