@@ -8,9 +8,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonsModule } from 'src/app/commons/commons.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: ListComponent},
+  { path: '', component: ListComponent, canActivate: [AuthGuard]},
   { path: ':orderId', component: InvoiceDetailComponent}
 ];
 
