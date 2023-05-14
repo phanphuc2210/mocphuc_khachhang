@@ -34,6 +34,7 @@ export class ForgotPasswordComponent implements OnInit {
           confirmButtonText: 'Ok',
           confirmButtonColor: '#0e9f6e',
         })
+        console.log('Mail:', res)
       },
       error: err => {
         const err_message = err.error.message
