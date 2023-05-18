@@ -175,8 +175,15 @@ export class PaymentComponent implements OnInit {
     if (this.methodName === 'VNPAY') {
       this.cartService.payment(data).subscribe({
         next: (res) => {
+          const dataVNPay: Payment = {
+            ...data,
+            order: {
+              ...data.order,
+              id: res.orderId
+            }
+          }
           this.store.dispatch(CartActions.clearCart());
-          this.paymentService.vnpayPayment(data).subscribe((res) => {
+          this.paymentService.vnpayPayment(dataVNPay).subscribe((res) => {
             window.location.assign(res.url);
           });
         },
