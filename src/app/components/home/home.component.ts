@@ -79,8 +79,8 @@ export class HomeComponent implements OnInit{
   constructor(private productService: ProductService, private commentService: CommentService) {}
 
   ngOnInit(): void {
-    this.products$ = this.productService.getProductsByQuantity({quantity: 7, isNew: true})
-    this.productService.getProductsByQuantity({quantity: 7, bestSeller: true}).subscribe(res => {
+    this.products$ = this.productService.getProductsByQuantity({quantity: 8, isNew: true})
+    this.productService.getProductsByQuantity({quantity: 8, bestSeller: true}).subscribe(res => {
       this.bestSeller = []
       res.forEach((val:any) => {
         this.commentService.getComments(val.id).subscribe(res => {
