@@ -15,7 +15,7 @@
                 <span class="text-xs md:text-sm">({{ product.amountComment }})</span>
             </div>
             <br class="md:hidden">
-            <p class="text-sm lg:text-base font-normal text-gray-900 dark:text-white">Đã bán: {{product.sold}}</p>
+            <p class="text-sm lg:text-base font-normal text-gray-900 dark:text-white">Đã bán: {{product.sold || 0}}</p>
         </div>
 
         <p class="mb-4 text-sm lg:text-base font-normal text-gray-900 dark:text-white">
